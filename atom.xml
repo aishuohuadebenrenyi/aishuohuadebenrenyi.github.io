@@ -45,10 +45,12 @@
     <link href="http://example.com/2020/12/29/temporary/"/>
     <id>http://example.com/2020/12/29/temporary/</id>
     <published>2020-12-29T07:29:15.000Z</published>
-    <updated>2020-12-29T09:23:02.099Z</updated>
+    <updated>2020-12-29T09:55:07.884Z</updated>
     
     
     
+    
+    <category term="测试" scheme="http://example.com/categories/%E6%B5%8B%E8%AF%95/"/>
     
     
     <category term="test" scheme="http://example.com/tags/test/"/>
