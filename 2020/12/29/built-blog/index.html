@@ -195,12 +195,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fas fa-file-word"></i> <span>889 Words</span>
+            <i class="fas fa-file-word"></i> <span>1.1k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fas fa-clock"></i> <span>3 Mins</span>
+            <i class="fas fa-clock"></i> <span>4 Mins</span>
         </span>
     
     
@@ -216,7 +216,7 @@
         
 
         <div class="article-content markdown-body">
-            <p>这里展示此博客是如何搭建。</p>
+            <p>作者选择 hexo，主要是因为它简单易操作，有很多现存精美主题；选择keep模版主要是因为有搜索功能，万物皆可搜索，其主题简洁大方又五脏俱全。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">必要工具：GitHub、Git、Node.js、hexo;</span><br><span class="line">非必要工具：Vusual Studio Code;</span><br><span class="line">环境：macOS Big Sur 11.1; git 2.29.2; node 14.4.0;</span><br></pre></td></tr></table></figure>
 <p><a class="link" target="_blank" rel="noopener" href="https://aishuohuadebenrenyi.github.io/">这里有个实际效果<i class="fas fa-external-link-alt"></i></a></p>
 <h2 id="注册GitHub账号及新建仓库"><a href="#注册GitHub账号及新建仓库" class="headerlink" title="注册GitHub账号及新建仓库"></a>注册GitHub账号及新建仓库</h2><h3 id="注册-GitHub-账号"><a href="#注册-GitHub-账号" class="headerlink" title="注册 GitHub 账号"></a>注册 GitHub 账号</h3><p><a class="link" target="_blank" rel="noopener" href="https://github.com/">点此进入官网进行注册<i class="fas fa-external-link-alt"></i></a></p>
@@ -229,7 +229,7 @@
 <li><p>编辑博客的主要配置文件：config.yml<br>只需要将红框中repo替换成你的username就可以<br><img src="/2020/12/29/built-blog/modify-setting1.png"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https:&#x2F;&#x2F;github.com&#x2F;aishuohuadebenrenyi&#x2F;aishuohuadebenrenyi.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></li>
 <li><p>在目录中执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 产生静态网页</span><br><span class="line">hexo g</span><br><span class="line"># 部署到GitHub page上</span><br><span class="line">hexo d</span><br><span class="line"># 注：上面两个命令会经常使用，可简写为：</span><br><span class="line">hexo g -d</span><br><span class="line"># 注：如果执行 hexo d 后提示 ERROR Deployer not found: git，则执行下列命令后再执行 hexo d</span><br><span class="line">npm install --save hexo-deployer-git</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 产生静态网页</span><br><span class="line">hexo g</span><br><span class="line"># 部署到GitHub page上</span><br><span class="line">hexo d</span><br><span class="line"># 注：上面两个命令会经常使用，可简写为：</span><br><span class="line">hexo g -d</span><br><span class="line"># 注：如果执行 hexo d 后提示 ERROR Deployer not found: git，则执行下列命令</span><br><span class="line">npm install --save hexo-deployer-git</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 <p>然后需要输入你的GitHub账号和密码即可。</p>
 </li>
 <li><p>关联GitHub账号，免密提交（可选步骤）<br>为了避免每次部署都需要输入账号密码，有一个一劳永逸的办法：生成密钥提交到<br>GitHub,具体方法如下：</p>
@@ -243,7 +243,7 @@
 <li><p>创建新的文章</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个markdown文件</span><br><span class="line">hexo new &quot;built-blog&quot; # 双引号中是文件名，任意取</span><br></pre></td></tr></table></figure>
 <p>如果要在markdown中插入图片，我比较喜欢的方式如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 修改博客根目录下的_config.yml文件</span><br><span class="line">post_asset_folder: true</span><br><span class="line"># 修改后再执行 </span><br><span class="line">hexo new &quot;built-blog&quot;</span><br><span class="line"># 在source&#x2F;_posts中会生成文章built-blog.md和同名文件夹built-blog。将图片资源放在built-blog中，文章就可以使用相对路径引用图片资源了。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 修改博客根目录下的_config.yml文件</span><br><span class="line">post_asset_folder: true</span><br><span class="line"># 安装一个可以上传本地图片的插件</span><br><span class="line">npm install https:&#x2F;&#x2F;github.com&#x2F;CodeFalling&#x2F;hexo-asset-image --save</span><br><span class="line"># 修改后再执行 </span><br><span class="line">hexo new &quot;built-blog&quot;</span><br><span class="line"># 在source&#x2F;_posts中会生成文章built-blog.md和同名文件夹built-blog。将图片资源放在built-blog中，文章就可以使用相对路径引用图片资源了。</span><br></pre></td></tr></table></figure>
 <p>你也可以将所有的图片放在一个文件下，或使用CDN通过URL地址引用，具体方法这里不再赘述。</p>
 </li>
 <li><p>编辑markdown文件<br>可以使用markdown神器 typora， 也可以使用VS Code。<br>这里使用 VS Code。推荐两个插件</p>
@@ -255,10 +255,14 @@
 </ol>
 <p><img src="/2020/12/29/built-blog/edit-blog-content.png" alt="编辑文"></p>
 <ol start="3">
-<li>发布文章至博客<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<li>发布文章至博客<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
 <h2 id="博客美化及功能完善"><a href="#博客美化及功能完善" class="headerlink" title="博客美化及功能完善"></a>博客美化及功能完善</h2></li>
 </ol>
-<h3 id="主题选择"><a href="#主题选择" class="headerlink" title="主题选择"></a>主题选择</h3><p>Hexo官网：<a class="link" target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/<i class="fas fa-external-link-alt"></i></a><br>这里选择keep</p>
+<h3 id="主题选择"><a href="#主题选择" class="headerlink" title="主题选择"></a>主题选择</h3><p>Hexo官网：<a class="link" target="_blank" rel="noopener" href="https://hexo.io/themes/">https://hexo.io/themes/<i class="fas fa-external-link-alt"></i></a><br>这里选择keep，项目地址 <a class="link" target="_blank" rel="noopener" href="https://github.com/XPoet/hexo-theme-keep">https://github.com/XPoet/hexo-theme-keep<i class="fas fa-external-link-alt"></i></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 按照提示操作</span><br><span class="line">$ cd blog</span><br><span class="line">$ git clone https:&#x2F;&#x2F;github.com&#x2F;XPoet&#x2F;hexo-theme-keep themes&#x2F;keep</span><br><span class="line"># 修改配置文件 _config.yml</span><br><span class="line">theme: keep</span><br></pre></td></tr></table></figure>
+<p><img src="/2020/12/29/built-blog/modify-theme.png"></p>
+<p>至此已搭建好keep风格的博客。里面没有搜索(search)、分类(categories)、标签(tags)等功能，按照<a class="link" target="_blank" rel="noopener" href="https://keep.xpoet.cn/2020/11/Keep-%E4%B8%BB%E9%A2%98%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97/">keep官方操作指南<i class="fas fa-external-link-alt"></i></a>操作即可，简单易懂，此处不再赘述。</p>
+<p>若有什么问题，欢迎探讨。</p>
 
         </div>
 
