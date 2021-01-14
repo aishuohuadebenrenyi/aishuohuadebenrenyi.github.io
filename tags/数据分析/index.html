@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <title>
-        Category: 未分类 |
+        Tag: 数据分析 |
         
         LeeHuyoo
     </title>
@@ -64,7 +64,7 @@
                 </li>
             
                 <li class="menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/categories"
                     >
                         CATEGORIES
@@ -72,7 +72,7 @@
                 </li>
             
                 <li class="menu-item">
-                    <a class=""
+                    <a class="active"
                        href="/tags"
                     >
                         TAGS
@@ -108,12 +108,12 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/categories">CATEGORIES</a>
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class=""
+                    <a class="active"
                        href="/tags">TAGS</a>
                 </li>
             
@@ -137,30 +137,45 @@
                 <main class="main-content normal-code-theme">
 
                     
-                        $category-name-font-size = 1.6rem;
+                        <div class="fade-in-down-animation">
+    <div class="tag-container">
+        <div class="tag-name"><i class="fas fa-tag"></i> 数据分析 (1)
+        </div>
+        <div class="tag--post-list">
+            
+<div class="archive-list-container">
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2021</span>
+                <span class="archive-year-post-count">(1)</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/01/02/data-science/"
+                        >数据科学家养成计划手册(持续更新中)</a>
+                        <span class="article-date">01-02</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+</div>
 
-.category-container {
+        </div>
+    </div>
 
-  keep-container(1.02, 1.02, 30px, 30px);
+    <div class="tag-paginator">
+        <div class="paginator">
+    
 
-  .category-name {
-    color: var(--second-text-color);
-    font-size: $category-name-font-size;
+    
+</div>
 
-    +keep-tablet() {
-      font-size: $category-name-font-size * 0.9;
-    }
-
-    +keep-mobile() {
-      font-size: $category-name-font-size * 0.8;
-    }
-
-    font-weight: 600;
-    padding-bottom: 20px;
-    margin-bottom: $component-interspace;
-    border-bottom: 1px solid var(--border-color);
-  }
-}
+    </div>
+</div>
 
 
                     

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <title>
-        Category: 未分类 |
+        Archive: 2021 |
         
         LeeHuyoo
     </title>
@@ -56,7 +56,7 @@
                 </li>
             
                 <li class="menu-item">
-                    <a class=""
+                    <a class="active"
                        href="/archives"
                     >
                         ARCHIVES
@@ -64,7 +64,7 @@
                 </li>
             
                 <li class="menu-item">
-                    <a class="active"
+                    <a class=""
                        href="/categories"
                     >
                         CATEGORIES
@@ -103,12 +103,12 @@
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class=""
+                    <a class="active"
                        href="/archives">ARCHIVES</a>
                 </li>
             
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/categories">CATEGORIES</a>
                 </li>
             
@@ -137,31 +137,56 @@
                 <main class="main-content normal-code-theme">
 
                     
-                        $category-name-font-size = 1.6rem;
+                        <div class="fade-in-down-animation">
+    <div class="archive-container ">
+        
+<div class="archive-list-container">
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2021</span>
+                <span class="archive-year-post-count">(1)</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2021/01/02/data-science/"
+                        >数据科学家养成计划手册(持续更新中)</a>
+                        <span class="article-date">01-02</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+        <section class="archive-item">
+            <div class="archive-item-header">
+                <span class="archive-year">2020</span>
+                <span class="archive-year-post-count">(2)</span>
+            </div>
+            <ul class="article-list">
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/12/29/hello-world/"
+                        >Hello World</a>
+                        <span class="article-date">12-29</span>
+                    </li>
+                
+                    <li class="article-item">
+                        <a class="article-title"
+                           href="/2020/12/29/built-blog/"
+                        >MAC系统下快速利用 GitHub + hexo 搭建个人精美静态博客网站</a>
+                        <span class="article-date">12-29</span>
+                    </li>
+                
+            </ul>
+        </section>
+    
+</div>
 
-.category-container {
-
-  keep-container(1.02, 1.02, 30px, 30px);
-
-  .category-name {
-    color: var(--second-text-color);
-    font-size: $category-name-font-size;
-
-    +keep-tablet() {
-      font-size: $category-name-font-size * 0.9;
-    }
-
-    +keep-mobile() {
-      font-size: $category-name-font-size * 0.8;
-    }
-
-    font-weight: 600;
-    padding-bottom: 20px;
-    margin-bottom: $component-interspace;
-    border-bottom: 1px solid var(--border-color);
-  }
-}
-
+    </div>
+</div>
 
                     
                 </main>
