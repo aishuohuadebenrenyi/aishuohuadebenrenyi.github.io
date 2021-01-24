@@ -647,7 +647,124 @@
 </ul>
 <p>非监督学习使用场景举例：App客群分类、词向量转化等</p>
 <p>聚类常用模型：基于切割的k-means、基于层次的聚类、基于密度的DBSCAN、基于图的split<br>关联常用模型：Apriori、Apriori-All</p>
-<h5 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h5><h6 id="k-mean"><a href="#k-mean" class="headerlink" title="k-mean"></a>k-mean</h6><h6 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h6><h6 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h6><h6 id="图分裂"><a href="#图分裂" class="headerlink" title="图分裂"></a>图分裂</h6><h5 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h5><h6 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h6><h6 id="Apriori-All"><a href="#Apriori-All" class="headerlink" title="Apriori-All"></a>Apriori-All</h6><h4 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h4><p>适用于样本集部分有标注，部分无标注的情况。通常无标注样本数量远大于有标注样本的数量。</p>
+<h5 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h5><h6 id="k-means"><a href="#k-means" class="headerlink" title="k-means"></a>k-means</h6><p>算法思想：所有类都有一个中心，属于一个类的点到它的中心的距离相比于其他类的中心更近。中心是指质心，距离常用欧式距离。</p>
+<p>实现步骤：</p>
+<ul>
+<li>从n个样本中随机选取k个作为初始化的质心</li>
+<li>对每个样本测量其到每个质心的距离，并把它归到最近的质心的类</li>
+<li>重新计算已经得到的各个类的质心</li>
+<li>迭代第二、三步，直至新的质心与原质心相等或小于阈值，算法结束</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>初始质心位置可能回影响最终结果<ul>
+<li>多试几次，取最稳定的结果</li>
+</ul>
+</li>
+<li>个别离群值会影响整体聚类效果<ul>
+<li>将取质心换成取中心(k-medoids)。k-medoids 中点与其他同类点的距离和最小</li>
+</ul>
+</li>
+<li>必须指定k值<ul>
+<li>其他衡量因子辅助，如轮廓系数、最小误差…</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;python实现，供参考，具体见官网</span><br><span class="line">from sklearn.cluster import KMeans</span><br><span class="line">KMeans(n_clusters &#x3D; 2).fit(X) &#x2F;&#x2F;分成两类</span><br><span class="line">KMeans.labels_.astype(np.int) &#x2F;&#x2F;将聚类后得到的labels转换成int格式</span><br><span class="line">plt.scatter( ) &#x2F;&#x2F;画散点图</span><br></pre></td></tr></table></figure>
+<h6 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h6><p>算法思想：相近的点尽可能接近。把相近的点视为一个簇，根据分类个数不断迭代。</p>
+<p>距离衡量指标：</p>
+<ul>
+<li>ward距离</li>
+<li>平方残差和：值越小，两个簇越可以合成一个簇</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>层次聚类灵活，但是计算复杂度比较高，离群点影响比较大</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;python实现，供参考，具体见官网</span><br><span class="line">from sklearn.cluster import AgglomerativeClustering</span><br><span class="line">AgglomerativeClustering(n_clusters &#x3D; 2,linkage&#x3D;&quot;ward&quot;) &#x2F;&#x2F;分成两类</span><br></pre></td></tr></table></figure>
+<h6 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h6><p>算法思想：一定区域内，密度达到一定程度才是一个类，否则是离群点。</p>
+<p>基本概念：</p>
+<ul>
+<li>E邻域：给定对象半径为 E 内的区域称为该对象的 E邻域</li>
+<li>核心对象：如果给定对象 E邻域内的样本点大于或等于 MinPts，则称该对象为核心对象</li>
+<li>直接密度可达：对于样本集合 D，如果样本点 q在 p的E邻域内，并且 p为核心对象，那么对象 q从对象 p直接密度可达。</li>
+<li>密度可达：对于样本集合 D，给定一串样本点 p1、p2、…、pn, p = p1, q = pn,假设对象 pi从 pi-1直接密度可达，那么对象 q从对象 p密度可达</li>
+<li>密度相连：存在样本集合 D中的一点 o，如果对象 o到对象 p和对象 q都是密度可达的，那么 p和 q密度相连</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>DBSCAN算法就是找到密度相连对象的最大集合</li>
+<li>DBSCAN算法优点：对离群点不敏感</li>
+<li>缺点：<ul>
+<li>计算相邻两个点之间的点不容易<ul>
+<li>借助 KD-Tree等数据结构的辅助</li>
+</ul>
+</li>
+<li>需要指定两个参数：E 、 MinPts<ul>
+<li>多尝试</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#x2F;&#x2F;python实现，供参考，具体见官网</span><br><span class="line">from sklearn.cluster import DBSCAN</span><br><span class="line">DBSCAN(min_samples &#x3D; 3,eps&#x3D; 0.5) &#x2F;&#x2F;min_samples：最小点数；eps:E邻域</span><br></pre></td></tr></table></figure>
+<h6 id="图分裂"><a href="#图分裂" class="headerlink" title="图分裂"></a>图分裂</h6><p>实现步骤：</p>
+<ul>
+<li>根据坐标点位置距离关系形成连通图(可采用DBSCAN等算法思路找到最大范围的点数，然后用边连接起来)</li>
+<li>将形成的多个连通图进行逐一分裂</li>
+</ul>
+<p>分类的依据：</p>
+<ul>
+<li>承受系数t</li>
+<li>分裂阈值$\lambda$</li>
+<li>若 t &gt; $\lambda$,则将该组边切分</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>与基于层次的聚类思路相反，是从顶至下</li>
+<li>图建立方式、分裂方式非常灵活</li>
+</ul>
+<h5 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h5><p>基本概念：</p>
+<ul>
+<li>项目：一个字段，对交易来说一般是指一次交易中的一个物品，如：尿布</li>
+<li>事物：某个客户在一次交易中，发生的所有项目的集合，如：{尿布，啤酒}</li>
+<li>项集：包含若干个项目的集合(一次事务中)</li>
+<li>频繁项集：某个项集的支持度大于设定阈值(人为设定或者根据数据分布出经验来定)，即称这个项集为频繁项集</li>
+<li>支持度：项集{x, y}在总项集中出现的频率(support)</li>
+<li>置信度：在先决条件 x发生的条件下，有关联规则{x -&gt; y}推出 y 的概率(Confidence)</li>
+<li>提升度：表示含有 x的条件下同时含有 y的概率，与无论含不含 x都含有 y的概率之比。(Confidence({x} -&gt; {y}) / support({y}))。若提升度大于1，则表示购买 x对购买 y有提升作用。</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>两个频繁项集组成的项集不一定是频繁项集</li>
+<li>两个非频繁项集组成的项集一定不是频繁项集</li>
+<li>一个频繁项集和一个非频繁项集组成的项集一定不是频繁项集</li>
+</ul>
+<p>关联可分为两类：</p>
+<ul>
+<li>关联规则：反映一个事物与其他事物之间的相互依存性和关联性，如Apriori算法</li>
+<li>序列规则：与关联规则相似。不同的是将时间因素考虑进来，剔除关联规则中时间点靠后的项对时间点靠前的项的支持，如Apriori-All算法</li>
+</ul>
+<h6 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h6><p>算法思想：先指定支持度的阈值，若一个项集的支持度大于这个阈值，则称其为频繁集，然后找出频繁项集。</p>
+<p>找出频繁集的方法：</p>
+<ul>
+<li>先找出一频繁项集，去掉一非频繁项集</li>
+<li>然后将一频繁项集组成二频繁项集，根据阈值去掉二非频繁项集</li>
+<li>再将一频繁项集和二频繁项集组成三频繁项集，根据阈值去掉三非频繁项集</li>
+<li>以此类推</li>
+<li>直至找出最高阶的频繁项集，所有组合遍历完毕，整理全部项集</li>
+</ul>
+<h6 id="Apriori-All"><a href="#Apriori-All" class="headerlink" title="Apriori-All"></a>Apriori-All</h6><p>适用场景：预测用户在购买某种东西后，下次购买时还会买其他什么东西作为搭配</p>
+<p>实现步骤：</p>
+<ul>
+<li>Forward: Apriori</li>
+<li>Backward: 去掉时间序列之后的项对之前的项的支持</li>
+</ul>
+<p>注意事项：</p>
+<ul>
+<li>sklearn中不支持序列规则，自己写</li>
+</ul>
+<h4 id="半监督学习"><a href="#半监督学习" class="headerlink" title="半监督学习"></a>半监督学习</h4><p>适用于样本集部分有标注，部分无标注的情况。通常无标注样本数量远大于有标注样本的数量。</p>
 <p>原因：获取标注的成本较大；无标注样本可能很容易获得。</p>
 <p>算法思路：</p>
 <ul>
@@ -723,9 +840,9 @@
 <h3 id="关联模型的常用评价指标"><a href="#关联模型的常用评价指标" class="headerlink" title="关联模型的常用评价指标"></a>关联模型的常用评价指标</h3></li>
 </ul>
 </li>
-<li>支持度</li>
-<li>置信度</li>
-<li>提升度</li>
+<li>支持度：项集{x, y}在总项集中出现的频率(support)</li>
+<li>置信度：在先决条件 x发生的条件下，有关联规则{x -&gt; y}推出 y 的概率(Confidence)</li>
+<li>提升度：表示含有 x的条件下同时含有 y的概率，与无论含不含 x都含有 y的概率之比。(Confidence({x} -&gt; {y}) / support({y}))。若提升度大于1，则表示购买 x对购买 y有提升作用。</li>
 </ul>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>python中保存和加载模型的方式：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.externals import joblib</span><br><span class="line">&#x2F;&#x2F;保存模型</span><br><span class="line">joblib.dump(knn_clf,&quot;knn_clf&quot;)</span><br><span class="line">&#x2F;&#x2F;加载模型</span><br><span class="line">joblib.load(knn_clf,&quot;knn_clf&quot;)</span><br></pre></td></tr></table></figure>
