@@ -2,7 +2,7 @@
 
 作为一名数据爱好者，在此记录所学所思所想。这是 aishuohuadebenrenyi 的 Blog 导航🧭，欢迎大家一起讨论交流学习👏。
 
-Blog 网址： [aishuohuadebenrenyi](aishuohuadebenrenyi.github.io)
+Blog 网址： [aishuohuadebenrenyi](https://aishuohuadebenrenyi.github.io/)
 
 ## 目前已更新的有：
 
@@ -16,5 +16,3 @@ Blog 网址： [aishuohuadebenrenyi](aishuohuadebenrenyi.github.io)
 ### 三.教程系列
 
 1.[MAC系统下快速利用 GitHub + hexo 搭建个人精美静态博客网站](https://aishuohuadebenrenyi.github.io/2020/12/29/built-blog/)
-
-
