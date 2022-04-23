@@ -240,14 +240,13 @@
 <p>注：如果提交失败，可能是vim打开文件复制的格式问题，就把id_rsa.pub中内容复制到其他地方（如text）,再复制粘贴提交。</p>
 <p>至此已搭建好一个简易博客。</p>
 <h3 id="博客基本使用"><a href="#博客基本使用" class="headerlink" title="博客基本使用"></a>博客基本使用</h3><ol>
-<li><p>创建新的文章</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个markdown文件</span><br><span class="line">hexo new &quot;built-blog&quot; # 双引号中是文件名，任意取</span><br></pre></td></tr></table></figure>
-<p>如果要在markdown中插入图片，我比较喜欢的方式如下</p>
+<li>创建新的文章<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 新建一个markdown文件</span><br><span class="line">hexo new &quot;built-blog&quot; # 双引号中是文件名，任意取</span><br></pre></td></tr></table></figure>
+如果要在markdown中插入图片，我比较喜欢的方式如下</li>
+</ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 修改博客根目录下的_config.yml文件</span><br><span class="line">post_asset_folder: true</span><br><span class="line"># 安装一个可以上传本地图片的插件</span><br><span class="line">npm install https:&#x2F;&#x2F;github.com&#x2F;CodeFalling&#x2F;hexo-asset-image --save</span><br><span class="line"># 修改后再执行 </span><br><span class="line">hexo new &quot;built-blog&quot;</span><br><span class="line"># 在source&#x2F;_posts中会生成文章built-blog.md和同名文件夹built-blog。将图片资源放在built-blog中，文章就可以使用相对路径引用图片资源了。</span><br></pre></td></tr></table></figure>
 <p>你也可以将所有的图片放在一个文件下，或使用CDN通过URL地址引用，具体方法这里不再赘述。</p>
-</li>
-<li><p>编辑markdown文件<br>可以使用markdown神器 typora， 也可以使用VS Code。<br>这里使用 VS Code。推荐两个插件</p>
-<ul>
+<ol start="2">
+<li>编辑markdown文件<br>可以使用markdown神器 typora， 也可以使用VS Code。<br>这里使用 VS Code。推荐两个插件<ul>
 <li>Markdown All in One<br>有在Vscode中编写Markdown所需的一切（键盘快捷键，目录，自动预览等）</li>
 <li>Markdown Preview Github Styling Custom<br>预览效果和 GitHub page 一样，博客就是GitHub page 搭建，真正的所见及所得。</li>
 </ul>
@@ -325,7 +324,7 @@
             
               <span>2020</span> -
             
-            2021 <i class="fas fa-heart icon-animate"></i> <a href="/">aishuohuadebenrenyi</a>
+            2022 <i class="fas fa-heart icon-animate"></i> <a href="/">aishuohuadebenrenyi</a>
         </div>
         
             <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
