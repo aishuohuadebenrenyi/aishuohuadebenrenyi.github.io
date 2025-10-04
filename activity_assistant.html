@@ -1542,46 +1542,67 @@
             });
             
             // 新建活动按钮
-            document.getElementById('create-activity-btn').addEventListener('click', function() {
-                showToolDetail('createEvent');
-            });
+            const createActivityBtn = document.getElementById('create-activity-btn');
+            if (createActivityBtn) {
+                createActivityBtn.addEventListener('click', function() {
+                    showToolDetail('createEvent');
+                });
+            }
             
             // 新建活动 - 生成二维码
-            document.getElementById('generateQR').addEventListener('click', function() {
-                document.getElementById('qrCodeContainer').style.display = 'block';
-            });
+            const generateQRBtn = document.getElementById('generateQR');
+            if (generateQRBtn) {
+                generateQRBtn.addEventListener('click', function() {
+                    const qrContainer = document.getElementById('qrCodeContainer');
+                    if (qrContainer) {
+                        qrContainer.style.display = 'block';
+                    }
+                });
+            }
             
             // 签到方式选择
-            document.getElementById('existingActivityCheckin').addEventListener('click', function() {
-                document.getElementById('existingActivityCheckin').classList.add('active');
-                document.getElementById('temporaryCheckin').classList.remove('active');
-                document.getElementById('existingActivityCheckinContent').style.display = 'block';
-                document.getElementById('temporaryCheckinContent').style.display = 'none';
+            const existingActivityCheckin = document.getElementById('existingActivityCheckin');
+            if (existingActivityCheckin) {
+                existingActivityCheckin.addEventListener('click', function() {
+                    document.getElementById('existingActivityCheckin').classList.add('active');
+                    document.getElementById('temporaryCheckin').classList.remove('active');
+                    document.getElementById('existingActivityCheckinContent').style.display = 'block';
+                    document.getElementById('temporaryCheckinContent').style.display = 'none';
 
-                // 初始化参与者名单
-                initParticipantList();
-            });
+                    // 初始化参与者名单
+                    initParticipantList();
+                });
+            }
             
-            document.getElementById('temporaryCheckin').addEventListener('click', function() {
-                document.getElementById('temporaryCheckin').classList.add('active');
-                document.getElementById('existingActivityCheckin').classList.remove('active');
-                document.getElementById('temporaryCheckinContent').style.display = 'block';
-                document.getElementById('existingActivityCheckinContent').style.display = 'none';
-                
-                // 初始化临时签到统计
-                updateTempCheckinStats();
-            });
+            const temporaryCheckin = document.getElementById('temporaryCheckin');
+            if (temporaryCheckin) {
+                temporaryCheckin.addEventListener('click', function() {
+                    document.getElementById('temporaryCheckin').classList.add('active');
+                    document.getElementById('existingActivityCheckin').classList.remove('active');
+                    document.getElementById('temporaryCheckinContent').style.display = 'block';
+                    document.getElementById('existingActivityCheckinContent').style.display = 'none';
+                    
+                    // 初始化临时签到统计
+                    updateTempCheckinStats();
+                });
+            }
             
             // 导出数据按钮
-            document.querySelector('.export-btn').addEventListener('click', function() {
-                alert('数据导出成功！');
-            });
+            const exportBtn = document.querySelector('.export-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function() {
+                    alert('数据导出成功！');
+                });
+            }
 
             // 开始扫描按钮
-            document.getElementById('startScan').addEventListener('click', function() {
-                // 模拟扫码过程
-                simulateScanning();
-            });
+            const startScanBtn = document.getElementById('startScan');
+            if (startScanBtn) {
+                startScanBtn.addEventListener('click', function() {
+                    // 模拟扫码过程
+                    simulateScanning();
+                });
+            }
             
             // 初始化参与者名单
             function initParticipantList() {
@@ -1704,7 +1725,9 @@
             
 
             // 随机抽签逻辑
-            document.getElementById('startDraw').addEventListener('click', function() {
+            const startDrawBtn = document.getElementById('startDraw');
+            if (startDrawBtn) {
+                startDrawBtn.addEventListener('click', function() {
                 const participants = document.getElementById('participantList').value.split('\n').filter(p => p.trim() !== '');
                 if (participants.length === 0) {
                     alert('请先输入参与者名单');
@@ -1730,18 +1753,26 @@
                     `;
                     drawnList.appendChild(newItem);
                 }, 1000);
-            });
+                });
+            }
             
-            document.getElementById('resetDraw').addEventListener('click', function() {
-                document.getElementById('drawResult').textContent = '';
-                document.getElementById('drawnList').innerHTML = '';
-            });
+            const resetDrawBtn = document.getElementById('resetDraw');
+            if (resetDrawBtn) {
+                resetDrawBtn.addEventListener('click', function() {
+                    const drawResult = document.getElementById('drawResult');
+                    const drawnList = document.getElementById('drawnList');
+                    if (drawResult) drawResult.textContent = '';
+                    if (drawnList) drawnList.innerHTML = '';
+                });
+            }
             
             // 倒计时器逻辑
             let timerInterval;
             let timerSeconds = 5 * 60; // 默认5分钟
             
-            document.getElementById('start-timer').addEventListener('click', function() {
+            const startTimerBtn = document.getElementById('start-timer');
+            if (startTimerBtn) {
+                startTimerBtn.addEventListener('click', function() {
                 const minutes = parseInt(document.getElementById('timerDuration').value);
                 if (isNaN(minutes) || minutes <= 0) {
                     alert('请输入有效的分钟数');
@@ -1763,22 +1794,31 @@
                         alert('时间到！');
                     }
                 }, 1000);
-            });
+                });
+            }
             
-            document.getElementById('pause-timer').addEventListener('click', function() {
-                if (timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }
-            });
+            const pauseTimerBtn = document.getElementById('pause-timer');
+            if (pauseTimerBtn) {
+                pauseTimerBtn.addEventListener('click', function() {
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }
+                });
+            }
             
-            document.getElementById('reset-timer').addEventListener('click', function() {
-                if (timerInterval) clearInterval(timerInterval);
-                const minutes = parseInt(document.getElementById('timerDuration').value);
-                timerSeconds = minutes * 60;
-                updateTimerDisplay();
-                document.getElementById('pause-timer').textContent = '暂停';
-            });
+            const resetTimerBtn = document.getElementById('reset-timer');
+            if (resetTimerBtn) {
+                resetTimerBtn.addEventListener('click', function() {
+                    if (timerInterval) clearInterval(timerInterval);
+                    const timerDuration = document.getElementById('timerDuration');
+                    const minutes = timerDuration ? parseInt(timerDuration.value) : 5;
+                    timerSeconds = minutes * 60;
+                    updateTimerDisplay();
+                    const pauseTimerBtn = document.getElementById('pause-timer');
+                    if (pauseTimerBtn) pauseTimerBtn.textContent = '暂停';
+                });
+            }
             
             // 计时器预设按钮
             document.querySelectorAll('.timer-preset').forEach(button => {
