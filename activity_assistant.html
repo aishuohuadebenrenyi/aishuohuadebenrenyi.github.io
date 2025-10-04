@@ -3,94 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>即兴活动工具箱 - 完整交互设计</title>
+    <title>活动现场工具合集</title>
     <style>
-        /* 基础样式重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-        
-        /* 极简配色系统 */
-        :root {
-            --primary: #4A90E2;
-            --success: #34C759;
-            --warning: #FF9500;
-            --danger: #FF3B30;
-            --gray-1: #F2F2F7;
-            --gray-2: #8E8E93;
-            --gray-3: #000000;
-            --white: #FFFFFF;
-            --border-radius: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
-            color: var(--gray-3);
-            line-height: 1.5;
+            background-color: #f5f5f7;
+            color: #333;
+            line-height: 1.6;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
         }
         
-        /* 设备容器 */
-        .device-container {
-            display: flex;
-            gap: 30px;
-            max-width: 1000px;
+        .app-container {
             width: 100%;
-        }
-        
-        /* 设备样式 */
-        .device {
-            flex: 1;
-            background: #fff;
-            border-radius: 24px;
+            max-width: 375px;
+            height: 667px;
+            background: white;
+            border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            max-width: 375px;
         }
         
-        .device-header {
-            padding: 20px;
-            background: var(--white);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        
-        .device-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .device-subtitle {
-            font-size: 14px;
-            color: var(--gray-2);
-        }
-        
-        /* 页面视图 */
-        .view {
-            display: none;
-            flex: 1;
-            flex-direction: column;
-        }
-        
-        .view.active {
-            display: flex;
-        }
-        
-        /* 主办人App样式 */
+        /* 顶部导航 */
         .app-header {
             padding: 16px;
-            background-color: var(--white);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -101,261 +49,345 @@
             font-weight: 600;
         }
         
-        .app-header .status {
+        .current-activity {
             font-size: 14px;
-            color: var(--gray-2);
-        }
-        
-        /* 小程序样式 */
-        .mini-program-header {
-            padding: 16px;
-            background-color: var(--white);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-        }
-        
-        .mini-program-header h1 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-        
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
+            color: #8E8E93;
         }
         
         /* 主内容区域 */
         .main-content {
             flex: 1;
-            padding: 16px;
             overflow-y: auto;
+            padding: 16px;
         }
         
-        /* 卡片样式 */
-        .card {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        /* 页面视图 */
+        .page {
+            display: none;
+            flex-direction: column;
+            height: 100%;
         }
         
-        /* 任务区域 */
-        .task-area {
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        .task-title {
-            font-size: 17px;
-            font-weight: 500;
-            margin-bottom: 12px;
-        }
-        
-        .task-content {
-            font-size: 16px;
-            color: var(--gray-2);
-            line-height: 1.6;
-        }
-        
-        /* 分组显示 */
-        .group-display {
+        .page.active {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 16px;
         }
         
-        .group {
-            flex: 1;
-            min-width: 100px;
-            padding: 12px;
-            background-color: var(--gray-1);
-            border-radius: var(--border-radius);
-            text-align: center;
-        }
-        
-        .group-name {
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-        
-        /* 底部工具栏 */
-        .toolbar {
+        /* 底部导航 */
+        .bottom-nav {
             display: flex;
             justify-content: space-around;
             padding: 12px 16px;
-            background-color: var(--white);
-            border-top: 1px solid rgba(0,0,0,0.05);
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
         }
         
-        .tool-btn {
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             background: none;
             border: none;
             font-size: 12px;
-            color: var(--gray-2);
+            color: #8E8E93;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         
-        .tool-btn:hover, .tool-btn.active {
-            color: var(--primary);
+        .nav-item.active {
+            color: #007AFF;
         }
         
-        .tool-icon {
-            font-size: 24px;
+        .nav-icon {
+            font-size: 22px;
             margin-bottom: 4px;
         }
         
-        /* 按钮样式 */
-        .btn {
-            padding: 12px 24px;
-            border-radius: 20px;
-            border: none;
-            font-weight: 500;
+        /* 卡片样式 */
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        /* 工具网格布局 */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             cursor: pointer;
-            width: 100%;
-            margin-top: 16px;
             transition: all 0.2s ease;
+            border: 1px solid #f0f0f0;
         }
         
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
-        .btn-outline {
-            background-color: transparent;
-            border: 1px solid var(--gray-2);
-            color: var(--gray-3);
+        .tool-icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: block;
         }
         
-        .btn-success {
-            background-color: var(--success);
+        .tool-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 工具分类 */
+        .tool-category {
+            margin-bottom: 24px;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        /* 活动列表 */
+        .activity-list {
+            margin-top: 16px;
+        }
+        
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-info h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .activity-meta {
+            font-size: 14px;
+            color: #8E8E93;
+        }
+        
+        .activity-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background: #f0f0f0;
+        }
+        
+        .activity-status.active {
+            background: #34C759;
             color: white;
         }
         
         /* 表单元素 */
-        .input-group {
+        .form-group {
             margin-bottom: 16px;
         }
         
-        .input-label {
+        label {
             display: block;
             margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
             font-weight: 500;
         }
         
-        .input-field {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid var(--gray-2);
-            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
         }
         
-        /* 签到列表 */
-        .attendee-list {
+        button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        button:hover {
+            background: #0056CC;
+        }
+        
+        button.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        button.secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .btn-group {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+            gap: 10px;
             margin-top: 20px;
         }
         
-        .attendee {
-            padding: 8px 12px;
-            background-color: var(--gray-1);
-            border-radius: 20px;
-            font-size: 14px;
+        /* 工具详情页面 */
+        .tool-detail {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+            flex-direction: column;
+            height: 100%;
         }
         
-        .attendee.checked {
-            background-color: var(--success);
-            color: white;
-        }
-        
-        /* 计时器 */
-        .timer-display {
-            font-size: 48px;
-            text-align: center;
-            margin: 30px 0;
-            font-weight: 300;
-        }
-        
-        .timer-controls {
+        .tool-header {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        /* 二维码 */
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .tool-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        /* 特定工具样式 */
         .qr-code {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .qr-placeholder {
             width: 200px;
             height: 200px;
-            background-color: var(--gray-1);
-            margin: 20px auto;
+            background: #f5f5f5;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
+            color: #999;
         }
         
-        /* 进度条 */
-        .progress-bar {
-            height: 6px;
-            background-color: var(--gray-1);
-            border-radius: 3px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--primary);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-        
-        /* 活动码 */
-        .activity-code {
+        .timer-display {
+            font-size: 48px;
             text-align: center;
-            font-size: 24px;
-            letter-spacing: 4px;
             margin: 20px 0;
-            padding: 12px;
-            background-color: var(--gray-1);
-            border-radius: var(--border-radius);
+            font-weight: 300;
         }
         
-        /* 题目列表 */
+        .sound-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .sound-btn {
+            padding: 12px;
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
         .question-list {
-            margin-top: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
         }
         
         .question-item {
             padding: 12px;
-            background-color: var(--gray-1);
-            border-radius: var(--border-radius);
-            margin-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .question-item:last-child {
+            border-bottom: none;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+        
+        .file-upload:hover {
+            border-color: #007AFF;
+        }
+        
+        /* 参与者列表 */
+        .participant-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .participant-item {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        .question-duration {
-            font-size: 14px;
-            color: var(--gray-2);
+        .participant-item:last-child {
+            border-bottom: none;
         }
         
-        /* 数据回顾 */
+        .participant-name {
+            flex: 1;
+        }
+        
+        .participant-status {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #f0f0f0;
+        }
+        
+        .participant-status.checked {
+            background: #34C759;
+        }
+        
+        /* 统计卡片 */
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -364,8 +396,8 @@
         }
         
         .stat-card {
-            background-color: var(--gray-1);
-            border-radius: var(--border-radius);
+            background-color: #f8f8f8;
+            border-radius: 12px;
             padding: 16px;
             text-align: center;
         }
@@ -378,803 +410,1381 @@
         
         .stat-label {
             font-size: 14px;
-            color: var(--gray-2);
+            color: #8E8E93;
         }
         
-        /* 环节时间轴 */
-        .timeline {
+        /* 当前活动卡片 */
+        .current-activity-card {
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .current-activity-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .current-activity-card h2 {
+            font-size: 22px;
+            margin-bottom: 12px;
+        }
+        
+        .activity-progress {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            margin: 16px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 60%;
+            background: white;
+            border-radius: 2px;
+        }
+        
+        /* 签到选择 */
+        .checkin-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
             margin: 20px 0;
         }
         
-        .timeline-item {
-            display: flex;
+        .checkin-option {
+            padding: 16px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .checkin-option:hover {
+            background: #e8e8e8;
+        }
+        
+        .checkin-option.active {
+            background: #007AFF;
+            color: white;
+        }
+        
+        /* 活动详情页 */
+        .activity-detail-header {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .activity-detail-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .activity-detail-meta {
+            font-size: 14px;
+            color: #8E8E93;
             margin-bottom: 16px;
         }
         
-        .timeline-dot {
-            width: 12px;
-            height: 12px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            margin-right: 12px;
-            margin-top: 4px;
+        .activity-tools {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 20px 0;
         }
         
-        .timeline-content {
-            flex: 1;
+        .activity-tool {
+            padding: 16px 8px;
+            background: #f8f8f8;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
         }
         
-        .timeline-title {
+        .activity-tool-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        /* 数据表格 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-table th {
+            font-weight: 500;
+            color: #8E8E93;
+        }
+        
+        .export-btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h3 {
+            font-size: 16px;
             font-weight: 500;
             margin-bottom: 4px;
         }
         
-        .timeline-duration {
+        .setting-desc {
             font-size: 14px;
-            color: var(--gray-2);
+            color: #8E8E93;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
         }
         
-        /* 提问管理 */
-        .question-management {
-            margin-top: 20px;
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
         
-        .question-item-manage {
-            padding: 12px;
-            background-color: var(--gray-1);
-            border-radius: var(--border-radius);
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .question-actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .action-btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 16px;
-            font-size: 12px;
+        .toggle-slider {
+            position: absolute;
             cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #e0e0e0;
+            transition: .4s;
+            border-radius: 24px;
         }
         
-        .action-btn.primary {
-            background-color: var(--primary);
-            color: white;
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
         }
         
-        .action-btn.success {
-            background-color: var(--success);
-            color: white;
+        input:checked + .toggle-slider {
+            background-color: #007AFF;
         }
         
-        .question-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--gray-2);
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            min-height: 100px;
-            resize: vertical;
-            margin-bottom: 12px;
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+                /* 扫码签到区域 */
+        .scan-area {
+            text-align: center;
+            margin: 20px 0;
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 12px;
         }
         
-        /* 匿名选项 */
-        .anonymous-option {
-            display: flex;
-            align-items: center;
+        .scan-icon {
+            font-size: 48px;
             margin-bottom: 16px;
         }
         
-        .anonymous-option input {
-            margin-right: 8px;
+        .scan-btn {
+            background: #007AFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 16px;
         }
         
-        /* 环节控制 */
-        .phase-controls {
-            display: flex;
-            justify-content: space-between;
+        .recent-scans {
             margin-top: 20px;
         }
         
-        .phase-btn {
-            padding: 10px 16px;
-            background-color: var(--gray-1);
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-        }
-        
-        .phase-btn.active {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        /* 时间设置 */
-        .time-setting {
+        .scan-item {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
-            margin: 16px 0;
-        }
-        
-        .time-input {
-            width: 60px;
-            padding: 8px;
-            border: 1px solid var(--gray-2);
-            border-radius: var(--border-radius);
-            text-align: center;
-        }
-        
-        /* 交互状态指示器 */
-        .sync-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--success);
-        }
-        
-        .sync-indicator.pending {
-            background-color: var(--warning);
-        }
-        
-        /* 演示控制面板 */
-        .demo-controls {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: white;
             padding: 12px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 100;
+            border-bottom: 1px solid #f0f0f0;
         }
         
-        .demo-controls h3 {
-            margin-bottom: 8px;
-            font-size: 14px;
+        .scan-item:last-child {
+            border-bottom: none;
         }
         
-        .demo-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        
-        .demo-btn {
-            padding: 6px 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .scan-time {
             font-size: 12px;
-        }
-        
-        .demo-btn.app {
-            background-color: var(--primary);
-        }
-        
-        .demo-btn.mini {
-            background-color: var(--success);
+            color: #8E8E93;
         }
     </style>
 </head>
 <body>
-    <div class="device-container">
-        <!-- 主办人App设备 -->
-        <div class="device">
-            <div class="device-header">
-                <div class="device-title">主办人App</div>
-                <div class="device-subtitle">活动控制中心</div>
-            </div>
-            
-            <!-- 主办人App视图 -->
-            <div class="view active" id="app-create-view">
-                <div class="app-header">
-                    <h1>创建活动</h1>
+    <div class="app-container">
+        <!-- 顶部导航 -->
+        <div class="app-header">
+            <h1 id="page-title">活动助手</h1>
+            <div class="current-activity" id="current-activity">设计思维工作坊</div>
+        </div>
+        
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 工具页面 -->
+            <div class="page active" id="tools-page">
+                <div class="current-activity-card">
+                    <h3>当前活动</h3>
+                    <h2>设计思维工作坊</h2>
+                    <div class="activity-progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>已进行: 60%</div>
+                        <div>剩余: 40分钟</div>
+                    </div>
                 </div>
                 
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title" style="text-align: center;">即兴活动工具箱</div>
-                        <div class="task-content" style="text-align: center; margin: 20px 0;">
-                            一站式解决小型活动的全流程需求
+                <div class="tool-category">
+                    <h3 class="category-title">活动管理</h3>
+                    <div class="tools-grid">
+                        <div class="tool-card" data-tool="createEvent">
+                            <span class="tool-icon">📅</span>
+                            <div class="tool-name">新建活动</div>
                         </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label">活动名称</label>
-                            <input type="text" class="input-field" placeholder="例如：设计思维工作坊" id="app-activity-name" value="设计思维工作坊">
+                        <div class="tool-card" data-tool="checkIn">
+                            <span class="tool-icon">✅</span>
+                            <div class="tool-name">签到管理</div>
                         </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label">活动类型</label>
-                            <select class="input-field" id="app-activity-type">
-                                <option value="improv">即兴戏剧</option>
-                                <option value="workshop" selected>工作坊</option>
-                                <option value="training">培训</option>
-                            </select>
+                    </div>
+                </div>
+                
+                <div class="tool-category">
+                    <h3 class="category-title">互动工具</h3>
+                    <div class="tools-grid">
+                        <div class="tool-card" data-tool="randomDraw">
+                            <span class="tool-icon">🎲</span>
+                            <div class="tool-name">随机抽签</div>
                         </div>
-                        
-                        <button class="btn btn-primary" id="app-create-activity-btn">创建活动</button>
+                        <div class="tool-card" data-tool="voting">
+                            <span class="tool-icon">🗳️</span>
+                            <div class="tool-name">投票表决</div>
+                        </div>
+                        <div class="tool-card" data-tool="questionWall">
+                            <span class="tool-icon">❓</span>
+                            <div class="tool-name">提问墙</div>
+                        </div>
+                        <div class="tool-card" data-tool="questionWall">
+                            <span class="tool-icon">💬</span>
+                            <div class="tool-name">反馈</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tool-category">
+                    <h3 class="category-title">实用工具</h3>
+                    <div class="tools-grid">
+                        <div class="tool-card" data-tool="timer">
+                            <span class="tool-icon">⏱️</span>
+                            <div class="tool-name">倒计时器</div>
+                        </div>
+                        <div class="tool-card" data-tool="soundEffects">
+                            <span class="tool-icon">🔊</span>
+                            <div class="tool-name">背景音效</div>
+                        </div>
+                        <div class="tool-card" data-tool="fileShare">
+                            <span class="tool-icon">📁</span>
+                            <div class="tool-name">资料分享</div>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- 主办人活动主页 -->
-            <div class="view" id="app-host-view">
-                <div class="app-header">
-                    <h1 id="app-host-activity-name">🎭 设计思维工作坊</h1>
-                    <div class="status">⏰ 当前：分组讨论 (08:00)</div>
-                </div>
-                
-                <div class="main-content">
-                    <div class="task-area">
-                        <div class="task-title">当前任务</div>
-                        <div class="task-content">讨论用户痛点并提出解决方案</div>
+            <!-- 活动页面 -->
+            <div class="page" id="activities-page">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3>我的活动</h3>
+                        <button class="secondary" id="create-activity-btn" style="width: auto;">新建活动</button>
                     </div>
                     
-                    <div class="card">
-                        <div class="task-title">分组情况</div>
-                        <div class="group-display">
-                            <div class="group">
-                                <div class="group-name">A组</div>
-                                <div>3人</div>
+                    <div class="activity-list">
+                        <div class="activity-item" data-activity="design">
+                            <div class="activity-info">
+                                <h3>设计思维工作坊</h3>
+                                <div class="activity-meta">今天 14:00-16:00 · 8/10人已签到</div>
                             </div>
-                            <div class="group">
-                                <div class="group-name">B组</div>
-                                <div>3人</div>
+                            <div class="activity-status active">进行中</div>
+                        </div>
+                        <div class="activity-item" data-activity="team">
+                            <div class="activity-info">
+                                <h3>团队建设活动</h3>
+                                <div class="activity-meta">今天 18:00-20:00 · 0/12人已签到</div>
                             </div>
-                            <div class="group">
-                                <div class="group-name">C组</div>
-                                <div>4人</div>
+                            <div class="activity-status">即将开始</div>
+                        </div>
+                        <div class="activity-item" data-activity="product">
+                            <div class="activity-info">
+                                <h3>产品发布会</h3>
+                                <div class="activity-meta">2023年12月15日 · 已完成</div>
+                            </div>
+                            <div class="activity-status">已完成</div>
+                        </div>
+                        <div class="activity-item" data-activity="annual">
+                            <div class="activity-info">
+                                <h3>年度总结会议</h3>
+                                <div class="activity-meta">2023年12月10日 · 已完成</div>
+                            </div>
+                            <div class="activity-status">已完成</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据页面 -->
+            <div class="page" id="data-page">
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">活动参与数据</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>活动名称</th>
+                                <th>扫码</th>
+                                <th>报名</th>
+                                <th>签到</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>设计思维工作坊</td>
+                                <td>15</td>
+                                <td>10</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>团队建设活动</td>
+                                <td>18</td>
+                                <td>12</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>产品发布会</td>
+                                <td>25</td>
+                                <td>20</td>
+                                <td>18</td>
+                            </tr>
+                            <tr>
+                                <td>年度总结会议</td>
+                                <td>22</td>
+                                <td>18</td>
+                                <td>16</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="export-btn">导出数据</button>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">活动统计概览</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">活动总数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">60</div>
+                            <div class="stat-label">总参与人数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">80</div>
+                            <div class="stat-label">总扫码数</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">70%</div>
+                            <div class="stat-label">平均签到率</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 个人页面 -->
+            <div class="page" id="profile-page">
+                <div class="card">
+                    <div style="text-align: center; padding: 20px 0;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #007AFF; color: white; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 600; margin: 0 auto 16px;">王</div>
+                        <div style="font-size: 20px; font-weight: 600; margin-bottom: 8px;">王老师</div>
+                        <div style="font-size: 14px; color: #8E8E93;">wang@example.com</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">账户设置</h3>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>个人信息</h3>
+                                <div class="setting-desc">修改姓名、头像等信息</div>
+                            </div>
+                            <div>›</div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>通知设置</h3>
+                                <div class="setting-desc">管理推送通知和邮件提醒</div>
+                            </div>
+                            <div>›</div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>隐私设置</h3>
+                                <div class="setting-desc">控制数据共享和隐私选项</div>
+                            </div>
+                            <div>›</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">应用设置</h3>
+                    <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>自动保存</h3>
+                                <div class="setting-desc">自动保存活动数据和设置</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>离线模式</h3>
+                                <div class="setting-desc">无网络时仍可使用基本功能</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <h3>深色模式</h3>
+                                <div class="setting-desc">切换为深色界面主题</div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                </div>
+                
+                <div class="card">
+                    <button class="secondary" style="width: 100%;">帮助与反馈</button>
+                    <button class="secondary" style="width: 100%; margin-top: 12px;">关于应用</button>
+                    <button class="secondary" style="width: 100%; margin-top: 12px; color: #FF3B30;">退出登录</button>
+                </div>
+            </div>
+            
+            <!-- 新建活动工具 -->
+            <div class="tool-detail" id="createEventDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">新建活动</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventName">活动名称</label>
+                    <input type="text" id="eventName" placeholder="输入活动名称">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDate">活动日期</label>
+                    <input type="date" id="eventDate">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventTime">活动时间</label>
+                    <input type="time" id="eventTime">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventLocation">活动地点</label>
+                    <input type="text" id="eventLocation" placeholder="输入活动地点">
+                </div>
+                
+                <div class="form-group">
+                    <label for="eventDescription">活动描述</label>
+                    <textarea id="eventDescription" placeholder="输入活动描述" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="participantList">参与者名单 (每行一个名字)</label>
+                    <textarea id="participantList" rows="5" placeholder="张三&#10;李四&#10;王五"></textarea>
+                </div>
+                
+                <button id="generateQR">创建活动并生成二维码</button>
+                
+                <div class="qr-code" id="qrCodeContainer" style="display: none;">
+                    <div class="qr-placeholder">活动二维码将在这里显示</div>
+                    <p>参与者扫描此二维码加入活动</p>
+                    <div class="btn-group">
+                        <button class="secondary">保存二维码</button>
+                        <button>分享活动</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 签到管理工具 -->
+            <div class="tool-detail" id="checkInDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">签到管理</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>选择签到方式</label>
+                    <div class="checkin-options">
+                        <div class="checkin-option active" id="existingActivityCheckin">
+                            <div style="font-size: 18px; margin-bottom: 8px;">📅</div>
+                            <div>已有活动签到</div>
+                        </div>
+                        <div class="checkin-option" id="temporaryCheckin">
+                            <div style="font-size: 18px; margin-bottom: 8px;">⏱️</div>
+                            <div>临时签到</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 已有活动签到 -->
+                <div id="existingActivityCheckinContent">
+                    <div class="form-group">
+                        <label for="selectActivity">选择活动</label>
+                        <select id="selectActivity">
+                            <option value="design">设计思维工作坊</option>
+                            <option value="team">团队建设活动</option>
+                        </select>
+                    </div>
+                    
+                    <div class="scan-area">
+                        <div class="scan-icon">📱</div>
+                        <h3>扫码签到</h3>
+                        <p>请扫描参与者报名时生成的二维码</p>
+                        <button class="scan-btn" id="startScan">开始扫描</button>
+                        
+                        <div class="recent-scans" id="recentScans" style="display: none;">
+                            <h4 style="margin-bottom: 12px;">最近扫描记录</h4>
+                            <div class="scan-list" id="scanList">
+                                <!-- 扫描记录将在这里显示 -->
                             </div>
                         </div>
                     </div>
                     
-                    <div class="card">
-                        <div class="task-title">活动进度控制</div>
-                        <div class="progress-bar">
-                            <div class="progress" id="activity-progress" style="width: 60%"></div>
-                        </div>
-                        <div class="phase-controls">
-                            <button class="phase-btn" data-phase="0">签到</button>
-                            <button class="phase-btn active" data-phase="1">分组</button>
-                            <button class="phase-btn" data-phase="2">讨论</button>
-                            <button class="phase-btn" data-phase="3">展示</button>
-                            <button class="phase-btn" data-phase="4">结束</button>
-                        </div>
-                        <div style="margin-top: 16px;">
-                            <button class="btn btn-outline" id="prev-phase">上一环节</button>
-                            <button class="btn btn-primary" id="next-phase">下一环节</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="toolbar">
-                    <button class="tool-btn" data-app-view="app-checkin-view">
-                        <span class="tool-icon">📍</span>
-                        <span>签到</span>
-                    </button>
-                    <button class="tool-btn active" data-app-view="app-grouping-view">
-                        <span class="tool-icon">👥</span>
-                        <span>分组</span>
-                    </button>
-                    <button class="tool-btn" data-app-view="app-question-view">
-                        <span class="tool-icon">🎲</span>
-                        <span>抽题</span>
-                    </button>
-                    <button class="tool-btn" data-app-view="app-timer-view">
-                        <span class="tool-icon">⏰</span>
-                        <span>计时</span>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- 主办人签到页面 -->
-            <div class="view" id="app-checkin-view">
-                <div class="app-header">
-                    <button class="back-btn" data-app-view="app-host-view">←</button>
-                    <h1>签到 (8/10)</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title">邀请参与者</div>
-                        <div class="qr-code">
-                            [二维码]
-                        </div>
-                        <div class="activity-code">X8D3K2</div>
-                        <div style="text-align: center; margin: 20px 0;">
-                            <button class="btn btn-outline" style="width: auto; margin: 0 8px;">复制链接</button>
-                            <button class="btn btn-outline" style="width: auto; margin: 0 8px;">分享</button>
+                    <div class="form-group">
+                        <label>签到统计</label>
+                        <div style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
+                            <p>已签到: <strong id="checkedInCount">8</strong> / <strong id="totalParticipants">10</strong> 人</p>
+                            <div style="height: 6px; background: #e0e0e0; border-radius: 3px; margin-top: 8px;">
+                                <div id="checkinProgress" style="height: 100%; width: 80%; background: #34C759; border-radius: 3px;"></div>
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="card">
-                        <div class="task-title">已签到人员</div>
-                        <div class="attendee-list">
-                            <div class="attendee checked">张三</div>
-                            <div class="attendee checked">李四</div>
-                            <div class="attendee checked">王五</div>
-                            <div class="attendee">赵六</div>
-                            <div class="attendee checked">钱七</div>
-                            <div class="attendee checked">孙八</div>
-                            <div class="attendee checked">周九</div>
-                            <div class="attendee checked">吴十</div>
+                    <div class="form-group">
+                        <label>参与者名单</label>
+                        <div class="participant-list" id="participantCheckinList">
+                            <div class="participant-item">
+                                <div class="participant-name">张三</div>
+                                <div class="participant-status checked"></div>
+                            </div>
+                            <div class="participant-item">
+                                <div class="participant-name">李四</div>
+                                <div class="participant-status checked"></div>
+                            </div>
+                            <div class="participant-item">
+                                <div class="participant-name">王五</div>
+                                <div class="participant-status checked"></div>
+                            </div>
+                            <div class="participant-item">
+                                <div class="participant-name">赵六</div>
+                                <div class="participant-status"></div>
+                            </div>
+                            <div class="participant-item">
+                                <div class="participant-name">钱七</div>
+                                <div class="participant-status checked"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- 主办人分组页面 -->
-            <div class="view" id="app-grouping-view">
-                <div class="app-header">
-                    <button class="back-btn" data-app-view="app-host-view">←</button>
-                    <h1>分组管理</h1>
-                </div>
                 
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title">分组方式</div>
-                        <div style="display: flex; gap: 8px; margin-top: 12px;">
-                            <button class="btn btn-outline" style="width: auto; flex: 1;">随机分组</button>
-                            <button class="btn btn-outline" style="width: auto; flex: 1;">按特质</button>
-                            <button class="btn btn-primary" style="width: auto; flex: 1;">手动调整</button>
-                        </div>
+                <!-- 临时签到 -->
+                <div id="temporaryCheckinContent" style="display: none;">
+                    <div class="form-group">
+                        <label for="tempEventName">活动名称</label>
+                        <input type="text" id="tempEventName" placeholder="输入临时活动名称">
                     </div>
                     
-                    <div class="card">
-                        <div class="task-title">当前分组</div>
-                        <div class="group-management">
-                            <div class="member-list">
-                                <div class="member">
-                                    <span>A组 (3人)</span>
-                                    <span>张三, 李四, 王五</span>
-                                </div>
-                                <div class="member">
-                                    <span>B组 (3人)</span>
-                                    <span>赵六, 钱七, 孙八</span>
-                                </div>
-                                <div class="member">
-                                    <span>C组 (2人)</span>
-                                    <span>周九, 吴十</span>
-                                </div>
+                    <div class="scan-area">
+                        <div class="scan-icon">📱</div>
+                        <h3>扫码签到</h3>
+                        <p>请扫描参与者二维码</p>
+                        <button class="scan-btn" id="startTempScan">开始扫描</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>签到统计</label>
+                        <div style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
+                            <p>已签到: <strong id="tempCheckedInCount">0</strong> / <strong id="tempTotalParticipants">0</strong> 人</p>
+                            <div style="height: 6px; background: #e0e0e0; border-radius: 3px; margin-top: 8px;">
+                                <div id="tempCheckinProgress" style="height: 100%; width: 0%; background: #34C759; border-radius: 3px;"></div>
                             </div>
                         </div>
-                        <button class="btn btn-primary" id="apply-grouping">应用分组</button>
+                    </div>
+                </div>
+                
+                <button class="secondary">导出签到名单</button>
+            </div>
+            
+            <!-- 活动详情页面 -->
+            <div class="tool-detail" id="activityDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title" id="activityDetailTitle">活动详情</h2>
+                </div>
+                
+                <div class="activity-detail-header">
+                    <div class="activity-detail-title" id="detailActivityName">设计思维工作坊</div>
+                    <div class="activity-detail-meta" id="detailActivityMeta">今天 14:00-16:00 · 创新中心</div>
+                </div>
+                
+                <div class="qr-code">
+                    <div class="qr-placeholder">活动二维码</div>
+                    <p>参与者扫描此二维码加入活动</p>
+                </div>
+                
+                <div class="activity-tools">
+                    <div class="activity-tool" data-tool="checkIn">
+                        <div class="activity-tool-icon">✅</div>
+                        <div>签到</div>
+                    </div>
+                    <div class="activity-tool" data-tool="randomDraw">
+                        <div class="activity-tool-icon">🎲</div>
+                        <div>抽签</div>
+                    </div>
+                    <div class="activity-tool" data-tool="voting">
+                        <div class="activity-tool-icon">🗳️</div>
+                        <div>投票</div>
+                    </div>
+                    <div class="activity-tool" data-tool="timer">
+                        <div class="activity-tool-icon">⏱️</div>
+                        <div>计时</div>
+                    </div>
+                    <div class="activity-tool" data-tool="questionWall">
+                        <div class="activity-tool-icon">❓</div>
+                        <div>提问</div>
+                    </div>
+                    <div class="activity-tool" data-tool="questionWall">
+                        <div class="activity-tool-icon">💬</div>
+                        <div>反馈</div>
+                    </div>
+                    <div class="activity-tool" data-tool="fileShare">
+                        <div class="activity-tool-icon">📁</div>
+                        <div>资料</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>活动统计</label>
+                    <div style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
+                        <p>扫码人数: <strong>15</strong></p>
+                        <p>报名人数: <strong>10</strong></p>
+                        <p>已签到: <strong>8</strong></p>
+                        <div style="height: 6px; background: #e0e0e0; border-radius: 3px; margin-top: 8px;">
+                            <div style="height: 100%; width: 80%; background: #34C759; border-radius: 3px;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="secondary">编辑活动</button>
+            </div>
+            
+                        <!-- 随机抽签工具 -->
+            <div class="tool-detail" id="randomDrawDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">随机抽签</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="drawType">抽签类型</label>
+                    <select id="drawType">
+                        <option value="attendee">抽取参与者</option>
+                        <option value="prize">抽奖</option>
+                        <option value="question">抽题目</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="participantList">参与者名单 (每行一个名字)</label>
+                    <textarea id="participantList" rows="5" placeholder="张三&#10;李四&#10;王五"></textarea>
+                </div>
+                
+                <div id="drawResult" style="text-align: center; margin: 20px 0; font-size: 24px; min-height: 40px;">
+                    <!-- 抽签结果将显示在这里 -->
+                </div>
+                
+                <div class="btn-group">
+                    <button id="startDraw">开始抽签</button>
+                    <button class="secondary" id="resetDraw">重置</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>已抽取名单</label>
+                    <div class="participant-list" id="drawnList">
+                        <!-- 已抽取名单将显示在这里 -->
                     </div>
                 </div>
             </div>
             
-            <!-- 主办人抽题页面 -->
-            <div class="view" id="app-question-view">
-                <div class="app-header">
-                    <button class="back-btn" data-app-view="app-host-view">←</button>
-                    <h1>题目抽取</h1>
+            <!-- 倒计时器工具 -->
+            <div class="tool-detail" id="timerDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">倒计时器</h2>
                 </div>
                 
-                <div class="main-content">
-                    <div class="card">
-                        <div class="input-group">
-                            <label class="input-label">题目库</label>
-                            <select class="input-field" id="question-category">
-                                <option>破冰游戏</option>
-                                <option>即兴表演</option>
-                                <option>团队协作</option>
-                                <option>创意激发</option>
-                            </select>
-                        </div>
-                        
-                        <div class="input-group">
-                            <label class="input-label">题目时间设置</label>
-                            <div class="time-setting">
-                                <input type="number" class="time-input" id="question-time" value="5" min="1" max="60">
-                                <span>分钟</span>
-                            </div>
-                        </div>
-                        
-                        <div class="question-list">
-                            <div class="question-item">
-                                <div>
-                                    <div>两个真相一个谎言</div>
-                                    <div class="question-duration">建议时间: 5分钟</div>
-                                </div>
-                                <button class="action-btn primary use-question" data-time="5">使用</button>
-                            </div>
-                            <div class="question-item">
-                                <div>
-                                    <div>人形雕塑</div>
-                                    <div class="question-duration">建议时间: 8分钟</div>
-                                </div>
-                                <button class="action-btn primary use-question" data-time="8">使用</button>
-                            </div>
-                            <div class="question-item">
-                                <div>
-                                    <div>镜像模仿</div>
-                                    <div class="question-duration">建议时间: 3分钟</div>
-                                </div>
-                                <button class="action-btn primary use-question" data-time="3">使用</button>
-                            </div>
-                        </div>
-                        
-                        <button class="btn btn-primary" id="draw-question">随机抽题</button>
-                        <button class="btn btn-outline">自定义题目</button>
+                <div class="timer-display" id="app-timer">05:00</div>
+                
+                <div class="form-group">
+                    <label for="timerDuration">设置时长 (分钟)</label>
+                    <input type="number" id="timerDuration" value="5" min="1" max="60">
+                </div>
+                
+                <div style="display: flex; gap: 8px; margin: 20px 0;">
+                    <button class="secondary timer-preset" data-time="1" style="flex: 1;">1分钟</button>
+                    <button class="secondary timer-preset" data-time="3" style="flex: 1;">3分钟</button>
+                    <button class="timer-preset" data-time="5" style="flex: 1;">5分钟</button>
+                    <button class="secondary timer-preset" data-time="10" style="flex: 1;">10分钟</button>
+                </div>
+                
+                <div class="timer-controls">
+                    <button id="start-timer" style="width: auto;">开始计时</button>
+                    <button class="secondary" id="pause-timer" style="width: auto;">暂停</button>
+                    <button class="secondary" id="reset-timer" style="width: auto;">重置</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>计时器主题</label>
+                    <div style="display: flex; gap: 8px; margin: 12px 0;">
+                        <button class="secondary theme-btn" data-theme="tension" style="flex: 1;">紧张</button>
+                        <button class="secondary theme-btn active" data-theme="relax" style="flex: 1;">轻松</button>
+                        <button class="secondary theme-btn" data-theme="simple" style="flex: 1;">简约</button>
                     </div>
                 </div>
             </div>
             
-            <!-- 主办人计时页面 -->
-            <div class="view" id="app-timer-view">
-                <div class="app-header">
-                    <button class="back-btn" data-app-view="app-host-view">←</button>
-                    <h1>计时器</h1>
+            <!-- 投票表决工具 -->
+            <div class="tool-detail" id="votingDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">投票表决</h2>
                 </div>
                 
-                <div class="main-content">
-                    <div class="card">
-                        <div class="timer-display" id="app-timer">05:00</div>
+                <div class="form-group">
+                    <label for="voteQuestion">投票问题</label>
+                    <input type="text" id="voteQuestion" placeholder="输入投票问题">
+                </div>
+                
+                <div class="form-group">
+                    <label>投票选项</label>
+                    <div id="voteOptions">
+                        <input type="text" placeholder="选项1" style="margin-bottom: 8px;">
+                        <input type="text" placeholder="选项2" style="margin-bottom: 8px;">
+                    </div>
+                    <button class="secondary" id="addOption" style="width: auto;">添加选项</button>
+                </div>
+                
+                <div class="form-group">
+                    <label>投票类型</label>
+                    <div>
+                        <input type="radio" id="singleVote" name="voteType" checked>
+                        <label for="singleVote" style="display: inline;">单选</label>
                         
-                        <div class="input-group">
-                            <label class="input-label">设置计时时间</label>
-                            <div class="time-setting">
-                                <input type="number" class="time-input" id="timer-minutes" value="5" min="1" max="60">
-                                <span>分钟</span>
-                                <input type="number" class="time-input" id="timer-seconds" value="0" min="0" max="59">
-                                <span>秒钟</span>
+                        <input type="radio" id="multiVote" name="voteType" style="margin-left: 15px;">
+                        <label for="multiVote" style="display: inline;">多选</label>
+                    </div>
+                </div>
+                
+                <button id="publishVote">发布投票</button>
+                
+                <div id="voteResults" style="margin-top: 20px; display: none;">
+                    <h3>投票结果</h3>
+                    <div class="participant-list" id="voteResultList">
+                        <!-- 投票结果将显示在这里 -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 背景音效工具 -->
+            <div class="tool-detail" id="soundEffectsDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">背景音效</h2>
+                </div>
+                
+                <div class="sound-buttons">
+                    <div class="sound-btn" data-sound="applause">
+                        <div style="font-size: 24px;">👏</div>
+                        <div>掌声</div>
+                    </div>
+                    <div class="sound-btn" data-sound="bell">
+                        <div style="font-size: 24px;">🔔</div>
+                        <div>提示音</div>
+                    </div>
+                    <div class="sound-btn" data-sound="drumroll">
+                        <div style="font-size: 24px;">🥁</div>
+                        <div>鼓声</div>
+                    </div>
+                    <div class="sound-btn" data-sound="cheer">
+                        <div style="font-size: 24px;">🎉</div>
+                        <div>欢呼</div>
+                    </div>
+                    <div class="sound-btn" data-sound="countdown">
+                        <div style="font-size: 24px;">⏰</div>
+                        <div>倒计时</div>
+                    </div>
+                    <div class="sound-btn" data-sound="gong">
+                        <div style="font-size: 24px;">🥁</div>
+                        <div>锣声</div>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label for="volumeControl">音量控制</label>
+                    <input type="range" id="volumeControl" min="0" max="100" value="50">
+                </div>
+                
+                <div class="form-group">
+                    <label>音效设置</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span>自动循环播放</span>
+                        <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e0e0e0; transition: .4s; border-radius: 24px;"></span>
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <span>播放后自动停止</span>
+                        <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #007AFF; transition: .4s; border-radius: 24px;"></span>
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(20px);"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 提问墙工具 -->
+            <div class="tool-detail" id="questionWallDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">提问墙</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label>问题审核</label>
+                    <div class="question-list" id="pendingQuestions">
+                        <div class="question-item">
+                            <p><strong>问题1:</strong> 这个活动的主题是什么？</p>
+                            <div style="margin-top: 8px;">
+                                <button class="approve-question" style="padding: 4px 8px; font-size: 12px;">通过</button>
+                                <button class="secondary reject-question" style="padding: 4px 8px; font-size: 12px;">驳回</button>
                             </div>
                         </div>
-                        
-                        <div style="display: flex; gap: 8px; margin: 20px 0;">
-                            <button class="btn btn-outline timer-preset" data-time="1" style="flex: 1;">1分钟</button>
-                            <button class="btn btn-outline timer-preset" data-time="3" style="flex: 1;">3分钟</button>
-                            <button class="btn btn-primary timer-preset" data-time="5" style="flex: 1;">5分钟</button>
-                            <button class="btn btn-outline timer-preset" data-time="10" style="flex: 1;">10分钟</button>
+                        <div class="question-item">
+                            <p><strong>问题2:</strong> 下一环节什么时候开始？</p>
+                            <div style="margin-top: 8px;">
+                                <button class="approve-question" style="padding: 4px 8px; font-size: 12px;">通过</button>
+                                <button class="secondary reject-question" style="padding: 4px 8px; font-size: 12px;">驳回</button>
+                            </div>
                         </div>
-                        
-                        <div class="task-title">氛围主题</div>
-                        <div style="display: flex; gap: 8px; margin: 12px 0;">
-                            <button class="btn btn-outline theme-btn" data-theme="tension" style="flex: 1;">紧张</button>
-                            <button class="btn btn-outline theme-btn active" data-theme="relax" style="flex: 1;">轻松</button>
-                            <button class="btn btn-outline theme-btn" data-theme="simple" style="flex: 1;">简约</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>已通过的问题</label>
+                    <div class="question-list" id="approvedQuestions">
+                        <div class="question-item">
+                            <p><strong>问题3:</strong> 如何参与小组讨论？</p>
+                            <div style="margin-top: 8px;">
+                                <button class="secondary" style="padding: 4px 8px; font-size: 12px;">已回答</button>
+                            </div>
                         </div>
-                        
-                        <div class="timer-controls">
-                            <button class="btn btn-primary" id="start-timer" style="width: auto;">开始计时</button>
-                            <button class="btn btn-outline" id="pause-timer" style="width: auto;">暂停</button>
-                            <button class="btn btn-outline" id="reset-timer" style="width: auto;">重置</button>
-                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="secondary" id="refreshQuestions">刷新问题</button>
+                    <button id="clearQuestions">清空问题</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>提问墙设置</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span>匿名提问</span>
+                        <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                            <input type="checkbox" checked style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #007AFF; transition: .4s; border-radius: 24px;"></span>
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; transform: translateX(20px);"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <span>自动审核</span>
+                        <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e0e0e0; transition: .4s; border-radius: 24px;"></span>
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 资料分享工具 -->
+            <div class="tool-detail" id="fileShareDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">资料分享</h2>
+                </div>
+                
+                <div class="file-upload" id="fileUploadArea">
+                    <div style="font-size: 36px; margin-bottom: 10px;">📁</div>
+                    <p>点击上传文件或拖拽文件到这里</p>
+                    <p style="font-size: 12px; color: #666; margin-top: 5px;">支持PDF, PPT, Word, Excel等格式</p>
+                </div>
+                
+                <div class="form-group" id="fileInfo" style="display: none;">
+                    <label>文件信息</label>
+                    <div style="background: #f8f8f8; padding: 15px; border-radius: 8px;">
+                        <p>文件名: <strong id="fileName">示例文件.pdf</strong></p>
+                        <p>文件大小: <strong id="fileSize">2.5 MB</strong></p>
+                        <p>上传时间: <strong id="fileTime">2023-12-20 14:30</strong></p>
+                    </div>
+                </div>
+                
+                <div class="qr-code" id="fileShareQR" style="display: none;">
+                    <div class="qr-placeholder">分享二维码</div>
+                    <p>参与者扫描此二维码下载资料</p>
+                    <div class="btn-group">
+                        <button class="secondary" id="copyLink">复制链接</button>
+                        <button id="shareFile">分享</button>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>分享设置</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span>设置有效期</span>
+                        <select style="width: auto;">
+                            <option>1小时</option>
+                            <option>24小时</option>
+                            <option selected>7天</option>
+                            <option>永久</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <span>下载次数限制</span>
+                        <input type="number" value="100" min="1" style="width: 80px;">
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <span>需要密码访问</span>
+                        <label style="position: relative; display: inline-block; width: 44px; height: 24px;">
+                            <input type="checkbox" style="opacity: 0; width: 0; height: 0;">
+                            <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e0e0e0; transition: .4s; border-radius: 24px;"></span>
+                            <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- 参与者小程序设备 -->
-        <div class="device">
-            <div class="device-header">
-                <div class="device-title">参与者小程序</div>
-                <div class="device-subtitle">轻量互动工具</div>
-            </div>
-            
-            <!-- 参与者加入页面 -->
-            <div class="view active" id="mini-join-view">
-                <div class="mini-program-header">
-                    <button class="back-btn" style="visibility: hidden;">←</button>
-                    <h1>加入活动</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title" style="text-align: center;">扫码加入活动</div>
-                        <div class="qr-code">
-                            [扫码区域]
-                        </div>
-                        <div class="task-content" style="text-align: center; margin: 20px 0;">
-                            或输入6位活动码
-                        </div>
-                        
-                        <div class="activity-code-input" style="display: flex; justify-content: center; gap: 8px; margin: 20px 0;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                            <input type="text" maxlength="1" class="input-field" style="width: 40px; text-align: center; padding: 12px;">
-                        </div>
-                        
-                        <button class="btn btn-primary" id="mini-join-btn">加入活动</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 参与者活动主页 -->
-            <div class="view" id="mini-activity-view">
-                <div class="mini-program-header">
-                    <button class="back-btn" data-mini-view="mini-join-view">←</button>
-                    <h1>设计思维工作坊</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title">当前环节</div>
-                        <div class="task-content" style="text-align: center; margin: 20px 0;">
-                            <div style="font-size: 18px; color: var(--primary); margin-bottom: 10px;" id="mini-current-phase">分组讨论</div>
-                            <div>剩余时间: <span style="color: var(--warning);" id="mini-time-remaining">04:32</span></div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="task-title">您的分组</div>
-                        <div class="task-content" style="text-align: center; margin: 20px 0;">
-                            <div style="font-size: 18px; color: var(--primary); margin-bottom: 10px;">B组</div>
-                            <div>同组成员: 赵六, 钱七, 孙八</div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="task-title">当前任务</div>
-                        <div class="task-content" id="mini-current-task">
-                            讨论用户痛点并提出解决方案，准备5分钟后的展示环节。
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="toolbar">
-                    <button class="tool-btn" data-mini-view="mini-group-view">
-                        <span class="tool-icon">👥</span>
-                        <span>分组</span>
-                    </button>
-                    <button class="tool-btn" data-mini-view="mini-question-view">
-                        <span class="tool-icon">📋</span>
-                        <span>任务</span>
-                    </button>
-                    <button class="tool-btn" data-mini-view="mini-qa-view">
-                        <span class="tool-icon">❓</span>
-                        <span>提问</span>
-                    </button>
-                    <button class="tool-btn" data-mini-view="mini-timer-view">
-                        <span class="tool-icon">⏰</span>
-                        <span>计时</span>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- 参与者分组页面 -->
-            <div class="view" id="mini-group-view">
-                <div class="mini-program-header">
-                    <button class="back-btn" data-mini-view="mini-activity-view">←</button>
-                    <h1>分组信息</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title">全部分组情况</div>
-                        <div class="group-display">
-                            <div class="group">
-                                <div class="group-name">A组</div>
-                                <div>张三, 李四, 王五</div>
-                            </div>
-                            <div class="group">
-                                <div class="group-name">B组</div>
-                                <div>赵六, 钱七, 孙八</div>
-                            </div>
-                            <div class="group">
-                                <div class="group-name">C组</div>
-                                <div>周九, 吴十</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 参与者任务页面 -->
-            <div class="view" id="mini-question-view">
-                <div class="mini-program-header">
-                    <button class="back-btn" data-mini-view="mini-activity-view">←</button>
-                    <h1>当前任务</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="task-title">讨论题目</div>
-                        <div class="task-content">
-                            <div style="font-size: 18px; margin-bottom: 15px;" id="mini-question-title">两个真相一个谎言</div>
-                            <div style="color: var(--gray-2);" id="mini-question-desc">
-                                规则：每人说出关于自己的两个真相和一个谎言，其他组员猜测哪个是谎言。
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="task-title">展示要求</div>
-                        <div class="task-content">
-                            每组有3分钟时间展示讨论结果，请确保每位成员都有发言机会。
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 参与者计时页面 -->
-            <div class="view" id="mini-timer-view">
-                <div class="mini-program-header">
-                    <button class="back-btn" data-mini-view="mini-activity-view">←</button>
-                    <h1>计时器</h1>
-                </div>
-                
-                <div class="main-content">
-                    <div class="card">
-                        <div class="timer-display" id="mini-timer">04:32</div>
-                        <div class="task-content" style="text-align: center;" id="mini-timer-desc">
-                            分组讨论剩余时间
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 演示控制面板 -->
-    <div class="demo-controls">
-        <h3>演示控制</h3>
-        <div class="demo-buttons">
-            <button class="demo-btn app" data-app-view="app-create-view">主办人: 创建活动</button>
-            <button class="demo-btn app" data-app-view="app-host-view">主办人: 活动主页</button>
-            <button class="demo-btn app" data-app-view="app-checkin-view">主办人: 签到管理</button>
-            <button class="demo-btn app" data-app-view="app-grouping-view">主办人: 分组管理</button>
-            <button class="demo-btn app" data-app-view="app-question-view">主办人: 题目抽取</button>
-            <button class="demo-btn app" data-app-view="app-timer-view">主办人: 计时器</button>
-            <button class="demo-btn mini" data-mini-view="mini-join-view">参与者: 加入活动</button>
-            <button class="demo-btn mini" data-mini-view="mini-activity-view">参与者: 活动主页</button>
-            <button class="demo-btn mini" data-mini-view="mini-group-view">参与者: 分组信息</button>
-            <button class="demo-btn mini" data-mini-view="mini-timer-view">参与者: 计时器</button>
+        <!-- 底部导航 -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-page="tools-page">
+                <span class="nav-icon">🛠️</span>
+                <span>工具</span>
+            </button>
+            <button class="nav-item" data-page="activities-page">
+                <span class="nav-icon">📅</span>
+                <span>活动</span>
+            </button>
+            <button class="nav-item" data-page="data-page">
+                <span class="nav-icon">📊</span>
+                <span>数据</span>
+            </button>
+            <button class="nav-item" data-page="profile-page">
+                <span class="nav-icon">👤</span>
+                <span>我的</span>
+            </button>
         </div>
     </div>
 
     <script>
         // 页面切换功能
         document.addEventListener('DOMContentLoaded', function() {
-            // 活动状态
-            let currentPhase = 1; // 0:签到, 1:分组, 2:讨论, 3:展示, 4:结束
-            let timerInterval = null;
-            let timerSeconds = 300; // 5分钟
-            
-            // 主办人App页面切换
-            const appViews = document.querySelectorAll('[data-app-view]');
-            appViews.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetView = this.getAttribute('data-app-view');
-                    showAppView(targetView);
+            // 底部导航切换
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
                     
-                    // 更新工具栏激活状态
-                    if (this.classList.contains('tool-btn')) {
-                        document.querySelectorAll('.toolbar .tool-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
+                    // 更新导航状态
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 更新页面内容
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById(targetPage).classList.add('active');
+                    
+                    // 更新页面标题
+                    const pageTitles = {
+                        'tools-page': '活动助手',
+                        'activities-page': '我的活动',
+                        'data-page': '数据回顾',
+                        'profile-page': '个人设置'
+                    };
+                    document.getElementById('page-title').textContent = pageTitles[targetPage];
                 });
             });
             
-            // 参与者小程序页面切换
-            const miniViews = document.querySelectorAll('[data-mini-view]');
-            miniViews.forEach(button => {
-                button.addEventListener('click', function() {
-                    const targetView = this.getAttribute('data-mini-view');
-                    showMiniView(targetView);
-                    
-                    // 更新工具栏激活状态
-                    if (this.classList.contains('tool-btn')) {
-                        document.querySelectorAll('.mini-program .toolbar .tool-btn').forEach(btn => {
-                            btn.classList.remove('active');
-                        });
-                        this.classList.add('active');
-                    }
+            // 工具卡片点击事件
+            const toolCards = document.querySelectorAll('.tool-card');
+            toolCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const toolId = this.getAttribute('data-tool');
+                    showToolDetail(toolId);
                 });
             });
             
-            // 演示控制按钮
-            const demoButtons = document.querySelectorAll('.demo-btn');
-            demoButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.classList.contains('app')) {
-                        const targetView = this.getAttribute('data-app-view');
-                        showAppView(targetView);
+            // 活动项点击事件
+            const activityItems = document.querySelectorAll('.activity-item');
+            activityItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const activityId = this.getAttribute('data-activity');
+                    showActivityDetail(activityId);
+                });
+            });
+            
+            // 活动详情页工具点击事件
+            const activityTools = document.querySelectorAll('.activity-tool');
+            activityTools.forEach(tool => {
+                tool.addEventListener('click', function() {
+                    const toolId = this.getAttribute('data-tool');
+                    showToolDetail(toolId);
+                });
+            });
+            
+            // 返回按钮逻辑
+            const backButtons = document.querySelectorAll('.back-btn');
+            backButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 隐藏所有工具详情页面
+                    document.querySelectorAll('.tool-detail').forEach(detail => {
+                        detail.style.display = 'none';
+                    });
+                    
+                    // 显示工具页面
+                    document.querySelectorAll('.page').forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    document.getElementById('tools-page').classList.add('active');
+                    document.getElementById('page-title').textContent = '活动助手';
+                    
+                    // 更新导航状态
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    document.querySelector('.nav-item[data-page="tools-page"]').classList.add('active');
+                });
+            });
+            
+            // 新建活动按钮
+            document.getElementById('create-activity-btn').addEventListener('click', function() {
+                showToolDetail('createEvent');
+            });
+            
+            // 新建活动 - 生成二维码
+            document.getElementById('generateQR').addEventListener('click', function() {
+                document.getElementById('qrCodeContainer').style.display = 'block';
+            });
+            
+            // 签到方式选择
+            document.getElementById('existingActivityCheckin').addEventListener('click', function() {
+                document.getElementById('existingActivityCheckin').classList.add('active');
+                document.getElementById('temporaryCheckin').classList.remove('active');
+                document.getElementById('existingActivityCheckinContent').style.display = 'block';
+                document.getElementById('temporaryCheckinContent').style.display = 'none';
+
+                // 初始化参与者名单
+                initParticipantList();
+            });
+            
+            document.getElementById('temporaryCheckin').addEventListener('click', function() {
+                document.getElementById('temporaryCheckin').classList.add('active');
+                document.getElementById('existingActivityCheckin').classList.remove('active');
+                document.getElementById('temporaryCheckinContent').style.display = 'block';
+                document.getElementById('existingActivityCheckinContent').style.display = 'none';
+                
+                // 初始化临时签到统计
+                updateTempCheckinStats();
+            });
+            
+            // 导出数据按钮
+            document.querySelector('.export-btn').addEventListener('click', function() {
+                alert('数据导出成功！');
+            });
+
+            // 开始扫描按钮
+            document.getElementById('startScan').addEventListener('click', function() {
+                // 模拟扫码过程
+                simulateScanning();
+            });
+            
+            // 初始化参与者名单
+            function initParticipantList() {
+                const participantList = document.getElementById('participantCheckinList');
+                if (!participantList) {
+                    console.warn('参与者列表元素未找到');
+                    return;
+                }
+                
+                participantList.innerHTML = '';
+                
+                // 模拟参与者数据
+                const participants = [
+                    { name: '张三', checked: false },
+                    { name: '李四', checked: false },
+                    { name: '王五', checked: false },
+                    { name: '赵六', checked: false },
+                    { name: '钱七', checked: false }
+                ];
+                
+                participants.forEach(participant => {
+                    const participantItem = document.createElement('div');
+                    participantItem.className = 'participant-item';
+                    participantItem.innerHTML = `
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-status ${participant.checked ? 'checked' : ''}"></div>
+                    `;
+                    participantList.appendChild(participantItem);
+                });
+                
+                // 更新统计信息
+                updateCheckinStats();
+            }
+            
+            // 模拟扫码过程
+            function simulateScanning() {
+                const participantList = document.getElementById('participantCheckinList');
+                if (!participantList) {
+                    alert('参与者列表未找到，请先选择活动');
+                    return;
+                }
+                
+                const participants = participantList.querySelectorAll('.participant-item');
+                
+                // 找到第一个未签到的参与者
+                let foundUnchecked = false;
+                for (let i = 0; i < participants.length; i++) {
+                    const status = participants[i].querySelector('.participant-status');
+                    if (!status.classList.contains('checked')) {
+                        // 模拟扫码成功
+                        status.classList.add('checked');
+                        foundUnchecked = true;
+                        
+                        // 显示扫描记录
+                        const recentScans = document.getElementById('recentScans');
+                        const scanList = document.getElementById('scanList');
+                        
+                        if (recentScans) recentScans.style.display = 'block';
+                        
+                        if (scanList) {
+                            const scanItem = document.createElement('div');
+                            scanItem.className = 'scan-item';
+                            const now = new Date();
+                            const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                            scanItem.innerHTML = `
+                                <div>${participants[i].querySelector('.participant-name').textContent}</div>
+                                <div class="scan-time">${timeString}</div>
+                            `;
+                            scanList.appendChild(scanItem);
+                        }
+                        
+                        // 更新统计信息
+                        updateCheckinStats();
+                        
+                        break;
+                    }
+                }
+                
+                if (!foundUnchecked) {
+                    alert('所有参与者已签到完成！');
+                }
+            }
+            
+            // 更新签到统计信息
+            function updateCheckinStats() {
+                const participantList = document.getElementById('participantCheckinList');
+                if (!participantList) return;
+                
+                const participants = participantList.querySelectorAll('.participant-item');
+                const total = participants.length;
+                let checkedCount = 0;
+                
+                participants.forEach(participant => {
+                    if (participant.querySelector('.participant-status').classList.contains('checked')) {
+                        checkedCount++;
+                    }
+                });
+                
+                const checkedInCountEl = document.getElementById('checkedInCount');
+                const totalParticipantsEl = document.getElementById('totalParticipants');
+                const checkinProgressEl = document.getElementById('checkinProgress');
+                
+                if (checkedInCountEl) checkedInCountEl.textContent = checkedCount;
+                if (totalParticipantsEl) totalParticipantsEl.textContent = total;
+                
+                const progress = total > 0 ? (checkedCount / total) * 100 : 0;
+                if (checkinProgressEl) checkinProgressEl.style.width = `${progress}%`;
+            };
+            
+            // 更新临时签到统计信息
+            function updateTempCheckinStats() {
+                const tempCheckedInCountEl = document.getElementById('tempCheckedInCount');
+                const tempTotalParticipantsEl = document.getElementById('tempTotalParticipants');
+                const tempCheckinProgressEl = document.getElementById('tempCheckinProgress');
+                
+                if (tempCheckedInCountEl) tempCheckedInCountEl.textContent = '0';
+                if (tempTotalParticipantsEl) tempTotalParticipantsEl.textContent = '0';
+                if (tempCheckinProgressEl) tempCheckinProgressEl.style.width = '0%';
+            };
+            
+
+            // 随机抽签逻辑
+            document.getElementById('startDraw').addEventListener('click', function() {
+                const participants = document.getElementById('participantList').value.split('\n').filter(p => p.trim() !== '');
+                if (participants.length === 0) {
+                    alert('请先输入参与者名单');
+                    return;
+                }
+                
+                // 模拟抽签过程
+                const resultElement = document.getElementById('drawResult');
+                resultElement.textContent = '抽签中...';
+                
+                setTimeout(() => {
+                    const randomIndex = Math.floor(Math.random() * participants.length);
+                    const result = participants[randomIndex];
+                    resultElement.textContent = result;
+                    
+                    // 添加到已抽取名单
+                    const drawnList = document.getElementById('drawnList');
+                    const newItem = document.createElement('div');
+                    newItem.className = 'participant-item';
+                    newItem.innerHTML = `
+                        <div class="participant-name">${result}</div>
+                        <div class="participant-status checked"></div>
+                    `;
+                    drawnList.appendChild(newItem);
+                }, 1000);
+            });
+            
+            document.getElementById('resetDraw').addEventListener('click', function() {
+                document.getElementById('drawResult').textContent = '';
+                document.getElementById('drawnList').innerHTML = '';
+            });
+            
+            // 倒计时器逻辑
+            let timerInterval;
+            let timerSeconds = 5 * 60; // 默认5分钟
+            
+            document.getElementById('start-timer').addEventListener('click', function() {
+                const minutes = parseInt(document.getElementById('timerDuration').value);
+                if (isNaN(minutes) || minutes <= 0) {
+                    alert('请输入有效的分钟数');
+                    return;
+                }
+                
+                timerSeconds = minutes * 60;
+                updateTimerDisplay();
+                
+                if (timerInterval) clearInterval(timerInterval);
+                
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
                     } else {
-                        const targetView = this.getAttribute('data-mini-view');
-                        showMiniView(targetView);
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        alert('时间到！');
                     }
-                });
+                }, 1000);
             });
             
-            // 主办人创建活动
-            document.getElementById('app-create-activity-btn').addEventListener('click', function() {
-                const activityName = document.getElementById('app-activity-name').value || '设计思维工作坊';
-                document.getElementById('app-host-activity-name').textContent = '🎭 ' + activityName;
-                showAppView('app-host-view');
-            });
-            
-            // 参与者加入活动
-            document.getElementById('mini-join-btn').addEventListener('click', function() {
-                showMiniView('mini-activity-view');
-            });
-            
-            // 主办人应用分组
-            document.getElementById('apply-grouping').addEventListener('click', function() {
-                alert('分组已应用，已同步到所有参与者');
-            });
-            
-            // 主办人使用题目
-            document.querySelectorAll('.use-question').forEach(button => {
-                button.addEventListener('click', function() {
-                    const time = this.getAttribute('data-time');
-                    document.getElementById('question-time').value = time;
-                    alert(`已选择题目，设置时间为${time}分钟`);
-                    
-                    // 同步到参与者
-                    document.getElementById('mini-question-title').textContent = this.parentElement.querySelector('div > div').textContent;
-                    document.getElementById('mini-question-desc').textContent = '规则：每人说出关于自己的两个真相和一个谎言，其他组员猜测哪个是谎言。';
-                    
-                    // 设置计时器
-                    setTimer(time * 60);
-                    startTimer();
-                    
-                    // 切换到计时页面
-                    showAppView('app-timer-view');
-                });
-            });
-            
-            // 主办人随机抽题
-            document.getElementById('draw-question').addEventListener('click', function() {
-                const time = document.getElementById('question-time').value;
-                alert(`题目已抽取：两个真相一个谎言，设置时间为${time}分钟`);
-                
-                // 同步到参与者
-                document.getElementById('mini-question-title').textContent = '两个真相一个谎言';
-                document.getElementById('mini-question-desc').textContent = '规则：每人说出关于自己的两个真相和一个谎言，其他组员猜测哪个是谎言。';
-                
-                // 设置计时器
-                setTimer(time * 60);
-                startTimer();
-                
-                // 切换到计时页面
-                showAppView('app-timer-view');
-            });
-            
-            // 活动环节控制
-            document.querySelectorAll('.phase-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const phase = parseInt(this.getAttribute('data-phase'));
-                    setCurrentPhase(phase);
-                });
-            });
-            
-            // 上一环节
-            document.getElementById('prev-phase').addEventListener('click', function() {
-                if (currentPhase > 0) {
-                    setCurrentPhase(currentPhase - 1);
+            document.getElementById('pause-timer').addEventListener('click', function() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
                 }
             });
             
-            // 下一环节
-            document.getElementById('next-phase').addEventListener('click', function() {
-                if (currentPhase < 4) {
-                    setCurrentPhase(currentPhase + 1);
-                }
+            document.getElementById('reset-timer').addEventListener('click', function() {
+                if (timerInterval) clearInterval(timerInterval);
+                const minutes = parseInt(document.getElementById('timerDuration').value);
+                timerSeconds = minutes * 60;
+                updateTimerDisplay();
+                document.getElementById('pause-timer').textContent = '暂停';
             });
             
             // 计时器预设按钮
             document.querySelectorAll('.timer-preset').forEach(button => {
                 button.addEventListener('click', function() {
                     const time = parseInt(this.getAttribute('data-time'));
-                    document.getElementById('timer-minutes').value = time;
-                    document.getElementById('timer-seconds').value = 0;
+                    document.getElementById('timerDuration').value = time;
                     setTimer(time * 60);
                     updateTimerDisplay();
                 });
@@ -1187,130 +1797,255 @@
                         btn.classList.remove('active');
                     });
                     this.classList.add('active');
+                    
+                    // 根据主题更新计时器样式
+                    const theme = this.getAttribute('data-theme');
+                    const timerDisplay = document.getElementById('app-timer');
+                    timerDisplay.className = 'timer-display';
+                    if (theme === 'tension') {
+                        timerDisplay.style.color = '#FF3B30';
+                    } else if (theme === 'relax') {
+                        timerDisplay.style.color = '#34C759';
+                    } else {
+                        timerDisplay.style.color = '#333';
+                    }
                 });
             });
             
-            // 开始计时
-            document.getElementById('start-timer').addEventListener('click', function() {
-                const minutes = parseInt(document.getElementById('timer-minutes').value) || 0;
-                const seconds = parseInt(document.getElementById('timer-seconds').value) || 0;
-                setTimer(minutes * 60 + seconds);
-                startTimer();
-            });
-            
-            // 暂停计时
-            document.getElementById('pause-timer').addEventListener('click', function() {
-                if (timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                    this.textContent = '继续';
-                } else {
-                    startTimer();
-                    this.textContent = '暂停';
-                }
-            });
-            
-            // 重置计时
-            document.getElementById('reset-timer').addEventListener('click', function() {
-                const minutes = parseInt(document.getElementById('timer-minutes').value) || 0;
-                const seconds = parseInt(document.getElementById('timer-seconds').value) || 0;
-                setTimer(minutes * 60 + seconds);
-                updateTimerDisplay();
-                if (timerInterval) {
-                    clearInterval(timerInterval);
-                    timerInterval = null;
-                }
-                document.getElementById('pause-timer').textContent = '暂停';
-            });
-            
-            // 设置当前环节
-            function setCurrentPhase(phase) {
-                currentPhase = phase;
-                
-                // 更新环节按钮状态
-                document.querySelectorAll('.phase-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                document.querySelector(`.phase-btn[data-phase="${phase}"]`).classList.add('active');
-                
-                // 更新进度条
-                const progress = (phase / 4) * 100;
-                document.getElementById('activity-progress').style.width = `${progress}%`;
-                
-                // 更新当前环节名称
-                const phaseNames = ['签到环节', '分组环节', '讨论环节', '展示环节', '结束环节'];
-                document.querySelector('.app-header .status').textContent = `⏰ 当前：${phaseNames[phase]} (08:00)`;
-                document.getElementById('mini-current-phase').textContent = phaseNames[phase];
-                
-                // 同步到参与者
-                if (phase === 2) { // 讨论环节
-                    document.getElementById('mini-current-task').textContent = '讨论用户痛点并提出解决方案，准备5分钟后的展示环节。';
-                } else if (phase === 3) { // 展示环节
-                    document.getElementById('mini-current-task').textContent = '每组有3分钟时间展示讨论结果，请确保每位成员都有发言机会。';
-                }
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timerSeconds / 60);
+                const seconds = timerSeconds % 60;
+                document.getElementById('app-timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }
             
-            // 设置计时器
             function setTimer(seconds) {
                 timerSeconds = seconds;
                 updateTimerDisplay();
             }
             
-            // 开始计时
-            function startTimer() {
-                if (timerInterval) {
-                    clearInterval(timerInterval);
+            // 投票功能
+            document.getElementById('addOption').addEventListener('click', function() {
+                const voteOptions = document.getElementById('voteOptions');
+                const newOption = document.createElement('input');
+                newOption.type = 'text';
+                newOption.placeholder = `选项${voteOptions.children.length + 1}`;
+                newOption.style.marginBottom = '8px';
+                voteOptions.appendChild(newOption);
+            });
+            
+            document.getElementById('publishVote').addEventListener('click', function() {
+                const question = document.getElementById('voteQuestion').value;
+                if (!question) {
+                    alert('请输入投票问题');
+                    return;
                 }
                 
-                timerInterval = setInterval(function() {
-                    if (timerSeconds > 0) {
-                        timerSeconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                        timerInterval = null;
-                        alert('时间到！');
+                const options = Array.from(document.getElementById('voteOptions').children)
+                    .map(input => input.value)
+                    .filter(value => value.trim() !== '');
+                
+                if (options.length < 2) {
+                    alert('请至少添加两个选项');
+                    return;
+                }
+                
+                alert('投票已发布！');
+                
+                // 显示投票结果区域
+                document.getElementById('voteResults').style.display = 'block';
+                
+                // 模拟投票结果
+                const voteResultList = document.getElementById('voteResultList');
+                voteResultList.innerHTML = '';
+                
+                options.forEach((option, index) => {
+                    const votes = Math.floor(Math.random() * 20) + 1;
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'participant-item';
+                    resultItem.innerHTML = `
+                        <div class="participant-name">${option}</div>
+                        <div>${votes} 票</div>
+                    `;
+                    voteResultList.appendChild(resultItem);
+                });
+            });
+            
+            // 背景音效逻辑
+            document.querySelectorAll('.sound-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const sound = this.getAttribute('data-sound');
+                    // 在实际应用中，这里会播放对应的音效文件
+                    console.log(`播放音效: ${sound}`);
+                    
+                    // 添加视觉反馈
+                    this.style.backgroundColor = '#e0e0e0';
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                    }, 200);
+                });
+            });
+            
+            // 提问墙功能
+            document.querySelectorAll('.approve-question').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const questionItem = this.closest('.question-item');
+                    const approvedQuestions = document.getElementById('approvedQuestions');
+                    
+                    // 移动到已通过问题列表
+                    approvedQuestions.appendChild(questionItem);
+                    
+                    // 更新按钮
+                    questionItem.querySelector('.approve-question').style.display = 'none';
+                    questionItem.querySelector('.reject-question').style.display = 'none';
+                    
+                    const answeredBtn = document.createElement('button');
+                    answeredBtn.className = 'secondary';
+                    answeredBtn.style.padding = '4px 8px';
+                    answeredBtn.style.fontSize = '12px';
+                    answeredBtn.textContent = '已回答';
+                    questionItem.querySelector('div').appendChild(answeredBtn);
+                });
+            });
+            
+            document.querySelectorAll('.reject-question').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const questionItem = this.closest('.question-item');
+                    questionItem.remove();
+                });
+            });
+            
+            document.getElementById('refreshQuestions').addEventListener('click', function() {
+                alert('问题列表已刷新');
+            });
+            
+            document.getElementById('clearQuestions').addEventListener('click', function() {
+                if (confirm('确定要清空所有问题吗？')) {
+                    document.getElementById('pendingQuestions').innerHTML = '';
+                    document.getElementById('approvedQuestions').innerHTML = '';
+                }
+            });
+            
+            // 资料分享功能
+            document.getElementById('fileUploadArea').addEventListener('click', function() {
+                // 在实际应用中，这里会触发文件选择对话框
+                // 模拟上传成功
+                this.style.display = 'none';
+                document.getElementById('fileInfo').style.display = 'block';
+                document.getElementById('fileShareQR').style.display = 'block';
+                
+                // 设置模拟文件信息
+                document.getElementById('fileName').textContent = '活动资料.pdf';
+                document.getElementById('fileSize').textContent = '2.5 MB';
+                document.getElementById('fileTime').textContent = new Date().toLocaleString();
+            });
+            
+            document.getElementById('copyLink').addEventListener('click', function() {
+                alert('链接已复制到剪贴板');
+            });
+            
+            document.getElementById('shareFile').addEventListener('click', function() {
+                alert('分享功能已触发');
+            });
+            
+            // 显示工具详情
+            function showToolDetail(toolId) {
+                // 隐藏所有页面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 隐藏所有工具详情
+                document.querySelectorAll('.tool-detail').forEach(detail => {
+                    detail.style.display = 'none';
+                });
+                
+                // 显示选中的工具详情
+                const toolDetailElement = document.getElementById(`${toolId}Detail`);
+                if (toolDetailElement) {
+                    toolDetailElement.style.display = 'block';
+                } else {
+                    console.error(`工具详情页面不存在: ${toolId}Detail`);
+                    return;
+                }
+
+                // 如果是签到工具，初始化参与者名单
+                if (toolId === 'checkIn') {
+                    initParticipantList();
+                }
+                
+                // 更新页面标题
+                const toolTitles = {
+                    'createEvent': '新建活动',
+                    'checkIn': '签到管理',
+                    'randomDraw': '随机抽签',
+                    'timer': '倒计时器',
+                    'voting': '投票表决',
+                    'soundEffects': '背景音效',
+                    'questionWall': '提问墙',
+                    'fileShare': '资料分享'
+                };
+                document.getElementById('page-title').textContent = toolTitles[toolId] || '工具详情';
+            }
+            
+            // 显示活动详情
+            function showActivityDetail(activityId) {
+                // 隐藏所有页面
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // 隐藏所有工具详情
+                document.querySelectorAll('.tool-detail').forEach(detail => {
+                    detail.style.display = 'none';
+                });
+                
+                // 显示活动详情
+                const activityDetailElement = document.getElementById('activityDetail');
+                if (activityDetailElement) {
+                    activityDetailElement.style.display = 'block';
+                } else {
+                    console.error('活动详情页面不存在');
+                    return;
+                }
+                
+                // 根据活动ID更新内容
+                const activityData = {
+                    'design': {
+                        name: '设计思维工作坊',
+                        meta: '今天 14:00-16:00 · 创新中心'
+                    },
+                    'team': {
+                        name: '团队建设活动',
+                        meta: '今天 18:00-20:00 · 会议室A'
+                    },
+                    'product': {
+                        name: '产品发布会',
+                        meta: '2023年12月15日 · 会议中心'
+                    },
+                    'annual': {
+                        name: '年度总结会议',
+                        meta: '2023年12月10日 · 总部大楼'
                     }
-                }, 1000);
-            }
-            
-            // 更新计时器显示
-            function updateTimerDisplay() {
-                const minutes = Math.floor(timerSeconds / 60);
-                const seconds = timerSeconds % 60;
-                const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                };
                 
-                document.getElementById('app-timer').textContent = timeString;
-                document.getElementById('mini-timer').textContent = timeString;
-                document.getElementById('mini-time-remaining').textContent = timeString;
-            }
-            
-            // 显示主办人指定视图
-            function showAppView(viewId) {
-                const views = document.querySelectorAll('.device:first-child .view');
-                views.forEach(view => {
-                    view.classList.remove('active');
-                });
+                if (activityData[activityId]) {
+                    const nameElement = document.getElementById('detailActivityName');
+                    const metaElement = document.getElementById('detailActivityMeta');
+                    const titleElement = document.getElementById('activityDetailTitle');
+                    
+                    if (nameElement) nameElement.textContent = activityData[activityId].name;
+                    if (metaElement) metaElement.textContent = activityData[activityId].meta;
+                    if (titleElement) titleElement.textContent = activityData[activityId].name;
+                } else {
+                    console.warn(`未找到活动数据: ${activityId}`);
+                }
                 
-                document.getElementById(viewId).classList.add('active');
+                document.getElementById('page-title').textContent = '活动详情';
             }
             
-            // 显示参与者指定视图
-            function showMiniView(viewId) {
-                const views = document.querySelectorAll('.device:last-child .view');
-                views.forEach(view => {
-                    view.classList.remove('active');
-                });
-                
-                document.getElementById(viewId).classList.add('active');
-            }
-            
-            // 初始化显示
-            showAppView('app-create-view');
-            showMiniView('mini-join-view');
-            setCurrentPhase(1);
-            setTimer(272); // 4分32秒
-            updateTimerDisplay();
+            // 初始化
+            document.getElementById('page-title').textContent = '活动助手';
         });
     </script>
 </body>
