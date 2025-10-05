@@ -708,7 +708,7 @@
                             <span class="tool-icon">❓</span>
                             <div class="tool-name">提问墙</div>
                         </div>
-                        <div class="tool-card" data-tool="questionWall">
+                        <div class="tool-card" data-tool="feedback">
                             <span class="tool-icon">💬</span>
                             <div class="tool-name">反馈</div>
                         </div>
@@ -1116,7 +1116,7 @@
                         <div class="activity-tool-icon">❓</div>
                         <div>提问</div>
                     </div>
-                    <div class="activity-tool" data-tool="questionWall">
+                    <div class="activity-tool" data-tool="feedback">
                         <div class="activity-tool-icon">💬</div>
                         <div>反馈</div>
                     </div>
@@ -1439,6 +1439,148 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 反馈工具 -->
+            <div class="tool-detail" id="feedbackDetail">
+                <div class="tool-header">
+                    <button class="back-btn">←</button>
+                    <h2 class="tool-title">反馈收集</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedbackPrompt">反馈提示</label>
+                    <input type="text" id="feedbackPrompt" placeholder="请输入反馈提示，例如：请分享您的想法...">
+                </div>
+                
+                <div class="form-group">
+                    <label>反馈类型</label>
+                    <div style="display: flex; gap: 8px; margin: 12px 0;">
+                        <button class="secondary feedback-type active" data-type="text" style="flex: 1;">文字反馈</button>
+                        <button class="secondary feedback-type" data-type="rating" style="flex: 1;">评分反馈</button>
+                        <button class="secondary feedback-type" data-type="emoji" style="flex: 1;">表情反馈</button>
+                    </div>
+                </div>
+                
+                <!-- 文字反馈区域 -->
+                <div id="textFeedbackArea">
+                    <div class="form-group">
+                        <label>收到的反馈</label>
+                        <div class="question-list" id="feedbackList">
+                            <div class="question-item">
+                                <p><strong>张三:</strong> 活动内容很丰富，学到了很多新知识。</p>
+                                <div style="margin-top: 8px;">
+                                    <button class="secondary" style="padding: 4px 8px; font-size: 12px;">已读</button>
+                                </div>
+                            </div>
+                            <div class="question-item">
+                                <p><strong>李四:</strong> 希望下次能有更多互动环节。</p>
+                                <div style="margin-top: 8px;">
+                                    <button class="secondary" style="padding: 4px 8px; font-size: 12px;">已读</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 评分反馈区域 -->
+                <div id="ratingFeedbackArea" style="display: none;">
+                    <div class="form-group">
+                        <label>评分统计</label>
+                        <div style="background: #f8f8f8; padding: 15px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 36px; font-weight: 600; color: #FF9500;">4.2</div>
+                            <div style="font-size: 14px; color: #8E8E93;">平均分 (基于15个评分)</div>
+                            <div style="margin-top: 12px;">
+                                <span style="color: #FF9500;">★★★★</span><span style="color: #E0E0E0;">★</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>评分分布</label>
+                        <div style="margin-top: 12px;">
+                            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <span>5星</span>
+                                <div style="flex: 1; height: 8px; background: #E0E0E0; border-radius: 4px; margin: 0 8px;">
+                                    <div style="height: 100%; width: 60%; background: #FF9500; border-radius: 4px;"></div>
+                                </div>
+                                <span>9</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <span>4星</span>
+                                <div style="flex: 1; height: 8px; background: #E0E0E0; border-radius: 4px; margin: 0 8px;">
+                                    <div style="height: 100%; width: 26%; background: #FF9500; border-radius: 4px;"></div>
+                                </div>
+                                <span>4</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <span>3星</span>
+                                <div style="flex: 1; height: 8px; background: #E0E0E0; border-radius: 4px; margin: 0 8px;">
+                                    <div style="height: 100%; width: 13%; background: #FF9500; border-radius: 4px;"></div>
+                                </div>
+                                <span>2</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                                <span>2星</span>
+                                <div style="flex: 1; height: 8px; background: #E0E0E0; border-radius: 4px; margin: 0 8px;">
+                                    <div style="height: 100%; width: 0%; background: #FF9500; border-radius: 4px;"></div>
+                                </div>
+                                <span>0</span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <span>1星</span>
+                                <div style="flex: 1; height: 8px; background: #E0E0E0; border-radius: 4px; margin: 0 8px;">
+                                    <div style="height: 100%; width: 0%; background: #FF9500; border-radius: 4px;"></div>
+                                </div>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 表情反馈区域 -->
+                <div id="emojiFeedbackArea" style="display: none;">
+                    <div class="form-group">
+                        <label>表情反馈统计</label>
+                        <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 32px;">😊</div>
+                                <div style="font-size: 18px; font-weight: 600;">8</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 32px;">😐</div>
+                                <div style="font-size: 18px; font-weight: 600;">5</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 32px;">😞</div>
+                                <div style="font-size: 18px; font-weight: 600;">2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="secondary" id="exportFeedback">导出反馈</button>
+                    <button id="clearFeedback">清空反馈</button>
+                </div>
+                
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>反馈设置</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                        <span>匿名反馈</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;">
+                        <span>实时显示</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- 底部导航 -->
@@ -1475,11 +1617,23 @@
                     navItems.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
                     
+                    // 隐藏所有工具详情页面
+                    document.querySelectorAll('.tool-detail').forEach(detail => {
+                        detail.style.display = 'none';
+                    });
+                    
                     // 更新页面内容
                     document.querySelectorAll('.page').forEach(page => {
                         page.classList.remove('active');
                     });
-                    document.getElementById(targetPage).classList.add('active');
+                    
+                    const targetPageElement = document.getElementById(targetPage);
+                    if (targetPageElement) {
+                        targetPageElement.classList.add('active');
+                    } else {
+                        console.error(`页面元素未找到: ${targetPage}`);
+                        return;
+                    }
                     
                     // 更新页面标题
                     const pageTitles = {
@@ -1488,7 +1642,7 @@
                         'data-page': '数据回顾',
                         'profile-page': '个人设置'
                     };
-                    document.getElementById('page-title').textContent = pageTitles[targetPage];
+                    document.getElementById('page-title').textContent = pageTitles[targetPage] || '活动助手';
                 });
             });
             
@@ -1497,7 +1651,11 @@
             toolCards.forEach(card => {
                 card.addEventListener('click', function() {
                     const toolId = this.getAttribute('data-tool');
-                    showToolDetail(toolId);
+                    if (toolId) {
+                        showToolDetail(toolId);
+                    } else {
+                        console.warn('工具卡片缺少data-tool属性');
+                    }
                 });
             });
             
@@ -1506,7 +1664,11 @@
             activityItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const activityId = this.getAttribute('data-activity');
-                    showActivityDetail(activityId);
+                    if (activityId) {
+                        showActivityDetail(activityId);
+                    } else {
+                        console.warn('活动项缺少data-activity属性');
+                    }
                 });
             });
             
@@ -1515,7 +1677,11 @@
             activityTools.forEach(tool => {
                 tool.addEventListener('click', function() {
                     const toolId = this.getAttribute('data-tool');
-                    showToolDetail(toolId);
+                    if (toolId) {
+                        showToolDetail(toolId);
+                    } else {
+                        console.warn('活动工具缺少data-tool属性');
+                    }
                 });
             });
             
@@ -1537,7 +1703,10 @@
                     
                     // 更新导航状态
                     navItems.forEach(nav => nav.classList.remove('active'));
-                    document.querySelector('.nav-item[data-page="tools-page"]').classList.add('active');
+                    const toolsNavItem = document.querySelector('.nav-item[data-page="tools-page"]');
+                    if (toolsNavItem) {
+                        toolsNavItem.classList.add('active');
+                    }
                 });
             });
             
@@ -1824,7 +1993,10 @@
             document.querySelectorAll('.timer-preset').forEach(button => {
                 button.addEventListener('click', function() {
                     const time = parseInt(this.getAttribute('data-time'));
-                    document.getElementById('timerDuration').value = time;
+                    const timerDuration = document.getElementById('timerDuration');
+                    if (timerDuration) {
+                        timerDuration.value = time;
+                    }
                     setTimer(time * 60);
                     updateTimerDisplay();
                 });
@@ -1841,22 +2013,75 @@
                     // 根据主题更新计时器样式
                     const theme = this.getAttribute('data-theme');
                     const timerDisplay = document.getElementById('app-timer');
-                    timerDisplay.className = 'timer-display';
-                    if (theme === 'tension') {
-                        timerDisplay.style.color = '#FF3B30';
-                    } else if (theme === 'relax') {
-                        timerDisplay.style.color = '#34C759';
-                    } else {
-                        timerDisplay.style.color = '#333';
+                    if (timerDisplay) {
+                        timerDisplay.className = 'timer-display';
+                        if (theme === 'tension') {
+                            timerDisplay.style.color = '#FF3B30';
+                        } else if (theme === 'relax') {
+                            timerDisplay.style.color = '#34C759';
+                        } else {
+                            timerDisplay.style.color = '#333';
+                        }
                     }
                 });
             });
+
+            // 反馈类型切换
+            document.querySelectorAll('.feedback-type').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.feedback-type').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const feedbackType = this.getAttribute('data-type');
+                    
+                    // 隐藏所有反馈区域
+                    document.getElementById('textFeedbackArea').style.display = 'none';
+                    document.getElementById('ratingFeedbackArea').style.display = 'none';
+                    document.getElementById('emojiFeedbackArea').style.display = 'none';
+                    
+                    // 显示选中的反馈区域
+                    if (feedbackType === 'text') {
+                        document.getElementById('textFeedbackArea').style.display = 'block';
+                    } else if (feedbackType === 'rating') {
+                        document.getElementById('ratingFeedbackArea').style.display = 'block';
+                    } else if (feedbackType === 'emoji') {
+                        document.getElementById('emojiFeedbackArea').style.display = 'block';
+                    }
+                });
+            });
+
+            // 导出反馈
+            const exportFeedbackBtn = document.getElementById('exportFeedback');
+            if (exportFeedbackBtn) {
+                exportFeedbackBtn.addEventListener('click', function() {
+                    alert('反馈数据已导出！');
+                });
+            }
+
+            // 清空反馈
+            const clearFeedbackBtn = document.getElementById('clearFeedback');
+            if (clearFeedbackBtn) {
+                clearFeedbackBtn.addEventListener('click', function() {
+                    if (confirm('确定要清空所有反馈吗？此操作不可撤销。')) {
+                        const feedbackList = document.getElementById('feedbackList');
+                        if (feedbackList) {
+                            feedbackList.innerHTML = '';
+                        }
+                        alert('反馈已清空！');
+                    }
+                });
+            }
             
             function updateTimerDisplay() {
                 const minutes = Math.floor(timerSeconds / 60);
                 const seconds = timerSeconds % 60;
-                document.getElementById('app-timer').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                const timerElement = document.getElementById('app-timer');
+                if (timerElement) {
+                    timerElement.textContent = 
+                        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
             }
             
             function setTimer(seconds) {
@@ -1865,51 +2090,70 @@
             }
             
             // 投票功能
-            document.getElementById('addOption').addEventListener('click', function() {
-                const voteOptions = document.getElementById('voteOptions');
-                const newOption = document.createElement('input');
-                newOption.type = 'text';
-                newOption.placeholder = `选项${voteOptions.children.length + 1}`;
-                newOption.style.marginBottom = '8px';
-                voteOptions.appendChild(newOption);
-            });
-            
-            document.getElementById('publishVote').addEventListener('click', function() {
-                const question = document.getElementById('voteQuestion').value;
-                if (!question) {
-                    alert('请输入投票问题');
-                    return;
-                }
-                
-                const options = Array.from(document.getElementById('voteOptions').children)
-                    .map(input => input.value)
-                    .filter(value => value.trim() !== '');
-                
-                if (options.length < 2) {
-                    alert('请至少添加两个选项');
-                    return;
-                }
-                
-                alert('投票已发布！');
-                
-                // 显示投票结果区域
-                document.getElementById('voteResults').style.display = 'block';
-                
-                // 模拟投票结果
-                const voteResultList = document.getElementById('voteResultList');
-                voteResultList.innerHTML = '';
-                
-                options.forEach((option, index) => {
-                    const votes = Math.floor(Math.random() * 20) + 1;
-                    const resultItem = document.createElement('div');
-                    resultItem.className = 'participant-item';
-                    resultItem.innerHTML = `
-                        <div class="participant-name">${option}</div>
-                        <div>${votes} 票</div>
-                    `;
-                    voteResultList.appendChild(resultItem);
+            const addOptionBtn = document.getElementById('addOption');
+            if (addOptionBtn) {
+                addOptionBtn.addEventListener('click', function() {
+                    const voteOptions = document.getElementById('voteOptions');
+                    if (voteOptions) {
+                        const newOption = document.createElement('input');
+                        newOption.type = 'text';
+                        newOption.placeholder = `选项${voteOptions.children.length + 1}`;
+                        newOption.style.marginBottom = '8px';
+                        voteOptions.appendChild(newOption);
+                    }
                 });
-            });
+            }
+            
+            const publishVoteBtn = document.getElementById('publishVote');
+            if (publishVoteBtn) {
+                publishVoteBtn.addEventListener('click', function() {
+                    const question = document.getElementById('voteQuestion');
+                    if (!question || !question.value) {
+                        alert('请输入投票问题');
+                        return;
+                    }
+                    
+                    const voteOptions = document.getElementById('voteOptions');
+                    if (!voteOptions) {
+                        alert('投票选项区域未找到');
+                        return;
+                    }
+                    
+                    const options = Array.from(voteOptions.children)
+                        .map(input => input.value)
+                        .filter(value => value.trim() !== '');
+                    
+                    if (options.length < 2) {
+                        alert('请至少添加两个选项');
+                        return;
+                    }
+                    
+                    alert('投票已发布！');
+                    
+                    // 显示投票结果区域
+                    const voteResults = document.getElementById('voteResults');
+                    if (voteResults) {
+                        voteResults.style.display = 'block';
+                    }
+                    
+                    // 模拟投票结果
+                    const voteResultList = document.getElementById('voteResultList');
+                    if (voteResultList) {
+                        voteResultList.innerHTML = '';
+                        
+                        options.forEach((option, index) => {
+                            const votes = Math.floor(Math.random() * 20) + 1;
+                            const resultItem = document.createElement('div');
+                            resultItem.className = 'participant-item';
+                            resultItem.innerHTML = `
+                                <div class="participant-name">${option}</div>
+                                <div>${votes} 票</div>
+                            `;
+                            voteResultList.appendChild(resultItem);
+                        });
+                    }
+                });
+            }
             
             // 背景音效逻辑
             document.querySelectorAll('.sound-btn').forEach(btn => {
@@ -1955,38 +2199,60 @@
                 });
             });
             
-            document.getElementById('refreshQuestions').addEventListener('click', function() {
-                alert('问题列表已刷新');
-            });
+            const refreshQuestionsBtn = document.getElementById('refreshQuestions');
+            if (refreshQuestionsBtn) {
+                refreshQuestionsBtn.addEventListener('click', function() {
+                    alert('问题列表已刷新');
+                });
+            }
             
-            document.getElementById('clearQuestions').addEventListener('click', function() {
-                if (confirm('确定要清空所有问题吗？')) {
-                    document.getElementById('pendingQuestions').innerHTML = '';
-                    document.getElementById('approvedQuestions').innerHTML = '';
-                }
-            });
+            const clearQuestionsBtn = document.getElementById('clearQuestions');
+            if (clearQuestionsBtn) {
+                clearQuestionsBtn.addEventListener('click', function() {
+                    if (confirm('确定要清空所有问题吗？')) {
+                        const pendingQuestions = document.getElementById('pendingQuestions');
+                        const approvedQuestions = document.getElementById('approvedQuestions');
+                        if (pendingQuestions) pendingQuestions.innerHTML = '';
+                        if (approvedQuestions) approvedQuestions.innerHTML = '';
+                    }
+                });
+            }
             
             // 资料分享功能
-            document.getElementById('fileUploadArea').addEventListener('click', function() {
-                // 在实际应用中，这里会触发文件选择对话框
-                // 模拟上传成功
-                this.style.display = 'none';
-                document.getElementById('fileInfo').style.display = 'block';
-                document.getElementById('fileShareQR').style.display = 'block';
-                
-                // 设置模拟文件信息
-                document.getElementById('fileName').textContent = '活动资料.pdf';
-                document.getElementById('fileSize').textContent = '2.5 MB';
-                document.getElementById('fileTime').textContent = new Date().toLocaleString();
-            });
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            if (fileUploadArea) {
+                fileUploadArea.addEventListener('click', function() {
+                    // 在实际应用中，这里会触发文件选择对话框
+                    // 模拟上传成功
+                    this.style.display = 'none';
+                    const fileInfo = document.getElementById('fileInfo');
+                    const fileShareQR = document.getElementById('fileShareQR');
+                    if (fileInfo) fileInfo.style.display = 'block';
+                    if (fileShareQR) fileShareQR.style.display = 'block';
+                    
+                    // 设置模拟文件信息
+                    const fileName = document.getElementById('fileName');
+                    const fileSize = document.getElementById('fileSize');
+                    const fileTime = document.getElementById('fileTime');
+                    if (fileName) fileName.textContent = '活动资料.pdf';
+                    if (fileSize) fileSize.textContent = '2.5 MB';
+                    if (fileTime) fileTime.textContent = new Date().toLocaleString();
+                });
+            }
             
-            document.getElementById('copyLink').addEventListener('click', function() {
-                alert('链接已复制到剪贴板');
-            });
+            const copyLinkBtn = document.getElementById('copyLink');
+            if (copyLinkBtn) {
+                copyLinkBtn.addEventListener('click', function() {
+                    alert('链接已复制到剪贴板');
+                });
+            }
             
-            document.getElementById('shareFile').addEventListener('click', function() {
-                alert('分享功能已触发');
-            });
+            const shareFileBtn = document.getElementById('shareFile');
+            if (shareFileBtn) {
+                shareFileBtn.addEventListener('click', function() {
+                    alert('分享功能已触发');
+                });
+            }
             
             // 显示工具详情
             function showToolDetail(toolId) {
@@ -2003,9 +2269,12 @@
                 // 显示选中的工具详情
                 const toolDetailElement = document.getElementById(`${toolId}Detail`);
                 if (toolDetailElement) {
-                    toolDetailElement.style.display = 'block';
+                    toolDetailElement.style.display = 'flex';
                 } else {
                     console.error(`工具详情页面不存在: ${toolId}Detail`);
+                    // 如果工具详情页面不存在，显示工具页面
+                    document.getElementById('tools-page').classList.add('active');
+                    document.getElementById('page-title').textContent = '活动助手';
                     return;
                 }
 
@@ -2023,6 +2292,7 @@
                     'voting': '投票表决',
                     'soundEffects': '背景音效',
                     'questionWall': '提问墙',
+                    'feedback': '反馈收集',
                     'fileShare': '资料分享'
                 };
                 document.getElementById('page-title').textContent = toolTitles[toolId] || '工具详情';
@@ -2043,9 +2313,12 @@
                 // 显示活动详情
                 const activityDetailElement = document.getElementById('activityDetail');
                 if (activityDetailElement) {
-                    activityDetailElement.style.display = 'block';
+                    activityDetailElement.style.display = 'flex';
                 } else {
                     console.error('活动详情页面不存在');
+                    // 如果活动详情页面不存在，显示活动页面
+                    document.getElementById('activities-page').classList.add('active');
+                    document.getElementById('page-title').textContent = '我的活动';
                     return;
                 }
                 
