@@ -94,9 +94,29 @@
                 padding-bottom: 80px;
             }
             
-            .quick-actions {
+            .tools-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 8px;
+            }
+            
+            .tool-item {
+                padding: 12px 6px;
+                aspect-ratio: 1;
+            }
+            
+            .tool-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+            
+            .tool-label {
+                font-size: 9px;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
                 margin-bottom: 20px;
             }
             
@@ -116,7 +136,7 @@
             
             .tools-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
+                gap: 4px;
             }
             
             .tool-item {
@@ -151,7 +171,7 @@
             }
             
             .quick-actions {
-                gap: 6px;
+                gap: 4px;
             }
             
             .action-card {
@@ -159,7 +179,7 @@
             }
             
             .tools-grid {
-                gap: 6px;
+                gap: 4px;
             }
             
             .tool-item {
@@ -303,7 +323,7 @@
         .card-header-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .feedback-link {
@@ -367,7 +387,7 @@
             white-space: nowrap;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .activity-type-tag {
@@ -436,7 +456,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             min-width: 120px;
             justify-content: flex-end;
         }
@@ -515,9 +535,53 @@
             font-size: 14px;
         }
         
+        /* 工具卡片样式 */
+        .tools-card {
+            margin-top: 16px;
+        }
+        
+        /* 视图切换按钮 */
+        .view-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 12px;
+        }
+        
+        .view-toggle:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .view-toggle i {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        
+        .view-toggle:hover i {
+            color: white;
+        }
+        
         /* 搜索和筛选样式 */
         .search-section {
             margin-bottom: 16px;
+        }
+        
+        .search-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-align: center;
         }
         
         .search-box {
@@ -555,17 +619,17 @@
         
         .filter-buttons {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             flex-wrap: wrap;
         }
         
         .filter-btn {
-            padding: 8px 16px;
+            padding: 4px 8px;
             border: 1px solid var(--separator);
-            border-radius: 20px;
+            border-radius: 12px;
             background: var(--card-bg);
             color: var(--text-secondary);
-            font-size: 13px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -594,7 +658,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             border-radius: 8px;
             transition: all 0.2s ease;
             cursor: pointer;
@@ -626,10 +690,11 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 16px;
-            font-size: 18px;
+            margin-bottom: 12px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
+            padding: 0 4px;
         }
         
         .section-badge {
@@ -644,21 +709,25 @@
         
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+            justify-items: center;
         }
         
         .tool-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px 12px;
+            padding: 16px 8px;
             background: var(--card-bg);
             border: 1px solid var(--separator);
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            justify-content: center;
         }
         
         .tool-item:hover {
@@ -673,22 +742,22 @@
         
         
         .tool-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 16px;
+            margin-bottom: 6px;
         }
         
         .tool-label {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 500;
             color: var(--text-primary);
             text-align: center;
-            margin-bottom: 4px;
+            line-height: 1.2;
         }
         
         
@@ -708,7 +777,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         /* 折叠面板 */
@@ -770,6 +839,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+            justify-items: center;
         }
         
         .tool-item {
@@ -778,11 +848,20 @@
             align-items: center;
             padding: 16px 8px;
             background-color: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
-            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            border: 1px solid var(--separator);
+            width: 100%;
+            aspect-ratio: 1;
+            justify-content: center;
+        }
+        
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
         }
         
         .tool-item:focus {
@@ -797,14 +876,14 @@
         }
         
         .tool-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
-            font-size: 20px;
+            margin-bottom: 6px;
+            font-size: 16px;
             color: white;
         }
         
@@ -833,9 +912,11 @@
         }
         
         .tool-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-primary);
             font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
         }
         
         .tool-stats {
@@ -847,8 +928,8 @@
         /* 统一统计样式 */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
         }
 
         .stat-item {
@@ -1089,7 +1170,7 @@
         
         /* 工具页面样式 */
         .tools-section {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .tools-section-title {
@@ -1361,7 +1442,7 @@
         .activity-detail-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             padding: 6px 12px;
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1469,7 +1550,7 @@
         .checkin-panel-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             font-weight: 600;
             font-size: 16px;
         }
@@ -1565,7 +1646,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             padding: 12px;
             min-height: 60px;
         }
@@ -1606,7 +1687,7 @@
         .participants-panel-title {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             font-weight: 600;
             font-size: 16px;
             color: var(--text-primary);
@@ -1681,7 +1762,7 @@
         
         .filter-buttons {
             display: flex;
-            gap: 8px;
+            gap: 4px;
         }
         
         .filter-btn {
@@ -1755,7 +1836,7 @@
         .participant-status {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .status-icon {
@@ -1960,7 +2041,7 @@
         
         .participants-stats-overview {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 16px;
             margin-top: 16px;
         }
@@ -2043,17 +2124,17 @@
         
         .filter-buttons {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             flex-wrap: wrap;
         }
         
         .filter-btn {
-            padding: 6px 12px;
+            padding: 4px 8px;
             border: 1px solid var(--separator);
-            border-radius: 16px;
+            border-radius: 12px;
             background: var(--background);
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -2222,7 +2303,7 @@
         .share-code-display,
         .share-link-display {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             align-items: center;
         }
         
@@ -2258,7 +2339,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .share-content {
@@ -2321,7 +2402,7 @@
         .share-code-display,
         .share-link-display {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             align-items: center;
         }
         
@@ -2357,7 +2438,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 4px;
         }
         
         .modal-header {
@@ -2490,6 +2571,30 @@
             }
         }
         
+        /* 中等屏幕优化 */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+            }
+            
+            .tool-item {
+                aspect-ratio: 1;
+            }
+        }
+        
+        /* 大屏幕优化 */
+        @media (min-width: 769px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+            
+            .tool-item {
+                aspect-ratio: 1;
+            }
+        }
+        
         /* 支持iOS安全区域 */
         @supports (padding: max(0px)) {
             .tab-bar {
@@ -2501,7 +2606,7 @@
         .tools-grid-compact {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            gap: 8px;
             margin-bottom: 16px;
         }
         
@@ -2509,13 +2614,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px 8px;
+            padding: 8px 4px;
             background: var(--card-bg);
             border: 1px solid var(--separator);
             border-radius: var(--radius);
             cursor: pointer;
             transition: all var(--transition-fast);
-            min-height: 80px;
+            aspect-ratio: 1;
+            justify-content: center;
         }
         
         .tool-item-compact:hover {
@@ -2530,18 +2636,18 @@
         }
         
         .tool-icon-compact {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
-            font-size: 18px;
+            margin-bottom: 4px;
+            font-size: 14px;
         }
         
         .tool-label-compact {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
             color: var(--text-primary);
             text-align: center;
@@ -2556,20 +2662,22 @@
         
         .more-tools-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
         }
         
         .tool-item-small {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 16px 8px;
+            padding: 8px 4px;
             background: var(--card-bg);
             border: 1px solid var(--separator);
             border-radius: var(--radius);
             cursor: pointer;
             transition: all var(--transition-fast);
+            aspect-ratio: 1;
+            justify-content: center;
         }
         
         .tool-item-small:hover {
@@ -2584,21 +2692,22 @@
         }
         
         .tool-icon-small {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
-            font-size: 18px;
+            margin-bottom: 4px;
+            font-size: 12px;
         }
         
         .tool-label-small {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
             color: var(--text-primary);
             text-align: center;
+            line-height: 1.2;
         }
     </style>
 </head>
@@ -2623,7 +2732,7 @@
             <div class="content">
                 <!-- 活动统计 -->
                 <div class="card">
-                    <div class="card-header">我的统计</div>
+                    <div class="card-header">活动概览</div>
                     <div class="card-content">
                         <div class="stats-grid">
                             <div class="stat-item">
@@ -2649,7 +2758,7 @@
                 <!-- 活动筛选和搜索 -->
                 <div class="card">
                     <div class="card-header">
-                        <span>我的活动</span>
+                        <span>一键搜索</span>
                         <span style="font-size: 14px; color: var(--text-secondary);" id="activities-count">3个活动</span>
                     </div>
                     <div class="card-content">
@@ -2668,7 +2777,7 @@
                                 <button class="filter-btn" data-filter="ongoing">进行中</button>
                                 <button class="filter-btn" data-filter="upcoming">即将开始</button>
                                 <button class="filter-btn" data-filter="ended">已结束</button>
-                                <button class="filter-btn" data-filter="tools">工具</button>
+                                <button class="filter-btn" data-filter="tools">临时</button>
                             </div>
                         </div>
                     </div>
@@ -2703,28 +2812,23 @@
         <!-- 工具页面 -->
         <div id="tools-page" class="page">
             <div class="nav-bar">
-                <div class="nav-title">工具</div>
+                <div class="nav-title">现场</div>
             </div>
             
             <div class="content">                
-                <!-- 我的工具 -->
+                <!-- 搜索和筛选 -->
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-header-left">
-                            <span>我的工具</span>
-                            </div>
-                        <div class="card-header-right">
-                            <span onclick="showFeedbackModal()" class="feedback-link" title="没找到需要的工具？立即反馈！">没找到？</span>
-                        </div>
-                            </div>
+                        <span>一键搜索</span>
+                    </div>
                     <div class="card-content">
                         <!-- 搜索框 -->
                         <div class="search-section">
                             <div class="search-box">
                                 <i class="fas fa-search"></i>
                                 <input type="text" id="tool-search" placeholder="搜索工具名称..." class="search-input">
-                        </div>
                             </div>
+                        </div>
                         
                         <!-- 分类筛选 -->
                         <div class="filter-section">
@@ -2739,69 +2843,114 @@
                     </div>
                 </div>
                 
-                <!-- 最近常用分类 -->
-                <div class="tools-section" data-category="recent">
-                    <div class="tools-section-title">
-                        <span>最近常用</span>
-                            </div>
-                    <div class="tools-grid" id="recent-tools-grid">
-                        <!-- 最近使用的工具将通过JS动态加载 -->
+                <!-- 工具展示卡片 -->
+                <div class="card tools-card">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <span>现场工具</span>
                         </div>
+                        <div class="card-header-right">
+                            <div class="view-toggle" onclick="toggleToolView()" title="切换视图">
+                                <i class="fas fa-th" id="view-icon"></i>
                             </div>
-                
-                <!-- 活动管理分类 -->
-                <div class="tools-section" data-category="activity">
-                    <div class="tools-section-title">
-                        <span>活动管理</span>
-                        </div>
-                    <div class="tools-grid">
-                        <div class="tool-item" onclick="useTool('create-activity')">
-                            <div class="tool-icon" style="background: rgba(0, 122, 255, 0.1); color: var(--primary);">
-                                <i class="fas fa-plus"></i>
-                            </div>
-                            <div class="tool-label">创建活动</div>
-                        </div>
-                        <div class="tool-item" onclick="useTool('checkin')">
-                            <div class="tool-icon" style="background: rgba(52, 199, 89, 0.1); color: var(--success);">
-                                <i class="fas fa-user-check"></i>
-                            </div>
-                            <div class="tool-label">签到</div>
+                            <span onclick="showFeedbackModal()" class="feedback-link" title="没找到需要的工具？立即反馈！">没找到？</span>
                         </div>
                     </div>
-                </div>
-                
-                <!-- 互动工具分类 -->
-                <div class="tools-section" data-category="interaction">
-                    <div class="tools-section-title">
-                        <span>互动工具</span>
+                    <div class="card-content">
+                        <!-- 紧凑视图 -->
+                        <div id="compact-view" class="tools-section">
+                            <div class="tools-grid">
+                                <div class="tool-item" data-category="activity" onclick="useTool('create-activity')">
+                                    <div class="tool-icon" style="background: rgba(0, 122, 255, 0.1); color: var(--primary);">
+                                        <i class="fas fa-plus"></i>
+                                    </div>
+                                    <div class="tool-label">创建活动</div>
+                                </div>
+                                <div class="tool-item" data-category="activity" onclick="useTool('checkin')">
+                                    <div class="tool-icon" style="background: rgba(52, 199, 89, 0.1); color: var(--success);">
+                                        <i class="fas fa-user-check"></i>
+                                    </div>
+                                    <div class="tool-label">签到</div>
+                                </div>
+                                <div class="tool-item" data-category="interaction" onclick="useTool('lottery')">
+                                    <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
+                                        <i class="fas fa-random"></i>
+                                    </div>
+                                    <div class="tool-label">抽签</div>
+                                </div>
+                                <div class="tool-item" data-category="utility" onclick="useTool('timer')">
+                                    <div class="tool-icon" style="background: rgba(255, 59, 48, 0.1); color: var(--danger);">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="tool-label">倒计时</div>
+                                </div>
+                                <div class="tool-item" data-category="utility" onclick="useTool('sound')">
+                                    <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
+                                        <i class="fas fa-volume-up"></i>
+                                    </div>
+                                    <div class="tool-label">音效</div>
+                                </div>
                             </div>
-                    <div class="tools-grid">
-                        <div class="tool-item" onclick="useTool('lottery')">
-                            <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
-                                <i class="fas fa-random"></i>
-                            </div>
-                            <div class="tool-label">抽签</div>
                         </div>
-                    </div>
-                </div>
-                
-                <!-- 实用工具分类 -->
-                <div class="tools-section" data-category="utility">
-                    <div class="tools-section-title">
-                        <span>实用工具</span>
-                    </div>
-                    <div class="tools-grid">
-                        <div class="tool-item" onclick="useTool('timer')">
-                            <div class="tool-icon" style="background: rgba(255, 59, 48, 0.1); color: var(--danger);">
-                                <i class="fas fa-clock"></i>
+                        
+                        <!-- 分类视图 -->
+                        <div id="category-view" class="tools-section" style="display: none;">
+                            <!-- 活动管理分类 -->
+                            <div class="tools-section" data-category="activity">
+                                <div class="tools-section-title">
+                                    <span>活动管理</span>
+                                </div>
+                                <div class="tools-grid">
+                                    <div class="tool-item" data-category="activity" onclick="useTool('create-activity')">
+                                        <div class="tool-icon" style="background: rgba(0, 122, 255, 0.1); color: var(--primary);">
+                                            <i class="fas fa-plus"></i>
+                                        </div>
+                                        <div class="tool-label">创建活动</div>
+                                    </div>
+                                    <div class="tool-item" data-category="activity" onclick="useTool('checkin')">
+                                        <div class="tool-icon" style="background: rgba(52, 199, 89, 0.1); color: var(--success);">
+                                            <i class="fas fa-user-check"></i>
+                                        </div>
+                                        <div class="tool-label">签到</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tool-label">倒计时</div>
-                        </div>
-                        <div class="tool-item" onclick="useTool('sound')">
-                            <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
-                                <i class="fas fa-volume-up"></i>
+                            
+                            <!-- 互动工具分类 -->
+                            <div class="tools-section" data-category="interaction">
+                                <div class="tools-section-title">
+                                    <span>互动工具</span>
+                                </div>
+                                <div class="tools-grid">
+                                    <div class="tool-item" data-category="interaction" onclick="useTool('lottery')">
+                                        <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
+                                            <i class="fas fa-random"></i>
+                                        </div>
+                                        <div class="tool-label">抽签</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="tool-label">音效</div>
+                            
+                            <!-- 实用工具分类 -->
+                            <div class="tools-section" data-category="utility">
+                                <div class="tools-section-title">
+                                    <span>实用工具</span>
+                                </div>
+                                <div class="tools-grid">
+                                    <div class="tool-item" data-category="utility" onclick="useTool('timer')">
+                                        <div class="tool-icon" style="background: rgba(255, 59, 48, 0.1); color: var(--danger);">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <div class="tool-label">倒计时</div>
+                                    </div>
+                                    <div class="tool-item" data-category="utility" onclick="useTool('sound')">
+                                        <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
+                                            <i class="fas fa-volume-up"></i>
+                                        </div>
+                                        <div class="tool-label">音效</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3173,7 +3322,7 @@
                         </div>
                         
                         <!-- 统计概览 -->
-                        <div class="participants-stats-overview">
+                        <div class="stats-grid">
                             <div class="stat-item">
                                 <div class="stat-value" id="participants-total">45</div>
                                 <div class="stat-label">总报名</div>
@@ -3181,13 +3330,13 @@
                             <div class="stat-item">
                                 <div class="stat-value" id="participants-checked">3</div>
                                 <div class="stat-label">已签到</div>
-                        </div>
+                            </div>
                             <div class="stat-item">
                                 <div class="stat-value" id="participants-unchecked">7</div>
                                 <div class="stat-label">未签到</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value" id="participants-rate">84%</div>
+                                <div class="stat-value" id="participants-rate">7%</div>
                                 <div class="stat-label">签到率</div>
                             </div>
                         </div>
@@ -3260,13 +3409,13 @@
                         </div>
                         
                         <!-- 签到统计概览 -->
-                        <div class="participants-stats-overview">
+                        <div class="stats-grid">
                             <div class="stat-item">
                                 <div class="stat-value" id="checkin-total">45</div>
                                 <div class="stat-label">总报名</div>
-                                </div>
+                            </div>
                             <div class="stat-item">
-                                <div class="stat-value" id="checkin-checked">3</div>
+                                <div class="stat-value" id="checkin-checked">4</div>
                                 <div class="stat-label">已签到</div>
                             </div>
                             <div class="stat-item">
@@ -3274,7 +3423,7 @@
                                 <div class="stat-label">未签到</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value" id="checkin-rate">84%</div>
+                                <div class="stat-value" id="checkin-rate">9%</div>
                                 <div class="stat-label">签到率</div>
                             </div>
                         </div>
@@ -3288,7 +3437,7 @@
                             <i class="fas fa-user-check checkin-panel-icon"></i>
                             <span>签到管理</span>
                             <div class="checkin-status-badge" id="checkin-status-badge">
-                                <span class="checkin-count" id="checkin-count">3</span>/<span class="total-count" id="total-count">45</span>
+                                <span class="checkin-count" id="checkin-count">4</span>/<span class="total-count" id="total-count">45</span>
                             </div>
                         </div>
                     </div>
@@ -3296,11 +3445,11 @@
                         <!-- 签到进度条 -->
                         <div class="checkin-progress">
                             <div class="progress-info">
-                                <span class="progress-text">已签到 <strong id="progress-checked">3</strong>/<strong id="progress-total">45</strong> 人</span>
-                                <span class="progress-percentage" id="progress-percentage">7%</span>
+                                <span class="progress-text">已签到 <strong id="progress-checked">4</strong>/<strong id="progress-total">45</strong> 人</span>
+                                <span class="progress-percentage" id="progress-percentage">9%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" id="progress-fill" style="width: 7%"></div>
+                                <div class="progress-fill" id="progress-fill" style="width: 9%"></div>
                             </div>
                         </div>
                         
@@ -3324,7 +3473,7 @@
                         <div class="participants-panel-title">
                             <i class="fas fa-users participants-panel-icon"></i>
                             <span>签到情况</span>
-                            <div class="participants-count" id="checkin-participants-count">45人（已签3人）</div>
+                            <div class="participants-count" id="checkin-participants-count">45人（已签4人）</div>
                             </div>
                         </div>
                     <div class="card-content">
@@ -3558,7 +3707,8 @@
                 checkinRecords: [
                     { id: 1, name: "张三", phone: "138****1234", time: "14:05" },
                     { id: 2, name: "李四", phone: "139****5678", time: "14:10" },
-                    { id: 3, name: "王五", phone: "136****9012", time: "14:15" }
+                    { id: 3, name: "王五", phone: "136****9012", time: "14:15" },
+                    { id: 4, name: "赵六", phone: "137****3456", time: "14:20" }
                 ]
             },
             {
@@ -4105,6 +4255,11 @@
             if (pageId === 'checkin-page') {
                 setupCheckinPageEvents();
             }
+            
+            // 如果是工具页面，确保显示所有工具
+            if (pageId === 'tools-page') {
+                showAllTools();
+            }
         }
         
         // 设置参与者管理页面事件监听器
@@ -4468,13 +4623,13 @@
             
             // 筛选活动
             let filteredActivities = activities.filter(activity => {
-                // 工具分类筛选
+                // 临时分类筛选
                 if (currentActivityFilter === 'tools') {
                     if (!activity.isTemp) {
                         return false;
                     }
                 } else if (currentActivityFilter !== 'all') {
-                    // 状态筛选（排除工具分类）
+                    // 状态筛选（排除临时分类）
                     if (activity.status !== currentActivityFilter) {
                         return false;
                     }
@@ -5926,6 +6081,133 @@
                     moreTools.style.display = 'none';
                 }, 300);
             }
+        }
+        
+        // 工具筛选功能
+        function initToolFilters() {
+            const filterButtons = document.querySelectorAll('#tools-page .filter-btn');
+            const toolItems = document.querySelectorAll('#tools-page .tool-item');
+            const searchInput = document.getElementById('tool-search');
+            
+            // 分类筛选
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // 更新按钮状态
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    // 获取选中的分类
+                    const category = button.getAttribute('data-category');
+                    
+                    // 筛选工具
+                    const searchValue = searchInput ? (searchInput.value || '') : '';
+                    filterTools(category, searchValue);
+                });
+            });
+            
+            // 搜索功能
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const activeButton = document.querySelector('#tools-page .filter-btn.active');
+                    const category = activeButton ? activeButton.getAttribute('data-category') : 'all';
+                    const searchValue = e.target.value || '';
+                    filterTools(category, searchValue);
+                });
+            }
+        }
+        
+        // 筛选工具
+        function filterTools(category, searchTerm) {
+            const toolItems = document.querySelectorAll('#tools-page .tool-item');
+            
+            // 确保 searchTerm 是字符串
+            const searchLower = (searchTerm || '').toLowerCase();
+            
+            toolItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                const toolLabel = item.querySelector('.tool-label').textContent.toLowerCase();
+                
+                let showItem = true;
+                
+                // 分类筛选
+                if (category !== 'all' && itemCategory !== category) {
+                    showItem = false;
+                }
+                
+                // 搜索筛选
+                if (searchLower && !toolLabel.includes(searchLower)) {
+                    showItem = false;
+                }
+                
+                // 显示或隐藏工具项
+                if (showItem) {
+                    item.style.display = 'flex';
+                    item.style.opacity = '1';
+                    item.style.transform = 'scale(1)';
+                } else {
+                    item.style.display = 'none';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                }
+            });
+            
+            // 在分类视图中，如果某个分类下没有可见的工具，隐藏整个分类
+            if (currentView === 'category') {
+                const categorySections = document.querySelectorAll('#category-view .tools-section[data-category]');
+                categorySections.forEach(section => {
+                    const visibleTools = section.querySelectorAll('.tool-item[style*="display: flex"], .tool-item:not([style*="display: none"])');
+                    if (visibleTools.length === 0) {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+            }
+        }
+        
+        // 页面加载完成后初始化筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            initToolFilters();
+            // 确保页面加载时显示所有工具
+            showAllTools();
+        });
+        
+        // 显示所有工具
+        function showAllTools() {
+            const toolItems = document.querySelectorAll('#tools-page .tool-item');
+            toolItems.forEach(item => {
+                item.style.display = 'flex';
+                item.style.opacity = '1';
+                item.style.transform = 'scale(1)';
+            });
+        }
+        
+        // 视图切换功能
+        let currentView = 'compact'; // 默认紧凑视图
+        
+        function toggleToolView() {
+            const compactView = document.getElementById('compact-view');
+            const categoryView = document.getElementById('category-view');
+            const viewIcon = document.getElementById('view-icon');
+            
+            if (currentView === 'compact') {
+                // 切换到分类视图
+                compactView.style.display = 'none';
+                categoryView.style.display = 'block';
+                viewIcon.className = 'fas fa-list';
+                currentView = 'category';
+            } else {
+                // 切换到紧凑视图
+                compactView.style.display = 'block';
+                categoryView.style.display = 'none';
+                viewIcon.className = 'fas fa-th';
+                currentView = 'compact';
+            }
+            
+            // 重新初始化筛选功能
+            setTimeout(() => {
+                initToolFilters();
+            }, 100);
         }
         
     </script>
