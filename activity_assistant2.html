@@ -2776,11 +2776,11 @@
                         <span>互动工具</span>
                             </div>
                     <div class="tools-grid">
-                        <div class="tool-item" onclick="useTool('share')">
-                            <div class="tool-icon" style="background: rgba(255, 149, 0, 0.1); color: var(--warning);">
-                                <i class="fas fa-share-alt"></i>
+                        <div class="tool-item" onclick="useTool('lottery')">
+                            <div class="tool-icon" style="background: rgba(88, 86, 214, 0.1); color: var(--secondary);">
+                                <i class="fas fa-random"></i>
                             </div>
-                            <div class="tool-label">资料分享</div>
+                            <div class="tool-label">抽签</div>
                         </div>
                     </div>
                 </div>
@@ -3522,7 +3522,7 @@
                 <div class="tab-icon">
                     <i class="fas fa-tools"></i>
                 </div>
-                <div class="tab-label">工具</div>
+                <div class="tab-label">现场</div>
             </div>
             <div class="tab-item active" data-page="activities-page">
                 <div class="tab-icon">
@@ -4376,12 +4376,12 @@
                     iconColor: 'var(--success)',
                     onclick: () => showCheckinSelectModal()
                 },
-                'share': {
-                    label: '资料分享',
-                    icon: 'fas fa-share-alt',
-                    iconBg: 'rgba(255, 149, 0, 0.1)',
-                    iconColor: 'var(--warning)',
-                    onclick: () => showToast('资料分享功能准备中...')
+                'lottery': {
+                    label: '抽签',
+                    icon: 'fas fa-random',
+                    iconBg: 'rgba(88, 86, 214, 0.1)',
+                    iconColor: 'var(--secondary)',
+                    onclick: () => showToast('抽签功能准备中...')
                 },
                 'timer': {
                     label: '倒计时',
