@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>活动帮手 - iOS风格主办方App</title>
+    <title>活动帮手 - 轻松管理您的活动</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* iOS风格全局样式 */
@@ -19,15 +20,35 @@
             --success: #34C759;
             --warning: #FF9500;
             --danger: #FF3B30;
+            --surface: #FFFFFF;
+
+            /* 统一设计系统变量 */
+            --radius: 12px;
+            --radius-small: 8px;
+            --radius-large: 16px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 12px;
+            --spacing-lg: 16px;
+            --spacing-xl: 20px;
+            --spacing-xxl: 24px;
+            --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-heavy: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+            /* 动画变量 */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
         body {
             background-color: var(--background);
             color: var(--text-primary);
@@ -36,43 +57,185 @@
             display: flex;
             justify-content: center;
             min-height: 100vh;
+            padding: 20px 0;
+            margin: 0;
         }
-        
+
         /* 移动端容器 */
         .mobile-container {
             width: 375px;
-            height: 812px;
+            min-height: 812px;
+            max-height: 100vh;
             background-color: var(--background);
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
-            margin: 20px 0;
+            margin: 0 auto;
+            box-sizing: border-box;
         }
-        
-        /* 状态栏 */
-        .status-bar {
-            height: 44px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 16px;
-            font-size: 15px;
-            font-weight: 600;
-            background-color: var(--card-bg);
+
+        /* 响应式设计 */
+        @media (max-width: 480px) {
+            .mobile-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            body {
+                padding: 0;
+                display: block;
+            }
+
+            .content {
+                padding: 16px;
+                padding-top: 60px;
+                padding-bottom: 80px;
+                box-sizing: border-box;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .tool-item {
+                padding: 12px 6px;
+                aspect-ratio: 1;
+            }
+
+            .tool-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
+            }
+
+            .tool-label {
+                font-size: 9px;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+                margin-bottom: 20px;
+            }
+
+            .action-card {
+                padding: 12px 8px;
+            }
+
+            .action-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .action-label {
+                font-size: 12px;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+
+            .tool-item {
+                padding: 12px 6px;
+            }
+
+            .tool-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .tool-label {
+                font-size: 11px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .form-input {
+                font-size: 16px;
+                /* 防止iOS缩放 */
+            }
         }
-        
+
+        @media (max-width: 375px) {
+            .content {
+                padding: 12px;
+                padding-top: 60px;
+                padding-bottom: 80px;
+                box-sizing: border-box;
+            }
+
+            .quick-actions {
+                gap: 4px;
+            }
+
+            .action-card {
+                padding: 10px 6px;
+            }
+
+            .tools-grid {
+                gap: 4px;
+            }
+
+            .tool-item {
+                padding: 10px 4px;
+            }
+        }
+
+        /* 平板端适配 */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .mobile-container {
+                width: 100%;
+                max-width: 480px;
+                margin: 20px auto;
+            }
+        }
+
+        /* 桌面端优化 */
+        @media (min-width: 1200px) {
+            .mobile-container {
+                width: 400px;
+                min-height: 900px;
+            }
+
+            .tab-bar {
+                width: 363px;
+            }
+        }
+
+        /* 大屏幕优化 */
+        @media (min-width: 1400px) {
+            .mobile-container {
+                width: 420px;
+                min-height: 950px;
+            }
+        }
+
+
         /* 页面容器 */
         .page {
             display: none;
-            height: calc(100% - 44px);
+            width: 100%;
+            height: 100%;
             overflow-y: auto;
+            padding-top: 0;
+            box-sizing: border-box;
         }
-        
+
         .page.active {
             display: block;
         }
-        
+
         /* 导航栏 */
         .nav-bar {
             height: 44px;
@@ -81,16 +244,20 @@
             justify-content: center;
             font-size: 17px;
             font-weight: 600;
-            position: relative;
             border-bottom: 0.5px solid var(--separator);
             background-color: var(--card-bg);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
         }
-        
+
         .nav-title {
             font-size: 17px;
             font-weight: 600;
         }
-        
+
         .nav-button {
             position: absolute;
             padding: 0 16px;
@@ -100,226 +267,855 @@
             font-size: 17px;
             color: var(--primary);
         }
-        
+
         .nav-button.left {
             left: 0;
         }
-        
+
         .nav-button.right {
             right: 0;
         }
-        
+
         /* 内容区域 */
         .content {
             padding: 16px;
-            height: calc(100% - 44px);
+            min-height: calc(100vh - 44px);
             overflow-y: auto;
+            padding-top: 60px;
+            /* 为固定导航栏留出空间，并增加美观间距 */
+            padding-bottom: 80px;
+            /* 为底部标签栏留出空间 */
+            box-sizing: border-box;
         }
-        
-        /* 卡片设计 */
+
+
+        /* 紧凑卡片设计 */
         .card {
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             margin-bottom: 16px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
-        
+
         .card-header {
             padding: 16px;
             font-weight: 600;
-            font-size: 17px;
-            border-bottom: 0.5px solid var(--separator);
-        }
-        
-        .card-content {
-            padding: 16px;
-        }
-        
-        /* 统计卡片 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 16px 8px;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        /* 活动列表 */
-        .activity-item {
-            padding: 16px;
+            font-size: 16px;
             border-bottom: 0.5px solid var(--separator);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
+        .card-header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-header-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .search-toggle-btn {
+            background: var(--background);
+            border: 1px solid var(--separator);
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .search-toggle-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .search-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        .feedback-link {
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 4px 8px;
+            border: 1px solid var(--separator);
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .feedback-link:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: rgba(0, 122, 255, 0.05);
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .stats-card .card-content {
+            padding: 12px 16px;
+        }
+
+        /* 活动列表项 */
+        .activity-item {
+            padding: 12px 16px;
+            border-bottom: 0.5px solid var(--separator);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+            gap: 12px;
+        }
+
+        .activity-item:active {
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+
         .activity-item:last-child {
             border-bottom: none;
         }
-        
+
         .activity-info {
             flex: 1;
-        }
-        
-        .activity-title {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        
-        .activity-meta {
-            font-size: 15px;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-        }
-        
-        .activity-date {
+            min-width: 0;
             margin-right: 12px;
         }
-        
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .activity-type-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .activity-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+            overflow: hidden;
+        }
+
+        .activity-datetime {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .activity-location {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-participants {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .meta-separator {
+            font-size: 12px;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
         .activity-status {
             display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 13px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
             font-weight: 500;
         }
-        
+
+        .activity-actions {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+            min-width: 120px;
+            justify-content: flex-end;
+        }
+
+        .activity-share-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .activity-share-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .activity-share-btn:active {
+            transform: scale(0.95);
+        }
+
+        .activity-status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         .status-upcoming {
             background-color: rgba(0, 122, 255, 0.1);
             color: var(--primary);
         }
-        
+
         .status-ongoing {
             background-color: rgba(52, 199, 89, 0.1);
             color: var(--success);
         }
-        
+
         .status-ended {
             background-color: rgba(142, 142, 147, 0.1);
             color: var(--text-secondary);
         }
-        
-        .activity-stats {
-            text-align: right;
-        }
-        
-        .participant-count {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-        
-        .checkin-rate {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
+
+
         /* 空状态 */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: var(--text-secondary);
         }
-        
+
         .empty-icon {
-            font-size: 64px;
+            font-size: 48px;
             margin-bottom: 16px;
             opacity: 0.5;
         }
-        
+
         .empty-title {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
             margin-bottom: 8px;
         }
-        
+
         .empty-description {
-            font-size: 15px;
+            font-size: 14px;
         }
-        
+
+        /* 工具卡片样式 */
+        .tools-card {
+            margin-top: 16px;
+        }
+
+        /* 视图切换按钮 */
+        .view-toggle {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-right: 12px;
+        }
+
+        .view-toggle:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .view-toggle i {
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .view-toggle:hover i {
+            color: white;
+        }
+
+        /* 搜索和筛选样式 */
+        .search-section {
+            margin-bottom: 16px;
+        }
+
+        .search-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            color: var(--text-secondary);
+            z-index: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .filter-section {
+            margin-bottom: 8px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 4px 8px;
+            border: 1px solid var(--separator);
+            border-radius: 12px;
+            background: var(--card-bg);
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+
+        /* 工具页面分层设计样式 */
+        .tools-section {
+            margin-bottom: 24px;
+        }
+
+        .tools-section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 0 4px;
+        }
+
+        .section-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--success);
+            color: white;
+        }
+
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            justify-items: center;
+        }
+
+        .tool-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 8px;
+            background: var(--card-bg);
+            border: 1px solid var(--separator);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            justify-content: center;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .tool-item-primary {
+            border-color: var(--primary);
+            background: rgba(0, 122, 255, 0.02);
+        }
+
+
+        .tool-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .tool-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+
+
+
+        /* 参与者导出按钮样式 */
+        .participants-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--separator);
+        }
+
+        .participants-actions .btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* 折叠面板 */
+        .collapse-panel {
+            margin-bottom: 16px;
+        }
+
+        .collapse-header {
+            padding: 16px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .collapse-header:active {
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+
+        .collapse-title {
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .collapse-icon {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        .collapse-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .collapse-arrow.expanded {
+            transform: rotate(180deg);
+        }
+
+        .collapse-content {
+            background: var(--card-bg);
+            border-radius: 0 0 12px 12px;
+            margin-top: -4px;
+            padding: 16px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .collapse-content.expanded {
+            display: block;
+        }
+
+        /* 工具网格 */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            justify-items: center;
+        }
+
+        .tool-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 8px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid var(--separator);
+            width: 100%;
+            aspect-ratio: 1;
+            justify-content: center;
+        }
+
+        .tool-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+
+        .tool-item:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        .tool-item:active {
+            transform: scale(0.95);
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+
+        .tool-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .tool-checkin {
+            background: linear-gradient(135deg, #34C759, #30D158);
+        }
+
+        .tool-timer {
+            background: linear-gradient(135deg, #FF9500, #FF9F0A);
+        }
+
+        .tool-qa {
+            background: linear-gradient(135deg, #5856D6, #5E5CE6);
+        }
+
+        .tool-lottery {
+            background: linear-gradient(135deg, #BF5AF2, #D158E0);
+        }
+
+        .tool-sound {
+            background: linear-gradient(135deg, #FF375F, #FF453A);
+        }
+
+        .tool-share {
+            background: linear-gradient(135deg, #32D74B, #30D158);
+        }
+
+        .tool-label {
+            font-size: 11px;
+            color: var(--text-primary);
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .tool-stats {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* 统一统计样式 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* 可点击统计项 */
+        .clickable-stat {
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            background: rgba(0, 122, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .clickable-stat:hover {
+            background: rgba(0, 122, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .clickable-stat:active {
+            transform: translateY(0);
+            background: rgba(0, 122, 255, 0.15);
+        }
+
+        .stat-hint {
+            font-size: 10px;
+            color: var(--primary);
+            margin-top: 2px;
+            opacity: 0.8;
+        }
+
         /* 表单样式 */
         .form-group {
             margin-bottom: 16px;
         }
-        
+
         .form-label {
             display: block;
             margin-bottom: 8px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
         }
-        
+
         .form-input {
             width: 100%;
             padding: 12px 16px;
             border: 1px solid var(--separator);
             border-radius: 10px;
-            font-size: 17px;
+            font-size: 16px;
             background-color: var(--card-bg);
+            transition: border-color 0.2s ease;
         }
-        
+
         .form-input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
-        
+
+        .form-input.error {
+            border-color: var(--danger);
+            background-color: rgba(255, 59, 48, 0.05);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .form-input.error:focus {
+            box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.1);
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* 日期时间选择器 */
+        .datetime-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .date-input,
+        .time-input {
+            flex: 1;
+        }
+
+        .datetime-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
         /* 按钮样式 */
         .btn {
-            display: inline-block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 12px 16px;
             border-radius: 10px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
-            text-align: center;
             text-decoration: none;
             border: none;
             cursor: pointer;
             transition: all 0.2s ease;
+            min-height: 44px;
         }
-        
+
         .btn-primary {
             background-color: var(--primary);
             color: white;
         }
-        
+
+        .btn-primary:active {
+            background-color: #0056CC;
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .btn-large {
             width: 100%;
             padding: 16px;
         }
-        
-        /* 底部标签栏 */
+
+        .btn-medium {
+            width: 90%;
+            padding: 16px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        /* 悬浮底部标签栏 */
         .tab-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.9);
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
-            border-top: 0.5px solid var(--separator);
-            z-index: 100;
+            padding: 12px 16px;
+            border-radius: 16px;
+            border: 0.5px solid var(--separator);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 343px;
+            transition: all 0.3s ease;
         }
-        
+
+        @media (max-width: 480px) {
+            .tab-bar {
+                bottom: 10px;
+                width: calc(100vw - 20px);
+                max-width: 343px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .tab-bar {
+                width: 363px;
+            }
+        }
+
         .tab-item {
             display: flex;
             flex-direction: column;
@@ -328,41 +1124,66 @@
             color: var(--text-secondary);
             font-size: 10px;
             flex: 1;
+            transition: all 0.2s ease;
+            padding: 8px 4px;
+            border-radius: 8px;
+            position: relative;
         }
-        
+
+        .tab-item:hover {
+            color: var(--primary);
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+
         .tab-item.active {
             color: var(--primary);
+            background-color: rgba(0, 122, 255, 0.1);
         }
-        
+
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
         .tab-icon {
-            font-size: 24px;
+            font-size: 20px;
             margin-bottom: 4px;
+            transition: transform 0.2s ease;
         }
-        
-        /* 二维码样式 */
-        .qrcode-container {
-            text-align: center;
-            padding: 30px 0;
+
+        .tab-item.active .tab-icon {
+            transform: scale(1.1);
         }
-        
-        .qrcode {
-            width: 200px;
-            height: 200px;
-            background-color: #f0f0f0;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
+
+        /* 工具页面样式 */
+        .tools-section {
+            margin-bottom: 20px;
         }
-        
+
+        .tools-section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
         /* 个人资料样式 */
         .profile-header {
             display: flex;
             align-items: center;
-            padding: 20px 0;
+            padding: 16px 0;
+            margin: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
-        
+
         .profile-avatar {
             width: 70px;
             height: 70px;
@@ -375,22 +1196,22 @@
             font-size: 28px;
             margin-right: 16px;
         }
-        
+
         .profile-info {
             flex: 1;
         }
-        
+
         .profile-name {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             margin-bottom: 4px;
         }
-        
+
         .profile-email {
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-secondary);
         }
-        
+
         /* 设置项 */
         .settings-item {
             padding: 16px;
@@ -398,156 +1219,1719 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 17px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
-        
+
+        .settings-item:active {
+            background-color: rgba(0, 122, 255, 0.05);
+        }
+
         .settings-item:last-child {
             border-bottom: none;
         }
-        
+
         .settings-icon {
-            width: 24px;
-            margin-right: 16px;
+            width: 22px;
+            margin-right: 14px;
             text-align: center;
             color: var(--text-secondary);
         }
-        
-        .settings-label {
+
+        .settings-content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
-        
+
+        .settings-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .settings-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
         .settings-arrow {
             color: var(--text-tertiary);
         }
-        
+
+        /* 我的页面特定样式修复 */
+        #profile-page {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        #profile-page .content {
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 16px !important;
+            padding-top: 60px !important;
+            padding-bottom: 80px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* 强制修复所有页面的content padding */
+        .content {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+        }
+
+        /* 签到选择选项样式 */
+
+        .option-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 16px;
+        }
+
+        .option-content {
+            flex: 1;
+        }
+
+        .option-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .option-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .option-arrow {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        /* 活动选择列表样式 */
+        .activity-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .activity-select-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--separator);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .activity-select-item:hover {
+            background: var(--background);
+        }
+
+        .activity-select-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-select-info {
+            flex: 1;
+        }
+
+        .activity-select-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .activity-select-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .activity-select-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .activity-select-status.ongoing {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+        }
+
+        .activity-select-status.upcoming {
+            background: rgba(255, 149, 0, 0.1);
+            color: var(--warning);
+        }
+
+        .activity-select-status.ended {
+            background: rgba(142, 142, 147, 0.1);
+            color: var(--text-secondary);
+        }
+
         /* 动画效果 */
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
-        
+
         .fade-in {
             animation: fadeIn 0.3s ease;
         }
-        
-        /* 加载状态 */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-            border-radius: 4px;
+
+        /* 活动信息卡片 */
+        .activity-info-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        
-        @keyframes loading {
-            0% {
-                background-position: 200% 0;
+
+        .activity-info-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .activity-info-meta {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .activity-info-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            opacity: 0.9;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-info-location {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .activity-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .activity-detail-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .activity-detail-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .activity-detail-btn:active {
+            transform: translateY(0);
+        }
+
+        .activity-detail-close-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .activity-detail-close-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .activity-info-icon {
+            width: 14px;
+            margin-right: 6px;
+            text-align: center;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        /* 创建成功页面 */
+        .success-page {
+            text-align: center;
+            padding: 20px 20px;
+        }
+
+        .success-icon {
+            font-size: 48px;
+            color: var(--success);
+            margin-bottom: 12px;
+        }
+
+        .success-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .success-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* 创建按钮容器 */
+        .create-button-container {
+            padding: 16px 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .create-button-container .btn {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
             }
-            100% {
-                background-position: -200% 0;
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        /* 签到进度条 */
+        .checkin-progress {
+            margin-bottom: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .progress-percentage {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--background);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #30D158);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* 签到操作按钮 */
+        .checkin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .checkin-action-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 12px;
+            min-height: 60px;
+        }
+
+        .checkin-action-btn i {
+            font-size: 20px;
+        }
+
+        .checkin-action-btn span {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* 报名人员概览面板 */
+        .participants-overview-panel {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+        }
+
+        .participants-panel-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--separator);
+            transition: background-color 0.2s ease;
+        }
+
+        .participants-panel-header:hover {
+            background: var(--background);
+        }
+
+        .participants-panel-title {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .participants-panel-icon {
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .participants-count {
+            font-size: 14px;
+            color: var(--text-secondary);
+            background: var(--background);
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .participants-panel-toggle {
+            transition: transform 0.3s ease;
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .participants-panel-toggle.expanded {
+            transform: rotate(180deg);
+        }
+
+        .participants-panel-content {
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .participants-panel-content.expanded {
+            display: block;
+        }
+
+        /* 参与者控制区域 */
+        .participants-controls {
+            padding: 16px;
+            border-bottom: 1px solid var(--separator);
+        }
+
+
+        .search-box {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--background);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .filter-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--separator);
+            border-radius: 16px;
+            background: var(--background);
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* 参与者列表 */
+        .participants-list {
+            /* 移除高度限制，让所有参与者信息完全展示 */
+            display: block;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--separator);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .participant-item:hover {
+            background: var(--background);
+        }
+
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+
+        .participant-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .participant-phone {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .participant-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-checked {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-waiting {
+            background: var(--warning);
+            color: white;
+        }
+
+        .status-unchecked {
+            background: var(--text-tertiary);
+            color: white;
+        }
+
+        .status-absent {
+            background: var(--danger);
+            color: white;
+        }
+
+        .checkin-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .checkin-list {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .checkin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 0.5px solid var(--separator);
+        }
+
+        .checkin-item:last-child {
+            border-bottom: none;
+        }
+
+        .checkin-user {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkin-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 18px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .checkin-name {
+            font-weight: 600;
+        }
+
+        .checkin-time {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 表单提示文本 */
+        .form-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        /* 加载状态 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--separator);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* 错误状态 */
+        .form-input.error {
+            border-color: var(--danger);
+            background-color: rgba(255, 59, 48, 0.05);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 14px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .error-message::before {
+            content: '⚠️';
+            font-size: 12px;
+        }
+
+        .form-group.error .form-label {
+            color: var(--danger);
+        }
+
+        .success-message {
+            color: var(--success);
+            font-size: 14px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .success-message::before {
+            content: '✓';
+            font-size: 12px;
+        }
+
+        /* 屏幕阅读器专用样式 */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* 高对比度模式支持 */
+        @media (prefers-contrast: high) {
+
+            .action-card,
+            .tool-item {
+                border: 2px solid var(--text-primary);
+            }
+
+            .action-card:focus,
+            .tool-item:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 4px var(--primary);
+            }
+        }
+
+        /* 减少动画模式支持 */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* 参与者管理页面样式 */
+        .activity-overview {
+            margin-bottom: 20px;
+        }
+
+        .activity-overview .activity-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .activity-overview .activity-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .participants-stats-overview {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .participants-stats-overview .stat-item {
+            text-align: center;
+            padding: 12px;
+            background: var(--background);
+            border-radius: 8px;
+            border: 1px solid var(--separator);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .participants-stats-overview .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+            text-align: center;
+        }
+
+        .participants-stats-overview .stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* 搜索和筛选区域 */
+        .search-section {
+            margin-bottom: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px 10px 36px;
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-size: 14px;
+            background: var(--background);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+        }
+
+        .search-clear {
+            position: absolute;
+            right: 8px;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: var(--text-secondary);
+            color: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 4px 8px;
+            border: 1px solid var(--separator);
+            border-radius: 12px;
+            background: var(--background);
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+
+        .participant-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .participant-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .participant-contact {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+
+        .participant-status {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .status-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .status-icon:active {
+            transform: scale(0.95);
+        }
+
+        .status-checked {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-unchecked {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .status-waiting {
+            background: var(--warning);
+            color: white;
+        }
+
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            width: 300px;
+            max-width: 90%;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .share-modal-content {
+            width: 350px;
+            max-width: 95%;
+        }
+
+        .share-content {
+            padding: 0;
+        }
+
+        .qr-code-section {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .qr-code-container {
+            margin-bottom: 12px;
+        }
+
+        .qr-code-placeholder {
+            width: 200px;
+            height: 200px;
+            background: var(--background);
+            border: 2px dashed var(--separator);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        .qr-code-placeholder i {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .qr-code-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .qr-code-activity-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .qr-code-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .share-info {
+            margin-bottom: 20px;
+        }
+
+        .share-code-section,
+        .share-link-section {
+            margin-bottom: 16px;
+        }
+
+        .share-code-display,
+        .share-link-display {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .share-code {
+            flex: 1;
+            padding: 10px 12px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .share-link-display .form-input {
+            flex: 1;
+            margin: 0;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 12px;
+            min-height: auto;
+        }
+
+        .share-actions {
+            margin-bottom: 16px;
+        }
+
+        .share-actions .btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .share-content {
+            padding: 0;
+        }
+
+        .qr-code-section {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .qr-code-container {
+            margin-bottom: 12px;
+        }
+
+        .qr-code-placeholder {
+            width: 200px;
+            height: 200px;
+            background: var(--background);
+            border: 2px dashed var(--separator);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: var(--text-secondary);
+        }
+
+        .qr-code-placeholder i {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .qr-code-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .qr-code-activity-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .qr-code-hint {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        .share-info {
+            margin-bottom: 20px;
+        }
+
+        .share-code-section,
+        .share-link-section {
+            margin-bottom: 16px;
+        }
+
+        .share-code-display,
+        .share-link-display {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .share-code {
+            flex: 1;
+            padding: 10px 12px;
+            background: var(--background);
+            border: 1px solid var(--separator);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .share-link-display .form-input {
+            flex: 1;
+            margin: 0;
+        }
+
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 12px;
+            min-height: auto;
+        }
+
+        .share-actions {
+            margin-bottom: 16px;
+        }
+
+        .share-actions .btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .modal-actions .btn:last-child {
+            margin-right: 0;
+        }
+
+        /* Toast提示 */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* 底部导航栏 - 统一设计，支持安全区 */
+        .tab-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 375px;
+            height: 80px;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            background: var(--card-bg);
+            border-top: 0.5px solid var(--separator);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+        }
+
+        .tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            min-width: 60px;
+            position: relative;
+        }
+
+        .tab-item:hover {
+            background: var(--background);
+        }
+
+        .tab-item:active {
+            transform: scale(0.95);
+        }
+
+        .tab-item.active {
+            color: var(--primary);
+        }
+
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .tab-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            transition: transform 0.2s ease;
+        }
+
+        .tab-item.active .tab-icon {
+            transform: scale(1.1);
+        }
+
+        .tab-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* 创建按钮特殊样式 */
+        .create-icon {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.3);
+        }
+
+        .tab-item[data-page="create-page"] {
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 响应式设计 - 统一处理 */
+        @media (max-width: 480px) {
+            .tab-bar {
+                max-width: 100vw;
+                left: 0;
+                transform: none;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .tab-bar {
+                max-width: 400px;
+            }
+        }
+
+        /* 中等屏幕优化 */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+            }
+
+            .tool-item {
+                aspect-ratio: 1;
+            }
+        }
+
+        /* 大屏幕优化 */
+        @media (min-width: 769px) {
+            .tools-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+
+            .tool-item {
+                aspect-ratio: 1;
+            }
+        }
+
+        /* 支持iOS安全区域 */
+        @supports (padding: max(0px)) {
+            .tab-bar {
+                padding-bottom: max(env(safe-area-inset-bottom), 0px);
+            }
+        }
+
+        /* 活动详情页工具栏样式 */
+        .tools-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tool-item-compact {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            background: var(--card-bg);
+            border: 1px solid var(--separator);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            aspect-ratio: 1;
+            justify-content: center;
+        }
+
+        .tool-item-compact:hover {
+            background: var(--background);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .tool-item-compact:active {
+            transform: translateY(0);
+        }
+
+        .tool-icon-compact {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        .tool-label-compact {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .more-tools {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--separator);
+        }
+
+        .more-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+
+        .tool-item-small {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 4px;
+            background: var(--card-bg);
+            border: 1px solid var(--separator);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            aspect-ratio: 1;
+            justify-content: center;
+        }
+
+        .tool-item-small:hover {
+            background: var(--background);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .tool-item-small:active {
+            transform: translateY(0);
+        }
+
+        .tool-icon-small {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 4px;
+            font-size: 12px;
+        }
+
+        .tool-label-small {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-align: center;
+            line-height: 1.2;
         }
     </style>
 </head>
+
 <body>
     <div class="mobile-container">
-        <!-- 状态栏 -->
-        <div class="status-bar">
-            <div>9:41</div>
-            <div>
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi" style="margin-left: 5px;"></i>
-                <i class="fas fa-battery-three-quarters" style="margin-left: 5px;"></i>
-            </div>
-        </div>
 
-        <!-- 首页 -->
-        <div id="home-page" class="page active">
+        <!-- 活动页面（首页） -->
+        <div id="activities-page" class="page active">
             <div class="nav-bar">
-                <div class="nav-title">活动管理</div>
+                <div class="nav-title">首页</div>
             </div>
-            
+
             <div class="content">
-                <!-- 数据统计 -->
+                <!-- 活动统计 -->
                 <div class="card">
+                    <div class="card-header">活动概览</div>
                     <div class="card-content">
                         <div class="stats-grid">
                             <div class="stat-item">
-                                <div class="stat-value">5</div>
-                                <div class="stat-label">总活动</div>
+                                <div class="stat-value" id="profile-total-activities">0</div>
+                                <div class="stat-label">活动总数</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">128</div>
-                                <div class="stat-label">总参与</div>
+                                <div class="stat-value" id="profile-total-participants">0</div>
+                                <div class="stat-label">累计参与人数</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value">87%</div>
-                                <div class="stat-label">签到率</div>
+                                <div class="stat-value" id="profile-total-checkins">0</div>
+                                <div class="stat-label">累计签到人数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="profile-avg-rate">0%</div>
+                                <div class="stat-label">平均签到率</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
+                <!-- 活动筛选和搜索 -->
+                <div class="card" id="search-card" style="display: none;">
+                    <div class="card-header">
+                        <span>搜索活动</span>
+                    </div>
+                    <div class="card-content">
+                        <!-- 搜索框 -->
+                        <div class="search-section">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="activity-search" placeholder="搜索活动名称或地点..." class="search-input">
+                            </div>
+                        </div>
+
+                        <!-- 筛选按钮 -->
+                        <div class="filter-section">
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" data-filter="all">全部</button>
+                                <button class="filter-btn" data-filter="ongoing">进行中</button>
+                                <button class="filter-btn" data-filter="upcoming">即将开始</button>
+                                <button class="filter-btn" data-filter="ended">已结束</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- 活动列表 -->
                 <div class="card">
-                    <div class="card-header">我的活动</div>
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <span>活动列表</span>
+                        </div>
+                        <div class="card-header-right">
+                            <button class="btn btn-small search-toggle-btn" onclick="toggleSearchCard()"
+                                style="display: flex; align-items: center; gap: 6px; margin-right: 8px;" title="搜索活动"ßß>
+                                <i class="fas fa-search"></i>
+                            </button>
+                            <button class="btn btn-primary btn-small" onclick="showPage('create-page')"
+                                style="display: flex; align-items: center; gap: 6px;">
+                                <i class="fas fa-plus"></i>
+                                新建活动
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-content" id="activities-container">
                         <!-- 活动项将通过JS动态加载 -->
                     </div>
                 </div>
-                
+
                 <!-- 空状态 -->
                 <div id="empty-state" class="empty-state" style="display: none;">
                     <div class="empty-icon">📅</div>
                     <div class="empty-title">暂无活动</div>
-                    <div class="empty-description">点击下方"+"创建您的第一个活动</div>
+                    <div class="empty-description">点击"新建活动"创建您的第一个活动</div>
                 </div>
             </div>
         </div>
-        
+
+
         <!-- 创建活动页面 -->
         <div id="create-page" class="page">
             <div class="nav-bar">
-                <div class="nav-button left" id="back-button">取消</div>
                 <div class="nav-title">创建活动</div>
-                <div class="nav-button right" style="visibility: hidden;">完成</div>
             </div>
-            
+
             <div class="content">
                 <div class="card">
                     <div class="card-content">
                         <form id="create-activity-form">
                             <div class="form-group">
                                 <label class="form-label" for="activity-name">活动名称</label>
-                                <input type="text" class="form-input" id="activity-name" placeholder="输入活动名称" required>
+                                <input type="text" class="form-input" id="activity-name" placeholder="例如：产品发布会"
+                                    required>
+                                <div class="form-hint">给您的活动起一个容易识别的名字</div>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label class="form-label" for="activity-date">活动日期</label>
-                                <input type="date" class="form-input" id="activity-date" required>
+                                <label class="datetime-label">活动时间</label>
+                                <div class="datetime-group">
+                                    <div class="date-input">
+                                        <input type="date" class="form-input" id="activity-date" required>
+                                    </div>
+                                    <div class="time-input">
+                                        <input type="time" class="form-input" id="activity-time" required>
+                                    </div>
+                                </div>
+                                <div class="form-hint">设置活动的日期和开始时间</div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label" for="activity-time">活动时间</label>
-                                <input type="time" class="form-input" id="activity-time" required>
-                            </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label" for="activity-location">活动地点</label>
-                                <input type="text" class="form-input" id="activity-location" placeholder="输入活动地点">
+                                <input type="text" class="form-input" id="activity-location" placeholder="例如：北京国际会议中心">
+                                <div class="form-hint">填写详细地址，方便参与者找到</div>
                             </div>
-                            
+
                             <div class="form-group">
-                                <label class="form-label" for="activity-description">活动描述</label>
-                                <textarea class="form-input" id="activity-description" placeholder="简单描述您的活动" rows="3"></textarea>
+                                <label class="form-label" for="activity-capacity">最多参加人数</label>
+                                <input type="number" class="form-input" id="activity-capacity" placeholder="0表示不限制"
+                                    min="0">
+                                <div class="form-hint">设置可参与的最大人数，0表示不限制</div>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary btn-large">创建活动</button>
+
+                            <div class="form-group">
+                                <label class="form-label" for="activity-description">活动介绍</label>
+                                <textarea class="form-input" id="activity-description" placeholder="简单描述您的活动内容..."
+                                    rows="3"></textarea>
+                                <div class="form-hint">选填，帮助参与者了解活动内容</div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
+                <!-- 创建按钮 -->
+                <div class="create-button-container">
+                    <button class="btn btn-primary btn-medium" id="create-activity-btn">创建活动</button>
+                </div>
             </div>
         </div>
-        
+
+        <!-- 创建成功页面 -->
+        <div id="create-success-page" class="page">
+            <div class="nav-bar">
+                <div class="nav-button left" id="success-back-button">返回</div>
+                <div class="nav-title">创建成功</div>
+                <div class="nav-button right" style="visibility: hidden;"></div>
+            </div>
+
+            <div class="content">
+                <!-- 成功提示 -->
+                <div class="success-page">
+                    <div class="success-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="success-title">活动创建成功！</div>
+                    <div class="success-description" id="success-activity-name">产品发布会</div>
+                </div>
+
+                <!-- 分享卡片 -->
+                <div class="card">
+                    <div class="card-header">分享活动</div>
+                    <div class="card-content">
+                        <!-- 二维码区域 -->
+                        <div class="qr-code-section">
+                            <div class="qr-code-container">
+                                <div class="qr-code-placeholder" id="success-qr-code-placeholder">
+                                    <i class="fas fa-qr-code"></i>
+                                    <div class="qr-code-text">活动二维码</div>
+                                    <div class="qr-code-activity-name" id="success-activity-name-qr">产品发布会</div>
+                                </div>
+                            </div>
+                            <p class="qr-code-hint">📱 扫码报名或签到</p>
+                        </div>
+                        
+                        <!-- 分享信息 -->
+                        <div class="share-info">
+                            <div class="share-link-section">
+                                <label class="form-label">分享链接</label>
+                                <div class="share-link-display">
+                                    <input type="text" class="form-input" id="success-share-link"
+                                        value="https://act.vip/8x3K9p" readonly>
+                                    <button class="btn btn-primary" onclick="copySuccessShareLink()">复制</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 分享操作 -->
+                        <div class="share-actions">
+                            <button class="btn btn-primary" onclick="shareSuccessToWeChat()">
+                                <i class="fas fa-comments"></i>
+                                分享给好友
+                            </button>
+                            <button class="btn" onclick="saveQRCode()">
+                                <i class="fas fa-download"></i>
+                                保存二维码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 操作按钮 -->
+                <div class="create-button-container">
+                    <button class="btn btn-primary" onclick="goToActivityDetail()">查看活动详情</button>
+                    <button class="btn" onclick="goToActivitiesList()">返回活动列表</button>
+                </div>
+            </div>
+        </div>
+
         <!-- 活动详情页面 -->
         <div id="detail-page" class="page">
             <div class="nav-bar">
@@ -555,92 +2939,271 @@
                 <div class="nav-title" id="detail-activity-name">活动详情</div>
                 <div class="nav-button right" id="edit-button">编辑</div>
             </div>
-            
+
             <div class="content">
-                <!-- 活动数据 -->
-                <div class="card">
+                <!-- 活动统计（最上面） -->
+                <div class="card stats-card">
+                    <div class="card-header">活动统计</div>
                     <div class="card-content">
                         <div class="stats-grid">
                             <div class="stat-item">
-                                <div class="stat-value" id="detail-participants">0</div>
+                                <div class="stat-value" id="detail-views">245</div>
+                                <div class="stat-label">浏览量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="detail-participants">45</div>
                                 <div class="stat-label">报名人数</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value" id="detail-checkins">0</div>
+                                <div class="stat-value" id="detail-checkins">3</div>
                                 <div class="stat-label">签到人数</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-value" id="detail-rate">0%</div>
+                                <div class="stat-value" id="detail-rate">84%</div>
                                 <div class="stat-label">签到率</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- 活动信息 -->
-                <div class="card">
-                    <div class="card-header">活动信息</div>
+
+                <!-- 活动信息卡片（支持展开详情和修改） -->
+                <div class="activity-info-card">
+                    <div class="activity-info-header">
+                        <div class="activity-info-title" id="detail-info-title">活动详情</div>
+                        <button class="activity-detail-btn" id="activity-detail-btn" onclick="toggleActivityDetail()">
+                            <i class="fas fa-info-circle"></i>
+                            <span>详情</span>
+                        </button>
+                    </div>
+                    <div class="activity-info-meta">
+                        <div class="activity-info-item">
+                            <i class="fas fa-calendar activity-info-icon"></i>
+                            <span id="detail-info-datetime">加载中...</span>
+                        </div>
+                        <div class="activity-info-item">
+                            <i class="fas fa-users activity-info-icon"></i>
+                            <span id="detail-info-capacity">加载中...</span>
+                        </div>
+                    </div>
+                    <div class="activity-info-location">
+                        <i class="fas fa-map-marker-alt activity-info-icon"></i>
+                        <span id="detail-info-location">加载中...</span>
+                    </div>
+                </div>
+
+                <!-- 活动详情信息（可折叠） -->
+                <div class="card" id="activity-detail-card" style="display: none;">
+                    <div class="card-header">
+                        <div class="card-header-left">
+                            <i class="fas fa-info-circle" style="margin-right: 8px; color: var(--primary);"></i>
+                            <span>活动详情</span>
+                        </div>
+                        <div class="card-header-right">
+                            <button class="activity-detail-close-btn" onclick="toggleActivityDetail()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-content">
                         <div class="form-group">
                             <label class="form-label">活动名称</label>
-                            <input type="text" class="form-input" id="edit-activity-name" value="加载中..." readonly>
+                            <input type="text" class="form-input" id="edit-activity-name" value="产品发布会" readonly>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label class="form-label">活动日期</label>
-                            <input type="date" class="form-input" id="edit-activity-date" value="2023-06-15" readonly>
+                            <label class="datetime-label">活动时间</label>
+                            <div class="datetime-group">
+                                <div class="date-input">
+                                    <input type="date" class="form-input" id="edit-activity-date" value="2023-06-15"
+                                        readonly>
+                                </div>
+                                <div class="time-input">
+                                    <input type="time" class="form-input" id="edit-activity-time" value="14:00"
+                                        readonly>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">活动时间</label>
-                            <input type="time" class="form-input" id="edit-activity-time" value="14:00" readonly>
-                        </div>
-                        
+
                         <div class="form-group">
                             <label class="form-label">活动地点</label>
-                            <input type="text" class="form-input" id="edit-activity-location" value="加载中..." readonly>
+                            <input type="text" class="form-input" id="edit-activity-location" value="北京国际会议中心" readonly>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label class="form-label">活动描述</label>
-                            <textarea class="form-input" id="edit-activity-description" rows="3" readonly>加载中...</textarea>
+                            <label class="form-label">最多参加人数</label>
+                            <input type="number" class="form-input" id="edit-activity-capacity" value="50" readonly>
                         </div>
-                        
-                        <button class="btn btn-primary btn-large" id="save-activity-btn" style="display: none;">保存修改</button>
+
+                        <div class="form-group">
+                            <label class="form-label">活动介绍</label>
+                            <textarea class="form-input" id="edit-activity-description" rows="3"
+                                readonly>欢迎参加我们的年度产品发布会，届时将发布多款创新产品。</textarea>
+                        </div>
+
+                        <button class="btn btn-primary btn-large" id="save-activity-btn"
+                            style="display: none;">保存修改</button>
                     </div>
                 </div>
-                
-                <!-- 活动分享 -->
+
+                <!-- 工具栏 -->
                 <div class="card">
-                    <div class="card-header">活动分享</div>
+                    <div class="card-header">
+                        <span>活动工具</span>
+                    </div>
                     <div class="card-content">
-                        <p style="margin-bottom: 16px; color: var(--text-secondary);">分享以下内容给参与者</p>
-                        
-                        <div class="qrcode-container">
-                            <div class="qrcode">
-                                <span>二维码图案</span>
+                        <!-- 主要工具网格 -->
+                        <div class="tools-grid-compact">
+                            <div class="tool-item-compact" onclick="openParticipantsPage()">
+                                <div class="tool-icon-compact"
+                                    style="background: rgba(0, 122, 255, 0.1); color: var(--primary);">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="tool-label-compact">报名情况</div>
                             </div>
-                            <p>扫描二维码参与活动</p>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label">短链接</label>
-                            <div style="display: flex;">
-                                <input type="text" class="form-input" id="short-link" value="https://act.vip/8x3K9p" readonly style="flex: 1; border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                                <button class="btn btn-primary" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" id="copy-link-btn">复制</button>
+
+
+                            <div class="tool-item-compact" onclick="showActivityShare(currentActivityId)">
+                                <div class="tool-icon-compact"
+                                    style="background: rgba(255, 149, 0, 0.1); color: var(--warning);">
+                                    <i class="fas fa-share-alt"></i>
+                                </div>
+                                <div class="tool-label-compact">分享</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- 活动分享模态框 -->
+        <div class="modal" id="activity-share-modal">
+            <div class="modal-content share-modal-content">
+                <div class="modal-header">活动分享</div>
+                <div class="share-content">
+                    <!-- 二维码区域 -->
+                    <div class="qr-code-section">
+                        <div class="qr-code-container">
+                            <div class="qr-code-placeholder" id="qr-code-placeholder">
+                                <i class="fas fa-qr-code"></i>
+                                <div class="qr-code-text">活动二维码</div>
+                                <div class="qr-code-activity-name" id="share-activity-name">产品发布会</div>
+                            </div>
+                        </div>
+                        <p class="qr-code-hint">📱 扫码报名或签到</p>
+                    </div>
+
+                    <!-- 分享信息 -->
+                    <div class="share-info">
+                        <div class="share-link-section">
+                            <label class="form-label">分享链接</label>
+                            <div class="share-link-display">
+                                <input type="text" class="form-input" id="share-link" value="https://act.vip/8x3K9p"
+                                    readonly>
+                                <button class="btn btn-primary" onclick="copyShareLink()">复制</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 分享操作 -->
+                    <div class="share-actions">
+                        <button class="btn btn-primary btn-large" onclick="shareToWeChat()">
+                            <i class="fas fa-comments"></i>
+                            分享给好友
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn" onclick="closeModal('activity-share-modal')">关闭</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 报名人员页面 -->
+        <div id="participants-page" class="page">
+            <div class="nav-bar">
+                <div class="nav-button left" id="participants-back-button">返回</div>
+                <div class="nav-title" id="participants-page-title">报名人员</div>
+                <div class="nav-button right" style="visibility: hidden;"></div>
+            </div>
+
+            <div class="content">
+                <!-- 统计概览 -->
+                <div class="card stats-card">
+                    <div class="card-header">报名统计</div>
+                    <div class="card-content">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="participants-total">45</div>
+                                <div class="stat-label">报名人数</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="participants-checked">3</div>
+                                <div class="stat-label">已签到</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="participants-unchecked">42</div>
+                                <div class="stat-label">未签到</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="participants-rate">7%</div>
+                                <div class="stat-label">签到率</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 报名人员列表 -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="participants-panel-title">
+                            <i class="fas fa-users participants-panel-icon"></i>
+                            <span>报名人员</span>
+                            <div class="participants-count" id="participants-count">45人（已签3人）</div>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <!-- 搜索和筛选 -->
+                        <div class="participants-controls">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="participant-search" placeholder="搜索参与者...">
+                            </div>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active" data-filter="all">全部</button>
+                                <button class="filter-btn" data-filter="checked">已签到</button>
+                                <button class="filter-btn" data-filter="unchecked">未签到</button>
+                            </div>
+                        </div>
+
+                        <!-- 参与者列表 -->
+                        <div class="participants-list" id="participants-list">
+                            <!-- 动态加载参与者列表 -->
+                        </div>
+
+                        <!-- 导出按钮 -->
+                        <div class="participants-actions">
+                            <button class="btn btn-primary" onclick="exportParticipants()">
+                                <i class="fas fa-download"></i>
+                                导出名单
+                            </button>
+                            <button class="btn" onclick="showToast('打印功能开发中...')">
+                                <i class="fas fa-print"></i>
+                                打印名单
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- 我的页面 -->
         <div id="profile-page" class="page">
             <div class="nav-bar">
                 <div class="nav-title">我的</div>
             </div>
-            
+
             <div class="content">
                 <!-- 个人信息 -->
                 <div class="card">
@@ -654,242 +3217,887 @@
                                 <div class="profile-email">user@example.com</div>
                             </div>
                         </div>
-                        
-                        <div style="border-top: 0.5px solid var(--separator); padding-top: 16px;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                                <span>活动统计</span>
-                                <span style="color: var(--text-secondary);">5个活动</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-                                <span>参与者统计</span>
-                                <span style="color: var(--text-secondary);">128人参与</span>
-                            </div>
-                            <div style="display: flex; justify-content: space-between;">
-                                <span>平均签到率</span>
-                                <span style="color: var(--text-secondary);">87%</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                
-                <!-- 设置选项 -->
+
+                <!-- 常用设置 -->
                 <div class="card">
-                    <div class="settings-item">
+                    <div class="card-header">常用设置</div>
+                    <div class="settings-item" onclick="showToast('主题设置功能准备中...')">
+                        <div class="settings-icon"><i class="fas fa-palette"></i></div>
+                        <div class="settings-content">
+                            <div class="settings-label">主题设置</div>
+                            <div class="settings-desc">切换深色/浅色模式</div>
+                        </div>
+                        <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="settings-item" onclick="showToast('通知设置功能准备中...')">
                         <div class="settings-icon"><i class="fas fa-bell"></i></div>
-                        <div class="settings-label">通知设置</div>
+                        <div class="settings-content">
+                            <div class="settings-label">通知设置</div>
+                            <div class="settings-desc">管理推送通知偏好</div>
+                        </div>
                         <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
                     </div>
-                    <div class="settings-item">
-                        <div class="settings-icon"><i class="fas fa-question-circle"></i></div>
-                        <div class="settings-label">帮助与反馈</div>
+                    <div class="settings-item" onclick="showToast('数据管理功能准备中...')">
+                        <div class="settings-icon"><i class="fas fa-database"></i></div>
+                        <div class="settings-content">
+                            <div class="settings-label">数据管理</div>
+                            <div class="settings-desc">导出数据、清理缓存</div>
+                        </div>
                         <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
                     </div>
-                    <div class="settings-item">
+                </div>
+
+                <!-- 帮助与支持 -->
+                <div class="card">
+                    <div class="card-header">帮助与支持</div>
+                    <div class="settings-item" onclick="showToast('使用指南功能准备中...')">
+                        <div class="settings-icon"><i class="fas fa-book"></i></div>
+                        <div class="settings-content">
+                            <div class="settings-label">使用指南</div>
+                            <div class="settings-desc">查看详细使用教程</div>
+                        </div>
+                        <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="settings-item" onclick="showFeedbackModal()">
+                        <div class="settings-icon"><i class="fas fa-comment-dots"></i></div>
+                        <div class="settings-content">
+                            <div class="settings-label">意见反馈</div>
+                            <div class="settings-desc">提交建议和问题</div>
+                        </div>
+                        <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
+                    </div>
+                    <div class="settings-item" onclick="showToast('关于页面准备中...')">
                         <div class="settings-icon"><i class="fas fa-info-circle"></i></div>
-                        <div class="settings-label">关于活动帮手</div>
+                        <div class="settings-content">
+                            <div class="settings-label">关于活动帮手</div>
+                            <div class="settings-desc">版本信息、隐私政策</div>
+                        </div>
                         <div class="settings-arrow"><i class="fas fa-chevron-right"></i></div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- 底部标签栏 -->
-        <div class="tab-bar">
-            <a href="#" class="tab-item active" data-page="home-page">
-                <div class="tab-icon"><i class="fas fa-chart-bar"></i></div>
-                <span>首页</span>
-            </a>
-            <a href="#" class="tab-item" data-page="create-page">
-                <div class="tab-icon"><i class="fas fa-plus"></i></div>
-                <span>创建</span>
-            </a>
-            <a href="#" class="tab-item" data-page="profile-page">
-                <div class="tab-icon"><i class="fas fa-user"></i></div>
-                <span>我的</span>
-            </a>
+
+        <!-- 反馈模态框 -->
+        <div id="feedback-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>APP反馈</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="feedback-form">
+                        <div class="form-group">
+                            <label class="form-label" for="feedback-tool-name">功能名称</label>
+                            <input type="text" class="form-input" id="feedback-tool-name" placeholder="例如：抽奖工具"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="feedback-description">功能描述</label>
+                            <textarea class="form-input" id="feedback-description" rows="4"
+                                placeholder="请详细描述您希望这个工具具备什么功能..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="feedback-contact">联系方式（可选）</label>
+                            <input type="text" class="form-input" id="feedback-contact" placeholder="邮箱或微信号，方便我们联系您">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer" style="display: flex; gap: 12px; justify-content: center;">
+                    <button class="btn" onclick="closeModal('feedback-modal')" ßß>取消</button>
+                    <button class="btn btn-primary" onclick="submitFeedback()">提交反馈</button>
+                </div>
+            </div>
         </div>
+
+        <!-- Toast提示 -->
+        <div class="toast" id="toast"></div>
+
+        <!-- 底部导航栏 -->
+        <div class="tab-bar">
+            <div class="tab-item active" data-page="activities-page">
+                <div class="tab-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="tab-label">首页</div>
+            </div>
+            <div class="tab-item" data-page="create-page">
+                <div class="tab-icon create-icon">
+                    <i class="fas fa-plus"></i>
+                </div>
+            </div>
+            <div class="tab-item" data-page="profile-page">
+                <div class="tab-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="tab-label">我的</div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         // 模拟活动数据
-        const activities = [
+        let activities = [
             {
                 id: 1,
                 name: "产品发布会",
+                type: "meeting",
                 date: "2023-06-15",
                 time: "14:00",
                 location: "北京国际会议中心",
                 description: "欢迎参加我们的年度产品发布会，届时将发布多款创新产品。",
+                capacity: 50,
                 participants: 45,
-                checkins: 38,
-                status: "upcoming" // upcoming, ongoing, ended
+                checkins: 4,
+                views: 245,
+                status: "ongoing", // upcoming, ongoing, ended
+                checkinRecords: [
+                    { id: 1, name: "张三", phone: "138****1234", time: "14:05" },
+                    { id: 2, name: "李四", phone: "139****5678", time: "14:10" },
+                    { id: 3, name: "王五", phone: "136****9012", time: "14:15" },
+                    { id: 4, name: "赵六", phone: "137****3456", time: "14:20" }
+                ]
             },
             {
                 id: 2,
                 name: "技术研讨会",
+                type: "training",
                 date: "2023-05-20",
                 time: "09:30",
                 location: "上海科技园",
                 description: "深入探讨最新技术趋势和行业动态。",
+                capacity: 40,
                 participants: 32,
                 checkins: 30,
-                status: "ended"
+                views: 187,
+                status: "ended",
+                checkinRecords: [
+                    { id: 1, name: "赵六", phone: "137****3456", time: "09:25" },
+                    { id: 2, name: "钱七", phone: "135****7890", time: "09:30" }
+                ]
             },
             {
                 id: 3,
                 name: "团队建设活动",
-                date: "2023-06-10",
+                type: "social",
+                date: "2023-06-20",
                 time: "10:00",
                 location: "郊外度假村",
                 description: "增强团队凝聚力的户外活动。",
+                capacity: 30,
                 participants: 28,
                 checkins: 25,
-                status: "ongoing"
+                views: 156,
+                status: "upcoming",
+                checkinRecords: [
+                    { id: 1, name: "孙八", phone: "", time: "10:05" },
+                    { id: 2, name: "周九", phone: "", time: "10:10" }
+                ]
             }
         ];
-        
+
         // 当前选中的活动ID
         let currentActivityId = null;
         let isEditing = false;
-        
+
         // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+
             // 初始化活动列表
             renderActivities();
-            
-            // 底部导航切换
-            document.querySelectorAll('.tab-item').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // 更新活跃导航项
-                    document.querySelectorAll('.tab-item').forEach(tab => {
-                        tab.classList.remove('active');
-                    });
+
+            // 更新活动页面统计数据
+            updateProfileStats();
+
+            // 设置活动筛选和搜索事件监听器
+            setupActivityFilters();
+
+
+
+            // 设置今日日期
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            const activityDate = document.getElementById('activity-date');
+            if (activityDate) {
+                activityDate.value = formattedDate;
+            }
+
+            // 设置默认时间（当前时间+1小时）
+            const nextHour = new Date(today.getTime() + 60 * 60 * 1000);
+            const formattedTime = nextHour.toTimeString().substring(0, 5);
+            const activityTime = document.getElementById('activity-time');
+            if (activityTime) {
+                activityTime.value = formattedTime;
+            }
+
+            // 折叠面板交互
+            const toolsCollapseHeader = document.getElementById('tools-collapse-header');
+            if (toolsCollapseHeader) {
+                toolsCollapseHeader.addEventListener('click', function () {
+                    const content = document.getElementById('tools-collapse-content');
+                    const arrow = this.querySelector('.collapse-arrow');
+
+                    if (content) content.classList.toggle('expanded');
+                    if (arrow) arrow.classList.toggle('expanded');
+                });
+            }
+
+
+            // 报名人员面板交互
+            const participantsPanelHeader = document.getElementById('participants-panel-header');
+            if (participantsPanelHeader) {
+                participantsPanelHeader.addEventListener('click', function () {
+                    const content = document.getElementById('participants-panel-content');
+                    const toggle = document.getElementById('participants-panel-toggle');
+
+                    if (content) content.classList.toggle('expanded');
+                    if (toggle) toggle.classList.toggle('expanded');
+                });
+            }
+
+            // 参与者搜索功能
+            const participantSearch = document.getElementById('participant-search');
+            if (participantSearch) {
+                participantSearch.addEventListener('input', function () {
+                    searchQuery = this.value.trim();
+                    filterParticipants();
+                });
+            }
+
+            // 参与者筛选功能
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    // 显示对应页面
-                    const pageId = this.getAttribute('data-page');
-                    showPage(pageId);
+                    currentFilter = this.getAttribute('data-filter');
+                    filterParticipants();
                 });
             });
-            
+
+            // 底部导航切换
+            document.querySelectorAll('.tab-item').forEach(item => {
+                item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetPage = this.getAttribute('data-page');
+                    if (targetPage) {
+                        // 移除所有活动状态
+                        document.querySelectorAll('.tab-item').forEach(tab => tab.classList.remove('active'));
+                        // 添加当前活动状态
+                        this.classList.add('active');
+                        // 切换页面
+                        showPage(targetPage);
+                    }
+                });
+
+                // 添加键盘支持
+                item.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.click();
+                    }
+                });
+
+                // 设置tabindex以支持键盘导航
+                item.setAttribute('tabindex', '0');
+                item.setAttribute('role', 'button');
+            });
+
             // 返回按钮
-            document.getElementById('back-button').addEventListener('click', function() {
-                showPage('home-page');
-            });
-            
-            // 详情页返回按钮
-            document.getElementById('detail-back-button').addEventListener('click', function() {
-                if (isEditing) {
-                    cancelEdit();
-                } else {
-                    showPage('home-page');
-                }
-            });
-            
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                backButton.addEventListener('click', () => showPage('activities-page'));
+            }
+
+            // 创建成功页面返回按钮
+            const successBackButton = document.getElementById('success-back-button');
+            if (successBackButton) {
+                successBackButton.addEventListener('click', () => showPage('activities-page'));
+            }
+
+            const detailBackButton = document.getElementById('detail-back-button');
+            if (detailBackButton) {
+                detailBackButton.addEventListener('click', function () {
+                    isEditing ? cancelEdit() : showPage('activities-page');
+                });
+            }
+
             // 编辑按钮
-            document.getElementById('edit-button').addEventListener('click', function() {
-                if (isEditing) {
+            const editButton = document.getElementById('edit-button');
+            if (editButton) {
+                editButton.addEventListener('click', function () {
+                    isEditing ? saveActivity() : enableEdit();
+                });
+            }
+
+            // 创建活动按钮
+            const createActivityBtn = document.getElementById('create-activity-btn');
+            if (createActivityBtn) {
+                createActivityBtn.addEventListener('click', createActivity);
+            }
+
+            // 实时表单验证
+            const formInputs = document.querySelectorAll('#create-activity-form input, #create-activity-form textarea');
+            formInputs.forEach(input => {
+                input.addEventListener('blur', function () {
+                    const fieldId = this.id;
+                    const value = this.value.trim();
+
+                    // 根据字段类型进行验证
+                    switch (fieldId) {
+                        case 'activity-name':
+                            if (value.length > 0 && value.length <= 50) {
+                                clearFieldError(fieldId);
+                            }
+                            break;
+                        case 'activity-location':
+                            if (value.length <= 100) {
+                                clearFieldError(fieldId);
+                            }
+                            break;
+                        case 'activity-capacity':
+                            if (value === '' || (!isNaN(value) && parseInt(value) >= 0)) {
+                                clearFieldError(fieldId);
+                            }
+                            break;
+                    }
+                });
+
+                input.addEventListener('input', function () {
+                    // 输入时清除错误状态
+                    if (this.classList.contains('error')) {
+                        clearFieldError(this.id);
+                    }
+                });
+            });
+
+            // 保存活动按钮
+            const saveActivityBtn = document.getElementById('save-activity-btn');
+            if (saveActivityBtn) {
+                saveActivityBtn.addEventListener('click', function () {
                     saveActivity();
-                } else {
-                    enableEdit();
+                });
+            }
+
+
+            // 键盘导航支持
+            document.addEventListener('keydown', function (e) {
+                // Enter键激活按钮和卡片
+                if (e.key === 'Enter' && (e.target.classList.contains('action-card') || e.target.classList.contains('tool-item'))) {
+                    e.preventDefault();
+                    e.target.click();
                 }
-            });
-            
-            // 创建活动表单提交
-            document.getElementById('create-activity-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // 获取表单数据
-                const name = document.getElementById('activity-name').value;
-                const date = document.getElementById('activity-date').value;
-                const time = document.getElementById('activity-time').value;
-                const location = document.getElementById('activity-location').value;
-                const description = document.getElementById('activity-description').value;
-                
-                // 创建新活动
-                const newActivity = {
-                    id: activities.length + 1,
-                    name,
-                    date,
-                    time,
-                    location,
-                    description,
-                    participants: 0,
-                    checkins: 0,
-                    status: "upcoming"
-                };
-                
-                activities.push(newActivity);
-                
-                // 重置表单
-                this.reset();
-                
-                // 显示成功消息
-                showToast('活动创建成功！');
-                
-                // 返回首页并刷新活动列表
-                showPage('home-page');
-                renderActivities();
-            });
-            
-            // 复制短链接
-            document.getElementById('copy-link-btn').addEventListener('click', function() {
-                const linkInput = document.getElementById('short-link');
-                linkInput.select();
-                document.execCommand('copy');
-                
-                // 显示复制成功反馈
-                showToast('链接已复制到剪贴板');
+
+                // 空格键激活按钮和卡片
+                if (e.key === ' ' && (e.target.classList.contains('action-card') || e.target.classList.contains('tool-item'))) {
+                    e.preventDefault();
+                    e.target.click();
+                }
+
+                // Escape键关闭模态框
+                if (e.key === 'Escape') {
+                    const activeModal = document.querySelector('.modal.active');
+                    if (activeModal) {
+                        closeModal(activeModal.id);
+                    } else if (isEditing) {
+                        cancelEdit();
+                    }
+                }
+
+                // Tab键在模态框中循环焦点
+                if (e.key === 'Tab' && document.querySelector('.modal.active')) {
+                    const modal = document.querySelector('.modal.active');
+                    const focusableElements = modal.querySelectorAll('input, button, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const firstElement = focusableElements[0];
+                    const lastElement = focusableElements[focusableElements.length - 1];
+
+                    if (e.shiftKey) {
+                        if (document.activeElement === firstElement) {
+                            e.preventDefault();
+                            lastElement.focus();
+                        }
+                    } else {
+                        if (document.activeElement === lastElement) {
+                            e.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                }
             });
         });
-        
+
+        // 清除表单错误状态
+        function clearFormErrors() {
+            document.querySelectorAll('.form-input.error').forEach(input => {
+                input.classList.remove('error');
+            });
+            document.querySelectorAll('.form-group.error').forEach(group => {
+                group.classList.remove('error');
+            });
+            document.querySelectorAll('.error-message, .success-message').forEach(msg => {
+                msg.remove();
+            });
+        }
+
+        // 清除单个字段错误状态
+        function clearFieldError(fieldId) {
+            const field = document.getElementById(fieldId);
+            const formGroup = field.closest('.form-group');
+
+            field.classList.remove('error');
+            formGroup.classList.remove('error');
+            const existingError = formGroup.querySelector('.error-message');
+            if (existingError) existingError.remove();
+        }
+
+        // 显示字段错误
+        function showFieldError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const formGroup = field.closest('.form-group');
+
+            // 清除之前的错误状态
+            field.classList.remove('error');
+            formGroup.classList.remove('error');
+            const existingError = formGroup.querySelector('.error-message');
+            if (existingError) existingError.remove();
+
+            // 添加错误状态
+            field.classList.add('error');
+            formGroup.classList.add('error');
+
+            // 添加错误消息
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message';
+            errorMsg.textContent = message;
+            formGroup.appendChild(errorMsg);
+
+            // 聚焦到错误字段
+            field.focus();
+        }
+
+        // 验证表单字段
+        function validateField(fieldId, value, rules) {
+            const field = document.getElementById(fieldId);
+            const formGroup = field.closest('.form-group');
+
+            // 清除之前的错误状态
+            field.classList.remove('error');
+            formGroup.classList.remove('error');
+            const existingError = formGroup.querySelector('.error-message');
+            if (existingError) existingError.remove();
+
+            // 验证规则
+            for (const rule of rules) {
+                if (!rule.test(value)) {
+                    showFieldError(fieldId, rule.message);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        // 创建活动
+        function createActivity() {
+            // 清除之前的错误状态
+            clearFormErrors();
+
+            // 获取表单数据
+            const name = document.getElementById('activity-name').value.trim();
+            const date = document.getElementById('activity-date').value;
+            const time = document.getElementById('activity-time').value;
+            const location = document.getElementById('activity-location').value.trim();
+            const capacity = document.getElementById('activity-capacity').value || 0;
+            const description = document.getElementById('activity-description').value.trim();
+
+            // 定义验证规则
+            const validationRules = {
+                'activity-name': [
+                    { test: (val) => val.length > 0, message: '请输入活动名称' },
+                    { test: (val) => val.length <= 50, message: '活动名称不能超过50个字符' }
+                ],
+                'activity-date': [
+                    { test: (val) => val.length > 0, message: '请选择活动日期' }
+                ],
+                'activity-time': [
+                    { test: (val) => val.length > 0, message: '请选择活动时间' }
+                ],
+                'activity-location': [
+                    { test: (val) => val.length <= 100, message: '地点不能超过100个字符' }
+                ],
+                'activity-capacity': [
+                    { test: (val) => val === '' || (!isNaN(val) && parseInt(val) >= 0), message: '人数必须是非负整数' }
+                ]
+            };
+
+            // 验证所有字段
+            let isValid = true;
+            isValid &= validateField('activity-name', name, validationRules['activity-name']);
+            isValid &= validateField('activity-date', date, validationRules['activity-date']);
+            isValid &= validateField('activity-time', time, validationRules['activity-time']);
+            isValid &= validateField('activity-location', location, validationRules['activity-location']);
+            isValid &= validateField('activity-capacity', capacity, validationRules['activity-capacity']);
+
+            if (!isValid) return;
+
+            // 检查日期是否在过去
+            const activityDateTime = new Date(`${date}T${time}`);
+            const now = new Date();
+            if (activityDateTime < now) {
+                showFieldError('activity-date', '活动时间不能早于当前时间');
+                return;
+            }
+
+            // 创建新活动
+            const newActivity = {
+                id: activities.length > 0 ? Math.max(...activities.map(a => a.id || 0)) + 1 : 1,
+                name,
+                type: 'meeting', // 默认类型
+                date,
+                time,
+                location,
+                capacity: parseInt(capacity) || 0,
+                description,
+                participants: 0,
+                checkins: 0,
+                views: 0,
+                status: "upcoming",
+                checkinRecords: [],
+                createdAt: new Date().toISOString()
+            };
+
+            activities.push(newActivity);
+
+            // 调试信息
+            console.log('新活动已添加:', newActivity);
+            console.log('当前活动总数:', activities.length);
+
+            // 显示加载状态
+            const createBtn = document.getElementById('create-activity-btn');
+            const originalText = createBtn.textContent;
+            createBtn.innerHTML = '<div class="loading"></div> 创建中...';
+            createBtn.disabled = true;
+
+            // 模拟创建延迟
+            setTimeout(() => {
+                // 立即更新活动列表
+                renderActivities();
+
+                // 显示创建成功页面
+                showCreateSuccessPage(newActivity);
+
+                // 重置表单
+                document.getElementById('create-activity-form').reset();
+
+                // 恢复按钮状态
+                createBtn.textContent = originalText;
+                createBtn.disabled = false;
+            }, 1000);
+        }
+
         // 显示页面
         function showPage(pageId) {
+            // 隐藏所有页面
             document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
+                page.classList.remove('active', 'fade-in');
             });
-            document.getElementById(pageId).classList.add('active');
-            document.getElementById(pageId).classList.add('fade-in');
-            
+
+            // 显示目标页面
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                // 延迟添加fade-in效果
+                setTimeout(() => {
+                    targetPage.classList.add('fade-in');
+                }, 10);
+            }
+
             // 更新底部导航
             document.querySelectorAll('.tab-item').forEach(tab => {
                 tab.classList.remove('active');
+                if (tab.getAttribute('data-page') === pageId) {
+                    tab.classList.add('active');
+                }
             });
-            document.querySelector(`.tab-item[data-page="${pageId}"]`).classList.add('active');
+
+            // 对于非底部导航页面，清除所有底部导航活动状态
+            if (pageId === 'participants-page' || pageId === 'detail-page' || pageId === 'create-page') {
+                document.querySelectorAll('.tab-item').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+            }
+
+            // 如果是活动页面，刷新活动列表
+            if (pageId === 'activities-page') {
+                renderActivities();
+            }
+
+            // 如果是我的页面，更新统计信息
+            if (pageId === 'profile-page') {
+                updateProfileStats();
+            }
+
+            // 如果是活动详情页面，更新活动详情
+            if (pageId === 'detail-page' && currentActivityId) {
+                const activity = activities.find(a => a.id === currentActivityId);
+                if (activity) {
+                    showActivityDetail(currentActivityId);
+                }
+            }
+
+            // 如果是报名人员页面，添加事件监听器
+            if (pageId === 'participants-page') {
+                setupParticipantsPageEvents();
+            }
+
+
         }
-        
+
+        // 设置参与者管理页面事件监听器
+        function setupParticipantsPageEvents() {
+            // 搜索功能
+            const searchInput = document.getElementById('participant-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    searchQuery = this.value;
+                    const activity = activities.find(a => a.id === currentActivityId);
+                    if (activity) {
+                        renderParticipantsList(activity);
+                    }
+                });
+            }
+
+            // 筛选按钮
+            const filterBtns = document.querySelectorAll('#participants-page .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // 移除所有active类
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 添加active类到当前按钮
+                    this.classList.add('active');
+
+                    currentFilter = this.getAttribute('data-filter');
+                    const activity = activities.find(a => a.id === currentActivityId);
+                    if (activity) {
+                        renderParticipantsList(activity);
+                    }
+                });
+            });
+
+
+            // 返回按钮
+            const backBtn = document.getElementById('participants-back-button');
+            if (backBtn) {
+                backBtn.addEventListener('click', function () {
+                    showPage('detail-page');
+                });
+            }
+
+            // 导出按钮
+            const exportBtn = document.getElementById('participants-export-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function () {
+                    showToast('导出功能开发中...');
+                });
+            }
+        }
+
+
+        // 活动筛选和搜索变量
+        let currentActivityFilter = 'all';
+        let activitySearchQuery = '';
+
+        // 切换搜索卡片显示/隐藏
+        function toggleSearchCard() {
+            const searchCard = document.getElementById('search-card');
+            if (!searchCard) return;
+
+            if (searchCard.style.display === 'none') {
+                // 显示搜索卡片
+                searchCard.style.display = 'block';
+                searchCard.style.opacity = '0';
+                searchCard.style.transform = 'translateY(-10px)';
+
+                // 添加动画效果
+                setTimeout(() => {
+                    searchCard.style.transition = 'all 0.3s ease';
+                    searchCard.style.opacity = '1';
+                    searchCard.style.transform = 'translateY(0)';
+                }, 10);
+
+                // 聚焦到搜索输入框
+                setTimeout(() => {
+                    const searchInput = document.getElementById('activity-search');
+                    if (searchInput) {
+                        searchInput.focus();
+                    }
+                }, 300);
+            } else {
+                // 隐藏搜索卡片
+                searchCard.style.transition = 'all 0.3s ease';
+                searchCard.style.opacity = '0';
+                searchCard.style.transform = 'translateY(-10px)';
+
+                setTimeout(() => {
+                    searchCard.style.display = 'none';
+                }, 300);
+
+                // 清空搜索内容
+                const searchInput = document.getElementById('activity-search');
+                if (searchInput) {
+                    searchInput.value = '';
+                    activitySearchQuery = '';
+                    renderActivities();
+                }
+            }
+        }
+
+        // 设置活动筛选和搜索事件监听器
+        function setupActivityFilters() {
+            // 搜索功能
+            const searchInput = document.getElementById('activity-search');
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    activitySearchQuery = this.value.trim();
+                    renderActivities();
+                });
+            }
+
+            // 筛选按钮 - 只选择活动页面的筛选按钮
+            const filterBtns = document.querySelectorAll('#activities-page .filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    // 移除所有active类
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 添加active类到当前按钮
+                    this.classList.add('active');
+
+                    currentActivityFilter = this.getAttribute('data-filter');
+                    renderActivities();
+                });
+            });
+        }
+
+
+
+
+        // 切换活动详情显示
+        function toggleActivityDetail() {
+            const detailCard = document.getElementById('activity-detail-card');
+            const detailBtn = document.getElementById('activity-detail-btn');
+
+            if (detailCard.style.display === 'none') {
+                // 显示详情
+                detailCard.style.display = 'block';
+                detailCard.style.opacity = '0';
+                detailCard.style.transform = 'translateY(-10px)';
+
+                // 动画效果
+                setTimeout(() => {
+                    detailCard.style.transition = 'all 0.3s ease';
+                    detailCard.style.opacity = '1';
+                    detailCard.style.transform = 'translateY(0)';
+                }, 10);
+
+                // 更新按钮状态
+                detailBtn.innerHTML = '<i class="fas fa-chevron-up"></i><span>收起</span>';
+            } else {
+                // 隐藏详情
+                detailCard.style.transition = 'all 0.3s ease';
+                detailCard.style.opacity = '0';
+                detailCard.style.transform = 'translateY(-10px)';
+
+                setTimeout(() => {
+                    detailCard.style.display = 'none';
+                }, 300);
+
+                // 更新按钮状态
+                detailBtn.innerHTML = '<i class="fas fa-info-circle"></i><span>详情</span>';
+            }
+        }
+
         // 渲染活动列表
         function renderActivities() {
             const container = document.getElementById('activities-container');
             const emptyState = document.getElementById('empty-state');
-            
+
             // 清空容器
             container.innerHTML = '';
-            
+
             if (activities.length === 0) {
                 // 显示空状态
                 emptyState.style.display = 'block';
                 return;
             }
-            
+
             // 隐藏空状态
             emptyState.style.display = 'none';
-            
+
+            // 筛选活动
+            let filteredActivities = activities.filter(activity => {
+                // 状态筛选
+                if (currentActivityFilter !== 'all') {
+                    if (activity.status !== currentActivityFilter) {
+                        return false;
+                    }
+                }
+
+                // 搜索筛选
+                if (activitySearchQuery) {
+                    const query = activitySearchQuery.toLowerCase();
+                    return activity.name.toLowerCase().includes(query) ||
+                        (activity.location && activity.location.toLowerCase().includes(query));
+                }
+
+                return true;
+            });
+
+
+            // 按状态和时间排序：进行中 -> 即将开始 -> 已结束
+            const sortedActivities = [...filteredActivities].sort((a, b) => {
+                const dateA = new Date(`${a.date}T${a.time}`);
+                const dateB = new Date(`${b.date}T${b.time}`);
+                const now = new Date();
+
+                // 定义状态优先级：进行中(1) > 即将开始(2) > 已结束(3)
+                const getStatusPriority = (activity) => {
+                    if (activity.status === 'ongoing') return 1;
+                    if (activity.status === 'upcoming') return 2;
+                    return 3; // ended
+                };
+
+                const priorityA = getStatusPriority(a);
+                const priorityB = getStatusPriority(b);
+
+                // 首先按状态优先级排序
+                if (priorityA !== priorityB) {
+                    return priorityA - priorityB;
+                }
+
+                // 同状态内按时间排序
+                if (priorityA === 1 || priorityA === 2) {
+                    // 进行中和即将开始的活动按时间升序（早的在前）
+                    return dateA - dateB;
+                } else {
+                    // 已结束的活动按时间降序（晚的在前）
+                    return dateB - dateA;
+                }
+            });
+
             // 渲染活动项
-            activities.forEach(activity => {
+            sortedActivities.forEach(activity => {
                 const activityDate = new Date(activity.date);
                 const formattedDate = `${activityDate.getMonth() + 1}月${activityDate.getDate()}日`;
-                
+
                 const activityElement = document.createElement('div');
                 activityElement.className = 'activity-item';
                 activityElement.setAttribute('data-activity-id', activity.id);
-                
+
                 // 状态标签
                 let statusText = '';
                 let statusClass = '';
-                
+
                 if (activity.status === 'upcoming') {
                     statusText = '未开始';
                     statusClass = 'status-upcoming';
@@ -900,99 +4108,139 @@
                     statusText = '已结束';
                     statusClass = 'status-ended';
                 }
-                
-                // 签到率
-                const checkinRate = activity.participants > 0 ? 
-                    Math.round((activity.checkins / activity.participants) * 100) : 0;
-                
+
+                // 活动类型标签
+                let typeTag = '';
+                if (activity.isTemp) {
+                    typeTag = '<div class="activity-type-tag">临时</div>';
+                }
+
                 activityElement.innerHTML = `
                     <div class="activity-info">
-                        <div class="activity-title">${activity.name}</div>
+                        <div class="activity-title">
+                            ${activity.name}
+                            ${typeTag}
+                        </div>
                         <div class="activity-meta">
-                            <div class="activity-date">${formattedDate} ${activity.time}</div>
-                            <div class="activity-status ${statusClass}">${statusText}</div>
+                            <span class="activity-datetime">${formattedDate} ${activity.time}</span>
+                            <span class="meta-separator">•</span>
+                            <span class="activity-location">${activity.location || '地点待定'}</span>
+                            <span class="meta-separator">•</span>
+                            <span class="activity-participants">${activity.participants}人</span>
                         </div>
                     </div>
-                    <div class="activity-stats">
-                        <div class="participant-count">${activity.participants}人</div>
-                        <div class="checkin-rate">${checkinRate}% 签到</div>
+                    <div class="activity-actions">
+                        <div class="activity-status-badge ${statusClass}">${statusText}</div>
+                        <button class="activity-share-btn" onclick="event.stopPropagation(); showActivityShare(${activity.id})" aria-label="分享活动">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
                     </div>
                 `;
-                
-                // 点击活动项进入详情页
-                activityElement.addEventListener('click', function() {
+
+                // 点击活动项进入详情页或签到页
+                activityElement.addEventListener('click', function () {
                     const activityId = parseInt(this.getAttribute('data-activity-id'));
+                    const activity = activities.find(a => a.id === activityId);
+
                     showActivityDetail(activityId);
+                    showPage('detail-page');
                 });
-                
+
                 container.appendChild(activityElement);
             });
         }
-        
+
         // 显示活动详情
         function showActivityDetail(activityId) {
             currentActivityId = activityId;
             const activity = activities.find(a => a.id === activityId);
-            
+
             if (!activity) return;
-            
+
             // 更新详情页数据
             document.getElementById('detail-activity-name').textContent = activity.name;
-            
+
+            // 更新活动信息卡片
+            const activityDate = new Date(activity.date);
+            const formattedDate = `${activityDate.getMonth() + 1}月${activityDate.getDate()}日 ${activity.time}`;
+            document.getElementById('detail-info-title').textContent = activity.name;
+            document.getElementById('detail-info-datetime').textContent = formattedDate;
+            document.getElementById('detail-info-location').textContent = activity.location || '地点待定';
+            document.getElementById('detail-info-capacity').textContent =
+                activity.capacity > 0 ? `最多${activity.capacity}人` : '人数不限制';
+
+            document.getElementById('detail-views').textContent = activity.views;
             document.getElementById('detail-participants').textContent = activity.participants;
             document.getElementById('detail-checkins').textContent = activity.checkins;
-            document.getElementById('detail-rate').textContent = activity.participants > 0 ? 
+            document.getElementById('detail-rate').textContent = activity.participants > 0 ?
                 Math.round((activity.checkins / activity.participants) * 100) + '%' : '0%';
-            
+
             // 更新编辑表单
             document.getElementById('edit-activity-name').value = activity.name;
+
             document.getElementById('edit-activity-date').value = activity.date;
             document.getElementById('edit-activity-time').value = activity.time;
             document.getElementById('edit-activity-location').value = activity.location;
+            document.getElementById('edit-activity-capacity').value = activity.capacity;
             document.getElementById('edit-activity-description').value = activity.description;
-            
+
+            // 更新工具面板状态
+            const toolItems = document.querySelectorAll('#tools-collapse-content .tool-stats');
+            if (toolItems.length > 0) {
+                toolItems[0].textContent = `${activity.checkins}/${activity.participants}人`;
+            }
+
+            // 渲染签到记录
+            renderCheckinRecords(activity);
+
             // 重置编辑状态
             cancelEdit();
-            
-            // 切换到详情页
-            showPage('detail-page');
         }
-        
+
+        // 渲染签到记录
+        function renderCheckinRecords(activity) {
+            // 在新的智能签到面板设计中，签到记录已经集成到参与者列表中
+            // 这个函数保留是为了兼容性，但实际功能由renderParticipants处理
+            console.log('签到记录已集成到参与者列表中');
+        }
+
         // 启用编辑模式
         function enableEdit() {
             isEditing = true;
-            
+
             // 使表单字段可编辑
             document.getElementById('edit-activity-name').readOnly = false;
             document.getElementById('edit-activity-date').readOnly = false;
             document.getElementById('edit-activity-time').readOnly = false;
             document.getElementById('edit-activity-location').readOnly = false;
+            document.getElementById('edit-activity-capacity').readOnly = false;
             document.getElementById('edit-activity-description').readOnly = false;
-            
+
             // 更新编辑按钮文本
             document.getElementById('edit-button').textContent = '完成';
-            
+
             // 显示保存按钮
             document.getElementById('save-activity-btn').style.display = 'block';
         }
-        
+
         // 取消编辑
         function cancelEdit() {
             isEditing = false;
-            
+
             // 使表单字段只读
             document.getElementById('edit-activity-name').readOnly = true;
             document.getElementById('edit-activity-date').readOnly = true;
             document.getElementById('edit-activity-time').readOnly = true;
             document.getElementById('edit-activity-location').readOnly = true;
+            document.getElementById('edit-activity-capacity').readOnly = true;
             document.getElementById('edit-activity-description').readOnly = true;
-            
+
             // 更新编辑按钮文本
             document.getElementById('edit-button').textContent = '编辑';
-            
+
             // 隐藏保存按钮
             document.getElementById('save-activity-btn').style.display = 'none';
-            
+
             // 重新加载活动数据
             if (currentActivityId) {
                 const activity = activities.find(a => a.id === currentActivityId);
@@ -1001,69 +4249,775 @@
                     document.getElementById('edit-activity-date').value = activity.date;
                     document.getElementById('edit-activity-time').value = activity.time;
                     document.getElementById('edit-activity-location').value = activity.location;
+                    document.getElementById('edit-activity-capacity').value = activity.capacity;
                     document.getElementById('edit-activity-description').value = activity.description;
                 }
             }
         }
-        
+
         // 保存活动修改
         function saveActivity() {
             if (!currentActivityId) return;
-            
+
             // 找到当前活动
             const activity = activities.find(a => a.id === currentActivityId);
             if (!activity) return;
-            
+
             // 更新活动信息
             activity.name = document.getElementById('edit-activity-name').value;
             activity.date = document.getElementById('edit-activity-date').value;
             activity.time = document.getElementById('edit-activity-time').value;
             activity.location = document.getElementById('edit-activity-location').value;
+            activity.capacity = parseInt(document.getElementById('edit-activity-capacity').value) || 0;
             activity.description = document.getElementById('edit-activity-description').value;
-            
+
             // 显示成功消息
             showToast('活动信息已更新！');
-            
+
             // 退出编辑模式
             cancelEdit();
-            
+
             // 刷新活动列表
             renderActivities();
         }
-        
+
+
+
+        // 导出参与者名单
+        function exportParticipants() {
+            if (!currentActivityId) {
+                showToast('请先选择活动');
+                return;
+            }
+
+            const activity = activities.find(a => a.id === currentActivityId);
+            if (!activity) {
+                showToast('活动不存在');
+                return;
+            }
+
+            // 获取所有参与者数据
+            const allParticipants = [];
+
+            // 添加报名人员
+            if (activity.participants && activity.participants > 0) {
+                for (let i = 0; i < activity.participants; i++) {
+                    allParticipants.push({
+                        name: `参与者${i + 1}`,
+                        phone: `138****${String(i + 1).padStart(4, '0')}`,
+                        status: '已报名',
+                        checkinTime: '未签到'
+                    });
+                }
+            }
+
+            // 添加签到记录
+            if (activity.checkinRecords && activity.checkinRecords.length > 0) {
+                activity.checkinRecords.forEach(record => {
+                    const existingIndex = allParticipants.findIndex(p => p.name === record.name);
+                    if (existingIndex !== -1) {
+                        allParticipants[existingIndex].status = '已签到';
+                        allParticipants[existingIndex].checkinTime = record.time;
+                    } else {
+                        allParticipants.push({
+                            name: record.name,
+                            phone: record.phone,
+                            status: '已签到',
+                            checkinTime: record.time
+                        });
+                    }
+                });
+            }
+
+            // 生成CSV内容
+            const csvContent = generateCSV(allParticipants, activity);
+
+            // 下载文件
+            downloadCSV(csvContent, `${activity.name}_参与者名单.csv`);
+
+            showToast('参与者名单导出成功！');
+        }
+
+        // 生成CSV内容
+        function generateCSV(participants, activity) {
+            const headers = ['姓名', '手机号', '状态', '签到时间', '活动名称', '活动时间', '活动地点'];
+            const rows = participants.map(p => [
+                p.name,
+                p.phone,
+                p.status,
+                p.checkinTime,
+                activity.name,
+                `${activity.date} ${activity.time}`,
+                activity.location || '地点待定'
+            ]);
+
+            const csvContent = [headers, ...rows]
+                .map(row => row.map(field => `"${field}"`).join(','))
+                .join('\n');
+
+            // 添加BOM以支持中文
+            return '\uFEFF' + csvContent;
+        }
+
+        // 下载CSV文件
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else {
+                showToast('您的浏览器不支持文件下载');
+            }
+        }
+
+
+        // 保存触发模态框的元素
+        let modalTriggerElement = null;
+
+        // 显示模态框
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                // 保存当前焦点元素
+                modalTriggerElement = document.activeElement;
+
+                modal.classList.add('active');
+                // 聚焦到第一个输入框
+                const firstInput = modal.querySelector('input, textarea, select, button');
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus(), 100);
+                }
+            }
+        }
+
+        // 关闭模态框
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                // 重置表单
+                const form = modal.querySelector('form');
+                if (form) {
+                    form.reset();
+                }
+
+                // 恢复之前的焦点
+                if (modalTriggerElement && modalTriggerElement.focus) {
+                    setTimeout(() => {
+                        modalTriggerElement.focus();
+                        modalTriggerElement = null;
+                    }, 100);
+                }
+            }
+        }
+
+        // 通用统计更新函数
+        function updateStats(activity, pageType = 'detail') {
+            const totalParticipants = activity.participants || 0;
+            const checkedParticipants = activity.checkins || 0;
+            const uncheckedParticipants = totalParticipants - checkedParticipants;
+
+            const stats = {
+                total: totalParticipants,
+                checked: checkedParticipants,
+                unchecked: uncheckedParticipants,
+                rate: totalParticipants > 0 ? Math.round((checkedParticipants / totalParticipants) * 100) : 0
+            };
+
+            // 更新不同页面的统计元素
+            const elements = {
+                detail: {
+                    total: 'detail-total',
+                    checked: 'detail-checkins',
+                    unchecked: 'detail-unchecked',
+                    rate: 'detail-rate'
+                },
+                participants: {
+                    total: 'participants-total',
+                    checked: 'participants-checked',
+                    unchecked: 'participants-unchecked',
+                    rate: 'participants-rate'
+                }
+            };
+
+            const pageElements = elements[pageType];
+            if (pageElements) {
+                Object.keys(pageElements).forEach(key => {
+                    const elementId = pageElements[key];
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        element.textContent = key === 'rate' ? stats[key] + '%' : stats[key];
+                    }
+                });
+            }
+
+            // 更新报名人员列表标题的计数显示
+            if (pageType === 'participants') {
+                const participantsCountElement = document.getElementById('participants-count');
+                if (participantsCountElement) {
+                    participantsCountElement.textContent = `${stats.total}人（已签${stats.checked}人）`;
+                }
+            }
+
+            // 更新进度条
+            updateProgressBar(activity);
+        }
+
+        // 更新进度条
+        function updateProgressBar(activity) {
+            const total = activity.participants || 0;
+            const checked = activity.checkins || 0;
+            const percentage = total > 0 ? Math.round((checked / total) * 100) : 0;
+
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercentage = document.getElementById('progress-percentage');
+            const progressChecked = document.getElementById('progress-checked');
+            const progressTotal = document.getElementById('progress-total');
+
+            if (progressFill) progressFill.style.width = `${percentage}%`;
+            if (progressPercentage) progressPercentage.textContent = `${percentage}%`;
+            if (progressChecked) progressChecked.textContent = checked;
+            if (progressTotal) progressTotal.textContent = total;
+        }
+
+        // 更新签到UI
+        function updateCheckinUI(activity) {
+            renderCheckinRecords(activity);
+            updateStats(activity, 'detail');
+
+            // 更新工具面板中的签到状态
+            const toolItems = document.querySelectorAll('#tools-collapse-content .tool-stats');
+            if (toolItems.length > 0) {
+                toolItems[0].textContent = `${activity.checkins}/${activity.participants}人`;
+            }
+
+        }
+
+
+        // 更新个人统计信息
+        function updateProfileStats() {
+            const totalActivities = activities.length;
+            const totalParticipants = activities.reduce((sum, activity) => sum + activity.participants, 0);
+            const totalCheckins = activities.reduce((sum, activity) => sum + activity.checkins, 0);
+            const avgRate = totalParticipants > 0 ? Math.round((totalCheckins / totalParticipants) * 100) : 0;
+
+            document.getElementById('profile-total-activities').textContent = totalActivities;
+            document.getElementById('profile-total-participants').textContent = totalParticipants;
+            document.getElementById('profile-total-checkins').textContent = totalCheckins;
+            document.getElementById('profile-avg-rate').textContent = avgRate + '%';
+        }
+
+        // 显示活动分享模态框
+        function showActivityShare(activityId) {
+            const activity = activities.find(a => a.id === activityId);
+            if (!activity) return;
+
+            // 更新分享信息
+            document.getElementById('share-activity-name').textContent = activity.name;
+            document.getElementById('share-link').value = `https://act.vip/${activity.id}`;
+
+            showModal('activity-share-modal');
+        }
+
+        // 复制分享链接
+        function copyShareLink() {
+            const shareLink = document.getElementById('share-link');
+            shareLink.select();
+            document.execCommand('copy');
+            showToast('分享链接已复制到剪贴板');
+        }
+
+        // 分享到微信
+        function shareToWeChat() {
+            showToast('正在打开微信分享...');
+            // 这里可以集成微信分享SDK
+        }
+
+        // 显示创建成功页面
+        function showCreateSuccessPage(activity) {
+            // 设置当前活动ID
+            currentActivityId = activity.id;
+
+            // 更新活动信息
+            document.getElementById('success-activity-name').textContent = activity.name;
+            document.getElementById('success-activity-name-qr').textContent = activity.name;
+
+            // 生成分享信息
+            const shareLink = `https://act.vip/${activity.id}`;
+
+            document.getElementById('success-share-link').value = shareLink;
+
+            // 确保活动列表已更新
+            renderActivities();
+
+            // 切换到创建成功页面
+            showPage('create-success-page');
+        }
+
+        // 复制创建成功页面的分享链接
+        function copySuccessShareLink() {
+            const shareLink = document.getElementById('success-share-link');
+            shareLink.select();
+            document.execCommand('copy');
+            showToast('分享链接已复制到剪贴板');
+        }
+
+        // 创建成功页面分享到微信
+        function shareSuccessToWeChat() {
+            showToast('正在打开微信分享...');
+            // 这里可以集成微信分享SDK
+        }
+
+        // 保存二维码
+        function saveQRCode() {
+            showToast('二维码保存功能开发中...');
+            // 这里可以实现二维码保存功能
+        }
+
+        // 跳转到活动详情
+        function goToActivityDetail() {
+            if (currentActivityId) {
+                showActivityDetail(currentActivityId);
+                showPage('detail-page');
+            }
+        }
+
+        // 返回活动列表
+        function goToActivitiesList() {
+            showPage('activities-page');
+        }
+
+        // 渲染参与者列表
+        function renderParticipants(activity) {
+            const container = document.getElementById('participants-list');
+            if (!container) {
+                console.log('participants-list 容器不存在');
+                return;
+            }
+
+            container.innerHTML = '';
+
+            // 如果没有参与者数据，显示空状态
+            if (!activity.participants || activity.participants === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:20px 0;">暂无参与者</p>';
+                return;
+            }
+
+            // 创建参与者数据（包含未签到人员）
+            const allParticipants = [];
+
+            // 添加已签到人员
+            activity.checkinRecords.forEach(record => {
+                allParticipants.push({
+                    name: record.name,
+                    phone: record.phone,
+                    status: 'checked',
+                    checkinTime: record.time
+                });
+            });
+
+            // 添加未签到人员（模拟数据）
+            const totalParticipants = activity.participants || 0;
+            const checkedCount = activity.checkinRecords.length;
+            const uncheckedCount = totalParticipants - checkedCount;
+
+            for (let i = 0; i < uncheckedCount; i++) {
+                const names = ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九', '吴十'];
+                const phones = ['138****1234', '139****5678', '136****9012', '137****3456', '135****7890'];
+
+                allParticipants.push({
+                    name: names[i % names.length] + (i > names.length - 1 ? (i + 1) : ''),
+                    phone: phones[i % phones.length],
+                    status: 'unchecked',
+                    checkinTime: null
+                });
+            }
+
+            // 渲染参与者项
+            allParticipants.forEach(participant => {
+                const participantItem = document.createElement('div');
+                participantItem.className = 'participant-item';
+
+                // 获取姓名首字母作为头像
+                const initial = participant.name ? participant.name.charAt(0) : '?';
+
+                // 状态图标
+                let statusIcon = '';
+                let statusClass = '';
+                let statusText = '';
+
+                switch (participant.status) {
+                    case 'checked':
+                        statusIcon = '✓';
+                        statusClass = 'status-checked';
+                        statusText = participant.checkinTime;
+                        break;
+                    case 'unchecked':
+                        statusIcon = '○';
+                        statusClass = 'status-unchecked';
+                        statusText = '未签到';
+                        break;
+                }
+
+                participantItem.innerHTML = `
+                    <div class="participant-avatar" style="background: var(--primary);">${initial}</div>
+                    <div class="participant-info">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-phone">${participant.phone}</div>
+                    </div>
+                    <div class="participant-status">
+                        <div class="status-icon ${statusClass}">${statusIcon}</div>
+                        <div class="participant-time">${statusText}</div>
+                    </div>
+                `;
+
+                // 点击未签到人员快速签到
+                if (participant.status === 'unchecked') {
+                    participantItem.addEventListener('click', function () {
+                        quickCheckinParticipant(participant.name, participant.phone);
+                    });
+                }
+
+                container.appendChild(participantItem);
+            });
+        }
+
+
+
         // 显示Toast提示
-        function showToast(message) {
-            // 创建Toast元素
-            const toast = document.createElement('div');
+        function showToast(message, duration = 2000) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+
             toast.textContent = message;
-            toast.style.position = 'fixed';
-            toast.style.bottom = '100px';
-            toast.style.left = '50%';
-            toast.style.transform = 'translateX(-50%)';
-            toast.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            toast.style.color = 'white';
-            toast.style.padding = '12px 20px';
-            toast.style.borderRadius = '10px';
-            toast.style.zIndex = '1000';
-            toast.style.fontSize = '16px';
-            toast.style.opacity = '0';
-            toast.style.transition = 'opacity 0.3s';
-            
-            document.querySelector('.mobile-container').appendChild(toast);
-            
-            // 显示Toast
-            setTimeout(() => {
-                toast.style.opacity = '1';
-            }, 10);
-            
-            // 隐藏并移除Toast
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => {
-                    document.querySelector('.mobile-container').removeChild(toast);
-                }, 300);
-            }, 2000);
+            toast.classList.add('show');
+
+            if (toast.timeoutId) {
+                clearTimeout(toast.timeoutId);
+            }
+
+            toast.timeoutId = setTimeout(() => {
+                toast.classList.remove('show');
+                toast.timeoutId = null;
+            }, duration);
+        }
+
+        // 参与者管理相关变量
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // 筛选参与者
+        function filterParticipants() {
+            if (!currentActivityId) return;
+
+            const activity = activities.find(a => a.id === currentActivityId);
+            if (!activity) return;
+
+            // 根据当前页面类型调用相应的渲染函数
+            const currentPageId = document.querySelector('.page.active').id;
+            if (currentPageId === 'participants-page') {
+                renderParticipantsList(activity);
+            }
+        }
+
+        // 打开报名人员页面
+        function openParticipantsPage() {
+            if (!currentActivityId) {
+                showToast('请先选择活动');
+                return;
+            }
+
+            const activity = activities.find(a => a.id === currentActivityId);
+            if (!activity) return;
+
+            // 重置筛选
+            currentFilter = 'all';
+            searchQuery = '';
+
+            // 更新页面标题
+            document.getElementById('participants-page-title').textContent = `${activity.name} - 报名人员`;
+
+            // 更新统计信息
+            updateStats(activity, 'participants');
+
+            // 渲染参与者列表
+            renderParticipantsList(activity);
+
+            // 切换到报名人员页面
+            showPage('participants-page');
+        }
+
+        // 切换参与者签到状态
+        function toggleParticipantCheckin(participantName, participantPhone) {
+            if (!currentActivityId) {
+                showToast('请先选择活动');
+                return;
+            }
+
+            const activity = activities.find(a => a.id === currentActivityId);
+            if (!activity) {
+                showToast('活动不存在');
+                return;
+            }
+
+            // 初始化签到记录数组
+            if (!activity.checkinRecords) {
+                activity.checkinRecords = [];
+            }
+
+            // 查找是否已签到
+            const existingRecordIndex = activity.checkinRecords.findIndex(record =>
+                record.name === participantName
+            );
+
+            if (existingRecordIndex !== -1) {
+                // 已签到，取消签到
+                activity.checkinRecords.splice(existingRecordIndex, 1);
+                activity.checkins = activity.checkinRecords.length;
+                showToast(`${participantName} 已取消签到`);
+            } else {
+                // 未签到，进行签到
+                const now = new Date();
+                const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+
+                const newRecord = {
+                    id: activity.checkinRecords.length + 1,
+                    name: participantName,
+                    phone: participantPhone,
+                    time: timeString
+                };
+
+                activity.checkinRecords.push(newRecord);
+                activity.checkins = activity.checkinRecords.length;
+                showToast(`${participantName} 签到成功！`);
+            }
+
+            // 更新UI
+            updateStats(activity, 'participants');
+            renderParticipantsList(activity);
+
+            // 更新活动列表（如果当前在活动页面）
+            const currentPageId = document.querySelector('.page.active').id;
+            if (currentPageId === 'activities-page') {
+                renderActivities();
+            }
+
+            // 更新我的页面统计（如果当前在我的页面）
+            if (currentPageId === 'profile-page') {
+                updateProfileStats();
+            }
+        }
+
+        // 渲染报名人员列表
+        function renderParticipantsList(activity) {
+            const container = document.getElementById('participants-list');
+            if (!container) {
+                console.log('participants-list 容器不存在');
+                return;
+            }
+
+            container.innerHTML = '';
+
+            // 如果没有参与者数据，显示空状态
+            if (!activity.participants || activity.participants === 0) {
+                container.innerHTML = '<p style="text-align:center;color:var(--text-secondary);padding:20px 0;">暂无参与者</p>';
+                return;
+            }
+
+            // 创建参与者数据（报名人员）
+            const allParticipants = [];
+
+            // 生成报名人员数据
+            const totalParticipants = activity.participants || 0;
+
+            for (let i = 0; i < totalParticipants; i++) {
+                const names = ['张三', '李四', '王五', '赵六', '钱七', '孙八', '周九', '吴十', '陈十一', '刘十二'];
+                const phones = ['138****1234', '139****5678', '136****9012', '137****3456', '135****7890', '158****1111', '159****2222', '186****3333'];
+
+                // 检查是否已签到
+                const isChecked = activity.checkinRecords && activity.checkinRecords.some(record =>
+                    record.name === (names[i % names.length] + (i >= names.length ? (i + 1) : ''))
+                );
+
+                allParticipants.push({
+                    name: names[i % names.length] + (i >= names.length ? (i + 1) : ''),
+                    phone: phones[i % phones.length],
+                    status: isChecked ? 'checked' : 'registered',
+                    registerTime: '已报名',
+                    checkinTime: isChecked ? '已签到' : '未签到'
+                });
+            }
+
+            // 应用搜索和筛选
+            let filteredParticipants = allParticipants;
+
+            // 搜索过滤
+            if (searchQuery) {
+                filteredParticipants = filteredParticipants.filter(p =>
+                    p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.phone.includes(searchQuery)
+                );
+            }
+
+            // 状态过滤
+            if (currentFilter !== 'all') {
+                if (currentFilter === 'checked') {
+                    filteredParticipants = filteredParticipants.filter(p => p.status === 'checked');
+                } else if (currentFilter === 'unchecked') {
+                    filteredParticipants = filteredParticipants.filter(p => p.status === 'registered');
+                }
+            }
+
+            // 渲染参与者项
+            filteredParticipants.forEach(participant => {
+                const participantItem = document.createElement('div');
+                participantItem.className = 'participant-item';
+
+                // 获取姓名首字母作为头像
+                const initial = participant.name ? participant.name.charAt(0) : '?';
+
+                // 状态图标
+                let statusIcon = '';
+                let statusClass = '';
+                let statusText = '';
+
+                switch (participant.status) {
+                    case 'registered':
+                        statusIcon = '○';
+                        statusClass = 'status-registered';
+                        statusText = participant.checkinTime;
+                        break;
+                    case 'checked':
+                        statusIcon = '✓';
+                        statusClass = 'status-checked';
+                        statusText = participant.checkinTime;
+                        break;
+                }
+
+                participantItem.innerHTML = `
+                    <div class="participant-avatar" style="background: var(--primary);">${initial}</div>
+                    <div class="participant-info">
+                        <div class="participant-name">${participant.name}</div>
+                        <div class="participant-phone">${participant.phone}</div>
+                    </div>
+                    <div class="participant-status">
+                        <div class="status-icon ${statusClass}" onclick="event.stopPropagation(); toggleParticipantCheckin('${participant.name}', '${participant.phone}')" style="cursor: pointer;" title="点击切换签到状态">${statusIcon}</div>
+                        <div class="participant-time">${statusText}</div>
+                    </div>
+                `;
+
+                container.appendChild(participantItem);
+            });
+
+        }
+
+
+
+
+        // 更新个人页面统计信息
+        function updateProfileStats() {
+            const totalActivities = activities.length;
+            const totalParticipants = activities.reduce((sum, activity) => sum + (activity.participants || 0), 0);
+            const totalCheckins = activities.reduce((sum, activity) => sum + (activity.checkins || 0), 0);
+            const avgRate = totalParticipants > 0 ? Math.round((totalCheckins / totalParticipants) * 100) : 0;
+
+            // 更新统计数字
+            const totalActivitiesEl = document.getElementById('profile-total-activities');
+            const totalParticipantsEl = document.getElementById('profile-total-participants');
+            const totalCheckinsEl = document.getElementById('profile-total-checkins');
+            const avgRateEl = document.getElementById('profile-avg-rate');
+
+            if (totalActivitiesEl) totalActivitiesEl.textContent = totalActivities;
+            if (totalParticipantsEl) totalParticipantsEl.textContent = totalParticipants;
+            if (totalCheckinsEl) totalCheckinsEl.textContent = totalCheckins;
+            if (avgRateEl) avgRateEl.textContent = avgRate + '%';
+        }
+
+        // 显示反馈模态框
+        function showFeedbackModal() {
+            showModal('feedback-modal');
+        }
+
+        // 提交反馈
+        function submitFeedback() {
+            const toolName = document.getElementById('feedback-tool-name').value.trim();
+            const description = document.getElementById('feedback-description').value.trim();
+            const contact = document.getElementById('feedback-contact').value.trim();
+
+            if (!toolName || !description) {
+                showToast('请填写工具名称和功能描述');
+                return;
+            }
+
+            // 这里可以添加实际的反馈提交逻辑
+            console.log('反馈内容:', {
+                toolName,
+                description,
+                contact
+            });
+
+            showToast('感谢您的反馈！我们会认真考虑您的建议');
+            closeModal('feedback-modal');
+            document.getElementById('feedback-form').reset();
+        }
+
+
+        // 显示活动选择模态框
+        function showActivitySelectModal() {
+            const container = document.getElementById('activity-select-list');
+            container.innerHTML = '';
+
+            if (activities.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">暂无活动</p>';
+            } else {
+                activities.forEach(activity => {
+                    const activityItem = document.createElement('div');
+                    activityItem.className = 'activity-select-item';
+                    activityItem.onclick = () => {
+                        showActivityDetail(activity.id);
+                        showPage('detail-page');
+                    };
+
+                    const activityDate = new Date(activity.date);
+                    const formattedDate = `${activityDate.getMonth() + 1}月${activityDate.getDate()}日 ${activity.time}`;
+
+                    let statusText = '';
+                    let statusClass = '';
+
+                    if (activity.status === 'upcoming') {
+                        statusText = '未开始';
+                        statusClass = 'upcoming';
+                    } else if (activity.status === 'ongoing') {
+                        statusText = '进行中';
+                        statusClass = 'ongoing';
+                    } else {
+                        statusText = '已结束';
+                        statusClass = 'ended';
+                    }
+
+                    activityItem.innerHTML = `
+                        <div class="activity-select-info">
+                            <div class="activity-select-name">${activity.name}</div>
+                            <div class="activity-select-meta">${formattedDate} • ${activity.location || '地点待定'}</div>
+                        </div>
+                        <div class="activity-select-status ${statusClass}">${statusText}</div>
+                    `;
+
+                    container.appendChild(activityItem);
+                });
+            }
+
+            showModal('activity-select-modal');
         }
     </script>
+
 </body>
+
 </html>
